@@ -1,7 +1,8 @@
-import { faComment, faGears, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faComment, faGears, faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import OptionTab, { OptionTabProps } from "./OptionTab";
 
 const optionTabs: OptionTabProps[] = [
+  { title: "Update Profile", icon: faPenToSquare, href: "/update" },
   { title: "Preferences", icon: faGears, href: "/preferences" },
   { title: "Likes", icon: faHeart, href: "/likes" },
   { title: "Matches", icon: faComment, href: "/matches" },

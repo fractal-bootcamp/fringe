@@ -15,7 +15,9 @@ const OptionTab = ({ title, icon, href }: OptionTabProps) => {
       href={href}
       className="flex space-x-2 items-center border-[1px] border-gray-200 p-3 rounded-lg"
     >
-      <FontAwesomeIcon icon={icon} />
+      <div className="min-w-6">
+        <FontAwesomeIcon icon={icon} />
+      </div>
       <p>{title}</p>
     </Link>
   );
