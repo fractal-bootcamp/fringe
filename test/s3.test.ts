@@ -15,7 +15,10 @@ async function deleteS3TestImage(fileName: string, downloadPath: string) {
 async function testS3ImageOperations() {
   try {
     // Test with a local image file
-    const imagePath = path.join(__dirname, 'test-image.jpg'); // Make sure this image exists
+    const imagePath = path.join(__dirname, 'test-image.jpg'); 
+    if (!fs.existsSync(imagePath)) {
+      throw new Error('Test image not found');
+    }
     const imageBuffer = fs.readFileSync(imagePath);
     const fileName = `test-image-${Date.now()}.jpg`;
 
@@ -35,15 +38,17 @@ async function testS3ImageOperations() {
       console.log('Content-Type:', response.headers.get('content-type'));
       console.log('Content-Length:', response.headers.get('content-length'));
     }
+    else {
+      console.error('❌ URL is not accessible');
+      throw new Error('URL is not accessible');
+    }
 
-    // Optional: Download the image to verify content
     console.log('\n4. Downloading image to verify...');
     const downloadPath = path.join(__dirname, 'downloaded-test-image.jpg');
     const downloadedContent = await response.arrayBuffer();
     fs.writeFileSync(downloadPath, Buffer.from(downloadedContent));
     console.log('✅ Image downloaded successfully');
 
-    // Replace deletion code with new function call
     await deleteS3TestImage(fileName, downloadPath);
 
   } catch (error) {
