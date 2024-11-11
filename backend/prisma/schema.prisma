@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +5,115 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String     @id @default(uuid())
+  clerkId          String     @unique
+  name             String
+  location         String
+  profilePhotoIds  String[]
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  applicantProfile Applicant?
+  companyProfile   Company?
+  sentLikes        Like[]     @relation("SentLikes")
+  receivedLikes    Like[]     @relation("ReceivedLikes")
+  matches          Match[]    @relation("UserMatches")
+  messages         Message[]
+}
+
+model Applicant {
+  id                      String               @id @default(uuid())
+  userId                  String               @unique
+  user                    User                 @relation(fields: [userId], references: [id])
+  yearsOfExperience       Int
+  educationalExperiences  String[]
+  professionalExperiences String[]
+  prompts                 Prompt[]
+  preferences             ApplicantPreference?
+}
+
+model Company {
+  id               String             @id @default(uuid())
+  userId           String             @unique
+  user             User               @relation(fields: [userId], references: [id])
+  yearsOfOperation Int
+  employeeCount    Int
+  industry         Industry
+  fundingRound     FundingRound
+  prompts          Prompt[]
+  preferences      CompanyPreference?
+}
+
+model Prompt {
+  id          String     @id @default(uuid())
+  question    String
+  answer      String
+  applicant   Applicant? @relation(fields: [applicantId], references: [id])
+  applicantId String?
+  company     Company?   @relation(fields: [companyId], references: [id])
+  companyId   String?
+}
+
+model Like {
+  id         String   @id @default(uuid())
+  fromUser   User     @relation("SentLikes", fields: [fromUserId], references: [id])
+  fromUserId String
+  toUser     User     @relation("ReceivedLikes", fields: [toUserId], references: [id])
+  toUserId   String
+  section    String
+  content    String
+  createdAt  DateTime @default(now())
+}
+
+model Match {
+  id        String    @id @default(uuid())
+  users     User[]    @relation("UserMatches")
+  messages  Message[]
+  createdAt DateTime  @default(now())
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  content   String
+  match     Match    @relation(fields: [matchId], references: [id])
+  matchId   String
+  sender    User     @relation(fields: [senderId], references: [id])
+  senderId  String
+  createdAt DateTime @default(now())
+}
+
+model ApplicantPreference {
+  id           String         @id @default(uuid())
+  applicant    Applicant      @relation(fields: [applicantId], references: [id])
+  applicantId  String         @unique
+  role         String[]
+  industry     Industry[]
+  location     String[]
+  fundingRound FundingRound[]
+}
+
+model CompanyPreference {
+  id                      String     @id @default(uuid())
+  company                 Company    @relation(fields: [companyId], references: [id])
+  companyId               String     @unique
+  role                    String[]
+  industry                Industry[]
+  location                String[]
+  educationalExperiences  String[]
+  professionalExperiences String[]
+}
+
+enum Industry {
+  software
+  finance
+  design
+}
+
+enum FundingRound {
+  seed
+  seriesA
+  seriesB
+  seriesC
 }
