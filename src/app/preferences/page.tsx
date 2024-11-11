@@ -2,7 +2,7 @@ import PreferencesPage from "@/components/PreferencesPage";
 
 const Page = () => {
   return (
-    <div>
+    <div className="p-2">
       <PreferencesPage />
     </div>
   );

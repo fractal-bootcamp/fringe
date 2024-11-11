@@ -19,7 +19,7 @@ const preferences: Preference[] = [
 const PreferencesPage = () => {
   return (
     <div>
-      <div>Preferences</div>
+      <div className="font-bold">Preferences</div>
       <div className="flex flex-col space-y-2">
         {preferences.map((pref, key) => (
           <PreferenceIndividual key={key} preference={pref} />
