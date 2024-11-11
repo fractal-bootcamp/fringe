@@ -7,8 +7,8 @@ interface LikesYouPageProps {
 const LikesYouPage = ({ likesYouUsers }: LikesYouPageProps) => {
   return (
     <div>
-      <div>Likes You</div>
-      <div>
+      <div className="w-full text-center font-semibold">Likes You</div>
+      <div className="grid grid-cols-2">
         {likesYouUsers.map((user, key) => (
           <LikesYouTab key={key} name={user.name} profilePhoto={user.profilePhoto} />
         ))}
