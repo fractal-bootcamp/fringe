@@ -8,6 +8,8 @@ export const getUserById = async (req: Request, res: Response) => {
     include: {
       applicantProfile: true,
       companyProfile: true,
+      matches: true,
+      messages: true,
     },
   });
   res.status(200).json(user);
