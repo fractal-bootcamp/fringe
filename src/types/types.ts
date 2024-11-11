@@ -1,6 +1,6 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
-interface Prompt {
+export interface Prompt {
   question: string;
   answer: string;
 }
@@ -21,7 +21,7 @@ export interface Company {
   prompts: Prompt[];
 }
 
-// Aplicants
+// Applicants
 export interface Applicant {
   id: string;
   name: string;
