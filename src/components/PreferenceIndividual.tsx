@@ -1,7 +1,7 @@
 "use client";
 
+import { Preference } from "@/types/types";
 import React, { useState } from "react";
-import { Preference } from "./PreferencesPage";
 
 interface PreferenceIndividualProps {
   preference: Preference;

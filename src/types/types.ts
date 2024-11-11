@@ -39,3 +39,11 @@ export interface NavigationItem {
   path: string;
   iconDefinition: IconDefinition;
 }
+
+// Preferences
+export interface Preference {
+  title: string;
+  type: "numerical" | "categorical";
+  range?: [number, number];
+  options?: string[];
+}

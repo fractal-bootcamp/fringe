@@ -1,11 +1,5 @@
+import { Preference } from "@/types/types";
 import PreferenceIndividual from "./PreferenceIndividual";
-
-export interface Preference {
-  title: string;
-  type: "numerical" | "categorical";
-  range?: [number, number];
-  options?: string[];
-}
 
 const preferences: Preference[] = [
   { title: "role", type: "categorical", options: ["CEO", "CTO", "CFO"] },
