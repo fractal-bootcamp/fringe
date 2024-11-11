@@ -1,14 +1,36 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
-export interface Applicant {
-  id: string;
-  nameFirst: string;
-  nameLast: string;
+interface Prompt {
+  question: string;
+  answer: string;
 }
+
+// Companies
+type Industry = "software" | "finance" | "design";
+type FundingRound = "seed" | "seriesA" | "seriesB" | "seriesC";
 
 export interface Company {
   id: string;
   name: string;
+  location: string;
+  yearsOfOperation: number;
+  employeeCount: number;
+  industry: Industry;
+  fundingRound: FundingRound;
+  profilePhotoIds: string[];
+  prompts: Prompt[];
+}
+
+// Aplicants
+export interface Applicant {
+  id: string;
+  name: string;
+  location: string;
+  yearsOfExperience: number;
+  educationalExperiences: string[];
+  professionalExperiences: string[];
+  profilePhotoIds: string[];
+  prompts: Prompt[];
 }
 
 // Navigation
