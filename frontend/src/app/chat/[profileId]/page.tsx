@@ -90,7 +90,6 @@ const ChatPage = () => {
       
       // Show announcement 5 minutes before call AND at call time
       const timeDiff = callTime.getTime() - now.getTime();
-      console.log(timeDiff);
       if (timeDiff <= 5 * 60 * 1000 && timeDiff > 0 && !meetLink) {
         // Generate meet link if not already generated
         const link = `https://meet.google.com/${Math.random().toString(36).substring(2, 10)}`;
@@ -136,12 +135,14 @@ const ChatPage = () => {
         </div>
         {/* Schedule call */}
         <div className="flex items-center space-x-2">
+          {/* date picker */}
           <input
             type="date"
             value={scheduleDate}
             onChange={(e) => setScheduleDate(e.target.value)}
             className="border rounded-lg px-2 py-1 text-sm"
           />
+          {/* time picker */}
           <select
             value={scheduleTime}
             onChange={(e) => setScheduleTime(e.target.value)}
@@ -154,6 +155,7 @@ const ChatPage = () => {
               </option>
             ))}
           </select>
+          {/* schedule call button */}
           <button
             onClick={handleScheduleCall}
             className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm"
@@ -200,6 +202,7 @@ const ChatPage = () => {
                   ? 'bg-blue-500 text-white' 
                   : 'bg-gray-200 text-gray-800'
               }`}>
+                {/* join link if it's a system message about the call */}
                 {msg.content.includes('Join here:') ? (
                   <p className="text-sm">
                     {msg.content.split('Join here:')[0]}
