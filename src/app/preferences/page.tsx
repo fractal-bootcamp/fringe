@@ -1,9 +1,9 @@
-import Preferences from "@/components/Preferences";
+import PreferencesPage from "@/components/PreferencesPage";
 
 const Page = () => {
   return (
     <div>
-      <Preferences />
+      <PreferencesPage />
     </div>
   );
 };
