@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { FundingRound, Industry, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -214,7 +214,7 @@ async function main() {
   // Seed Companies
   const companyUsers = [
     {
-      id: "1",
+      id: "11",
       name: "Tech Innovations",
       location: "San Francisco, CA",
       profilePhotoIds: ["photo1", "photo2"],
@@ -222,8 +222,8 @@ async function main() {
         create: {
           yearsOfOperation: 5,
           employeeCount: 50,
-          industry: "software",
-          fundingRound: "seriesA",
+          industry: Industry.software,
+          fundingRound: FundingRound.seriesA,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To innovate technology." },
@@ -234,7 +234,7 @@ async function main() {
       },
     },
     {
-      id: "2",
+      id: "12",
       name: "Finance Solutions",
       location: "New York, NY",
       profilePhotoIds: ["photo3", "photo4"],
@@ -242,8 +242,8 @@ async function main() {
         create: {
           yearsOfOperation: 10,
           employeeCount: 200,
-          industry: "finance",
-          fundingRound: "seriesB",
+          industry: Industry.finance,
+          fundingRound: FundingRound.seriesB,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To provide financial clarity." },
@@ -254,7 +254,7 @@ async function main() {
       },
     },
     {
-      id: "3",
+      id: "13",
       name: "Creative Designs",
       location: "Austin, TX",
       profilePhotoIds: ["photo5", "photo6"],
@@ -262,8 +262,8 @@ async function main() {
         create: {
           yearsOfOperation: 3,
           employeeCount: 30,
-          industry: "design",
-          fundingRound: "seed",
+          industry: Industry.design,
+          fundingRound: FundingRound.seed,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To create stunning visuals." },
@@ -274,7 +274,7 @@ async function main() {
       },
     },
     {
-      id: "4",
+      id: "14",
       name: "HealthTech Corp",
       location: "Boston, MA",
       profilePhotoIds: ["photo7", "photo8"],
@@ -282,8 +282,8 @@ async function main() {
         create: {
           yearsOfOperation: 7,
           employeeCount: 150,
-          industry: "software",
-          fundingRound: "seriesC",
+          industry: Industry.software,
+          fundingRound: FundingRound.seriesC,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To improve healthcare through technology." },
@@ -294,7 +294,7 @@ async function main() {
       },
     },
     {
-      id: "5",
+      id: "15",
       name: "EcoFinance",
       location: "Seattle, WA",
       profilePhotoIds: ["photo9", "photo10"],
@@ -302,8 +302,8 @@ async function main() {
         create: {
           yearsOfOperation: 4,
           employeeCount: 80,
-          industry: "finance",
-          fundingRound: "seriesA",
+          industry: Industry.finance,
+          fundingRound: FundingRound.seriesA,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To promote sustainable investments." },
@@ -314,7 +314,7 @@ async function main() {
       },
     },
     {
-      id: "6",
+      id: "16",
       name: "Design Studio",
       location: "Los Angeles, CA",
       profilePhotoIds: ["photo11", "photo12"],
@@ -322,8 +322,8 @@ async function main() {
         create: {
           yearsOfOperation: 2,
           employeeCount: 20,
-          industry: "design",
-          fundingRound: "seed",
+          industry: Industry.design,
+          fundingRound: FundingRound.seed,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To bring ideas to life through design." },
@@ -334,7 +334,7 @@ async function main() {
       },
     },
     {
-      id: "7",
+      id: "17",
       name: "FinTech Innovations",
       location: "Chicago, IL",
       profilePhotoIds: ["photo13", "photo14"],
@@ -342,8 +342,8 @@ async function main() {
         create: {
           yearsOfOperation: 6,
           employeeCount: 120,
-          industry: "finance",
-          fundingRound: "seriesB",
+          industry: Industry.finance,
+          fundingRound: FundingRound.seriesB,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To revolutionize financial services." },
@@ -354,7 +354,7 @@ async function main() {
       },
     },
     {
-      id: "8",
+      id: "18",
       name: "Software Solutions",
       location: "Denver, CO",
       profilePhotoIds: ["photo15", "photo16"],
@@ -362,8 +362,8 @@ async function main() {
         create: {
           yearsOfOperation: 8,
           employeeCount: 300,
-          industry: "software",
-          fundingRound: "seriesC",
+          industry: Industry.software,
+          fundingRound: FundingRound.seriesC,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To provide robust software solutions." },
@@ -374,7 +374,7 @@ async function main() {
       },
     },
     {
-      id: "9",
+      id: "19",
       name: "Creative Agency",
       location: "Miami, FL",
       profilePhotoIds: ["photo17", "photo18"],
@@ -382,8 +382,8 @@ async function main() {
         create: {
           yearsOfOperation: 1,
           employeeCount: 10,
-          industry: "design",
-          fundingRound: "seed",
+          industry: Industry.design,
+          fundingRound: FundingRound.seed,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To inspire through creativity." },
@@ -394,7 +394,7 @@ async function main() {
       },
     },
     {
-      id: "10",
+      id: "20",
       name: "Tech Finance",
       location: "Atlanta, GA",
       profilePhotoIds: ["photo19", "photo20"],
@@ -402,8 +402,8 @@ async function main() {
         create: {
           yearsOfOperation: 9,
           employeeCount: 250,
-          industry: "finance",
-          fundingRound: "seriesB",
+          industry: Industry.finance,
+          fundingRound: FundingRound.seriesB,
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To integrate technology with finance." },
@@ -426,7 +426,16 @@ async function main() {
   console.log('Seeding companies...')
   for (const userData of companyUsers) {
     await prisma.user.create({
-      data: userData,
+      data: {
+        ...userData,
+        companyProfile: {
+          create: {
+            ...userData.companyProfile.create,
+            industry: userData.companyProfile.create.industry as Industry,
+            fundingRound: userData.companyProfile.create.fundingRound as FundingRound
+          }
+        }
+      }
     })
   }
 
