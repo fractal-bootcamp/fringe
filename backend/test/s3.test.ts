@@ -1,4 +1,4 @@
-import { uploadToS3, getSignedReadUrl, deleteFromS3 } from '../src/utils/s3';
+import { uploadToS3, getSignedReadUrl, deleteFromS3 } from '../utils/s3';
 import * as fs from 'fs';
 import * as path from 'path';
 
