@@ -20,7 +20,7 @@ const Page = () => {
   const likesYouUsers = userType === "applicant" ? likesYouCompanies : likesYouApplicants;
 
   return (
-    <div>
+    <div className="p-2">
       <LikesYouPage likesYouUsers={likesYouUsers} />
     </div>
   );

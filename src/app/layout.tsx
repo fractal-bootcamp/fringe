@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning className={`antialiased`}>
-        {children}
+        <div className="bg-gray-100 h-screen">{children}</div>
         <Navbar navigationItems={dataNavigation} />
       </body>
     </html>
