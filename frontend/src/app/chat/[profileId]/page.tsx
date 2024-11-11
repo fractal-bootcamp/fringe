@@ -17,6 +17,8 @@ const ChatPage = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const { userType } = userTypeStore();
+  const [scheduleDate, setScheduleDate] = useState("");
+  const [scheduleTime, setScheduleTime] = useState("");
   
   const matchedProfile = userType === "applicant"
     ? dummyCompanies.find(c => c.id === profileId)
@@ -50,6 +52,27 @@ const ChatPage = () => {
     setMessage("");
   };
 
+  const handleScheduleCall = () => {
+    if (!scheduleDate || !scheduleTime) {
+      alert("Please select both date and time");
+      return;
+    }
+    // Combine date and time for scheduling
+    const dateTime = new Date(`${scheduleDate}T${scheduleTime}`);
+    alert(`Call scheduled for ${dateTime.toLocaleString()}`);
+  };
+
+  const generateTimeOptions = () => {
+    const options = [];
+    for (let hour = 9; hour <= 17; hour++) {
+      for (let minute of ['00', '30']) {
+        const time = `${hour.toString().padStart(2, '0')}:${minute}`;
+        options.push(time);
+      }
+    }
+    return options;
+  };
+
   if (!matchedProfile) {
     return <div className="p-4">Profile not found</div>;
   }
@@ -57,11 +80,40 @@ const ChatPage = () => {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b p-4 flex items-center space-x-3">
-        <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-          <span className="text-lg text-gray-600">{matchedProfile.name[0]}</span>
+      <div className="bg-white border-b p-4 flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <span className="text-lg text-gray-600">{matchedProfile.name[0]}</span>
+          </div>
+          <h1 className="font-semibold">{matchedProfile.name}</h1>
         </div>
-        <h1 className="font-semibold">{matchedProfile.name}</h1>
+        {/* Schedule call */}
+        <div className="flex items-center space-x-2">
+          <input
+            type="date"
+            value={scheduleDate}
+            onChange={(e) => setScheduleDate(e.target.value)}
+            className="border rounded-lg px-2 py-1 text-sm"
+          />
+          <select
+            value={scheduleTime}
+            onChange={(e) => setScheduleTime(e.target.value)}
+            className="border rounded-lg px-2 py-1 text-sm"
+          >
+            <option value="">Select time</option>
+            {generateTimeOptions().map((time) => (
+              <option key={time} value={time}>
+                {time}
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={handleScheduleCall}
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm"
+          >
+            Schedule Call
+          </button>
+        </div>
       </div>
 
       {/* Chat messages area */}
