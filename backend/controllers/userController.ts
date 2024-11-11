@@ -5,6 +5,10 @@ export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = await prisma.user.findUnique({
     where: { id },
+    include: {
+      applicantProfile: true,
+      companyProfile: true,
+    },
   });
   res.status(200).json(user);
 };
