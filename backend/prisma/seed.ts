@@ -1,18 +1,18 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
   // Clear existing data
-  await prisma.message.deleteMany()
-  await prisma.match.deleteMany()
-  await prisma.like.deleteMany()
-  await prisma.prompt.deleteMany()
-  await prisma.applicantPreference.deleteMany()
-  await prisma.companyPreference.deleteMany()
-  await prisma.applicant.deleteMany()
-  await prisma.company.deleteMany()
-  await prisma.user.deleteMany()
+  await prisma.message.deleteMany();
+  await prisma.match.deleteMany();
+  await prisma.like.deleteMany();
+  await prisma.prompt.deleteMany();
+  await prisma.applicantPreference.deleteMany();
+  await prisma.companyPreference.deleteMany();
+  await prisma.applicant.deleteMany();
+  await prisma.company.deleteMany();
+  await prisma.user.deleteMany();
 
   // Seed Applicants
   const applicantUsers = [
@@ -32,7 +32,10 @@ async function main() {
           prompts: {
             create: [
               { question: "What is your greatest strength?", answer: "Problem-solving skills." },
-              { question: "Why do you want to work here?", answer: "I admire the company's innovation." },
+              {
+                question: "Why do you want to work here?",
+                answer: "I admire the company's innovation.",
+              },
             ],
           },
         },
@@ -69,7 +72,10 @@ async function main() {
           professionalExperiences: ["Backend Developer at DataSolutions"],
           prompts: {
             create: [
-              { question: "What is your biggest achievement?", answer: "Led a successful project." },
+              {
+                question: "What is your biggest achievement?",
+                answer: "Led a successful project.",
+              },
               { question: "How do you handle stress?", answer: "I prioritize and stay organized." },
             ],
           },
@@ -89,7 +95,10 @@ async function main() {
           prompts: {
             create: [
               { question: "What are your career goals?", answer: "To become a data scientist." },
-              { question: "How do you work in a team?", answer: "I communicate openly and support my teammates." },
+              {
+                question: "How do you work in a team?",
+                answer: "I communicate openly and support my teammates.",
+              },
             ],
           },
         },
@@ -165,7 +174,10 @@ async function main() {
           prompts: {
             create: [
               { question: "What inspires your designs?", answer: "User experience and feedback." },
-              { question: "How do you stay updated with design trends?", answer: "I follow industry leaders and blogs." },
+              {
+                question: "How do you stay updated with design trends?",
+                answer: "I follow industry leaders and blogs.",
+              },
             ],
           },
         },
@@ -183,8 +195,14 @@ async function main() {
           professionalExperiences: ["Security Analyst at SecureTech"],
           prompts: {
             create: [
-              { question: "What is your approach to cybersecurity?", answer: "Proactive and preventive measures." },
-              { question: "What challenges do you face in your role?", answer: "Keeping up with evolving threats." },
+              {
+                question: "What is your approach to cybersecurity?",
+                answer: "Proactive and preventive measures.",
+              },
+              {
+                question: "What challenges do you face in your role?",
+                answer: "Keeping up with evolving threats.",
+              },
             ],
           },
         },
@@ -202,14 +220,20 @@ async function main() {
           professionalExperiences: ["Captain at The Black Pearl"],
           prompts: {
             create: [
-              { question: "What is your leadership philosophy?", answer: "To inspire loyalty and courage." },
-              { question: "How do you handle unexpected challenges?", answer: "With creativity and a bit of luck." },
+              {
+                question: "What is your leadership philosophy?",
+                answer: "To inspire loyalty and courage.",
+              },
+              {
+                question: "How do you handle unexpected challenges?",
+                answer: "With creativity and a bit of luck.",
+              },
             ],
           },
         },
       },
     },
-  ]
+  ];
 
   // Seed Companies
   const companyUsers = [
@@ -286,7 +310,10 @@ async function main() {
           fundingRound: "seriesC",
           prompts: {
             create: [
-              { question: "What is your mission?", answer: "To improve healthcare through technology." },
+              {
+                question: "What is your mission?",
+                answer: "To improve healthcare through technology.",
+              },
               { question: "What products do you offer?", answer: "Health management software." },
             ],
           },
@@ -307,7 +334,10 @@ async function main() {
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To promote sustainable investments." },
-              { question: "What services do you offer?", answer: "Eco-friendly financial planning." },
+              {
+                question: "What services do you offer?",
+                answer: "Eco-friendly financial planning.",
+              },
             ],
           },
         },
@@ -326,7 +356,10 @@ async function main() {
           fundingRound: "seed",
           prompts: {
             create: [
-              { question: "What is your mission?", answer: "To bring ideas to life through design." },
+              {
+                question: "What is your mission?",
+                answer: "To bring ideas to life through design.",
+              },
               { question: "What do you specialize in?", answer: "Web design." },
             ],
           },
@@ -366,7 +399,10 @@ async function main() {
           fundingRound: "seriesC",
           prompts: {
             create: [
-              { question: "What is your mission?", answer: "To provide robust software solutions." },
+              {
+                question: "What is your mission?",
+                answer: "To provide robust software solutions.",
+              },
               { question: "What do you specialize in?", answer: "Enterprise software." },
             ],
           },
@@ -406,51 +442,51 @@ async function main() {
           fundingRound: "seriesB",
           prompts: {
             create: [
-              { question: "What is your mission?", answer: "To integrate technology with finance." },
+              {
+                question: "What is your mission?",
+                answer: "To integrate technology with finance.",
+              },
               { question: "What services do you offer?", answer: "Financial consulting." },
             ],
           },
         },
       },
     },
-  ]
+  ];
 
   // Create users with their profiles
-  console.log('Seeding applicants...')
+  console.log("Seeding applicants...");
   for (const userData of applicantUsers) {
     await prisma.user.create({
       data: userData,
-    })
+    });
   }
 
-  console.log('Seeding companies...')
+  console.log("Seeding companies...");
   for (const userData of companyUsers) {
     await prisma.user.create({
       data: userData,
-    })
+    });
   }
 
   // Create some example matches and likes
-  console.log('Creating example matches and likes...')
+  console.log("Creating example matches and likes...");
   const firstApplicant = await prisma.user.findFirst({
     where: { applicantProfile: { isNot: null } },
-  })
+  });
   const firstCompany = await prisma.user.findFirst({
     where: { companyProfile: { isNot: null } },
-  })
+  });
 
   if (firstApplicant && firstCompany) {
     // Create a match
     const match = await prisma.match.create({
       data: {
         users: {
-          connect: [
-            { id: firstApplicant.id },
-            { id: firstCompany.id },
-          ],
+          connect: [{ id: firstApplicant.id }, { id: firstCompany.id }],
         },
       },
-    })
+    });
 
     // Create some messages
     await prisma.message.createMany({
@@ -466,7 +502,7 @@ async function main() {
           senderId: firstCompany.id,
         },
       ],
-    })
+    });
 
     // Create some likes
     await prisma.like.create({
@@ -476,17 +512,17 @@ async function main() {
         section: "About",
         content: "Company mission",
       },
-    })
+    });
   }
 
-  console.log('Database has been seeded!')
+  console.log("Database has been seeded!");
 }
 
 main()
   .catch((e) => {
-    console.error(e)
-    process.exit(1)
+    console.error(e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });
