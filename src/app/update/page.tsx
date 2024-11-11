@@ -2,7 +2,7 @@ import UpdateProfile from "@/components/UpdateProfile";
 
 const Page = () => {
   return (
-    <div>
+    <div className="p-2">
       <UpdateProfile />
     </div>
   );

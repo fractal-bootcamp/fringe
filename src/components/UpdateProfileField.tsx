@@ -12,6 +12,7 @@ const UpdateProfileField = ({ title, value, callback }: UpdateProfileFieldProps)
         type="text"
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => callback(e.target.value)}
+        className="w-full"
       />
     </div>
   );
