@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { dummyApplicants } from "@/api/dummyApplicants";
 import { dummyCompanies } from "@/api/dummyCompanies";
@@ -8,7 +8,7 @@ import { userTypeStore } from "@/stores/userTypeStore";
 
 interface ChatMessage {
   content: string;
-  sender: 'user' | 'match';
+  sender: 'user' | 'match' | 'system';
   timestamp: Date;
 }
 
@@ -19,6 +19,8 @@ const ChatPage = () => {
   const { userType } = userTypeStore();
   const [scheduleDate, setScheduleDate] = useState("");
   const [scheduleTime, setScheduleTime] = useState("");
+  const [scheduledCall, setScheduledCall] = useState<Date | null>(null);
+  const [meetLink, setMeetLink] = useState<string>("");
   
   const matchedProfile = userType === "applicant"
     ? dummyCompanies.find(c => c.id === profileId)
@@ -57,21 +59,66 @@ const ChatPage = () => {
       alert("Please select both date and time");
       return;
     }
-    // Combine date and time for scheduling
     const dateTime = new Date(`${scheduleDate}T${scheduleTime}`);
-    alert(`Call scheduled for ${dateTime.toLocaleString()}`);
+    setScheduledCall(dateTime);
+    
+    // Add system message about scheduled call
+    setMessages(prev => [...prev, {
+      content: `Call scheduled for ${dateTime.toLocaleString()}`,
+      sender: 'system',
+      timestamp: new Date()
+    }]);
   };
 
   const generateTimeOptions = () => {
     const options = [];
-    for (let hour = 9; hour <= 17; hour++) {
-      for (let minute of ['00', '30']) {
+    for (let hour = 0; hour <= 23; hour++) {
+      for (let minute of ['00', '15', '30', '45']) {
         const time = `${hour.toString().padStart(2, '0')}:${minute}`;
         options.push(time);
       }
     }
     return options;
   };
+
+  useEffect(() => {
+    const checkScheduledCall = () => {
+      if (!scheduledCall) return;
+      
+      const now = new Date();
+      const callTime = new Date(scheduledCall);
+      
+      // Show announcement 5 minutes before call AND at call time
+      const timeDiff = callTime.getTime() - now.getTime();
+      console.log(timeDiff);
+      if (timeDiff <= 5 * 60 * 1000 && timeDiff > 0 && !meetLink) {
+        // Generate meet link if not already generated
+        const link = `https://meet.google.com/${Math.random().toString(36).substring(2, 10)}`;
+        setMeetLink(link);
+        
+        // Add system message about the upcoming call
+        setMessages(prev => [...prev, {
+          content: `Your call starts in ${Math.ceil(timeDiff / 60000)} minutes! Join here: `,
+          sender: 'system',
+          timestamp: new Date()
+        }]);
+      } else if (timeDiff <= 0 && timeDiff > -60000) { // Within first minute of call time
+        // Add system message that call is starting now
+        setMessages(prev => {
+          // Avoid duplicate messages
+          if (prev.some(msg => msg.content.includes("starting now"))) return prev;
+          return [...prev, {
+            content: `Your call is starting now! Join here: `,
+            sender: 'system',
+            timestamp: new Date()
+          }];
+        });
+      }
+    };
+
+    const interval = setInterval(checkScheduledCall, 10000); // Check every 10 seconds
+    return () => clearInterval(interval);
+  }, [scheduledCall, meetLink]);
 
   if (!matchedProfile) {
     return <div className="p-4">Profile not found</div>;
@@ -153,7 +200,22 @@ const ChatPage = () => {
                   ? 'bg-blue-500 text-white' 
                   : 'bg-gray-200 text-gray-800'
               }`}>
-                <p className="text-sm">{msg.content}</p>
+                {msg.content.includes('Join here:') ? (
+                  <p className="text-sm">
+                    {msg.content.split('Join here:')[0]}
+                    Join here:{' '}
+                    <a 
+                      href={meetLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      {meetLink}
+                    </a>
+                  </p>
+                ) : (
+                  <p className="text-sm">{msg.content}</p>
+                )}
               </div>
             </div>
           ))}
