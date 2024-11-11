@@ -1,16 +1,14 @@
+"use client";
+
 import { Preference } from "@/types/types";
 import PreferenceIndividual from "./PreferenceIndividual";
-
-const preferences: Preference[] = [
-  { title: "role", type: "categorical", options: ["CEO", "CTO", "CFO"] },
-  { title: "industry", type: "categorical", options: ["Tech", "Finance", "Healthcare"] },
-  { title: "location", type: "categorical", options: ["New York", "San Francisco", "Chicago"] },
-  // { title: "years of operation", type: "numerical", range: [1, 100] },
-  // { title: "employees", type: "numerical", range: [1, 10000] },
-  { title: "funding round", type: "categorical", options: ["Series A", "Series B", "Series C"] },
-];
+import { userTypeStore } from "@/stores/userTypeStore";
+import { preferencesApplicant, preferencesCompany } from "@/api/dataPreferences";
 
 const PreferencesPage = () => {
+  const { userType } = userTypeStore();
+  const preferences: Preference[] =
+    userType === "applicant" ? preferencesApplicant : preferencesCompany;
   return (
     <div>
       <div className="font-bold">Preferences</div>
