@@ -4,11 +4,11 @@ import LikesYouPage from "@/components/LikesYouPage";
 import useLikes from "@/hooks/useLikes";
 
 const Page = () => {
-  const { likesUsers } = useLikes();
+  const { likes } = useLikes();
 
   return (
     <div className="p-2">
-      <LikesYouPage likesYouUsers={likesUsers} />
+      <LikesYouPage likes={likes} />
     </div>
   );
 };

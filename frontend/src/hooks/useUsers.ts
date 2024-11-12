@@ -1,4 +1,4 @@
-import { getAllUsers } from "@/api/apiUsers";
+import { apiGetAllUsers } from "@/api/apiUsers";
 import { User } from "../../../shared/schema";
 import { useEffect, useState } from "react";
 
@@ -8,7 +8,7 @@ const useUsers = () => {
   const [applicants, setApplicants] = useState<User[]>([]);
 
   const fetchUsers = async () => {
-    const res = await getAllUsers();
+    const res = await apiGetAllUsers();
     const resCompanies = res.filter((user: User) => user.profileType === "company");
     const resApplicants = res.filter((user: User) => user.profileType === "applicant");
 

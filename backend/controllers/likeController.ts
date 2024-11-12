@@ -1,6 +1,14 @@
 import type { Request, Response } from "express";
 import prisma from "../prisma/client";
 
+export const getLikes = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const likes = await prisma.like.findMany({
+    where: { toUserId: userId },
+  });
+  res.status(200).json({ likes });
+};
+
 export const sendLike = async (req: Request, res: Response) => {
   const { fromUserId, toUserId, section, content } = req.body;
   await prisma.like.create({
@@ -11,22 +19,14 @@ export const sendLike = async (req: Request, res: Response) => {
       content,
     },
   });
+  res.status(200);
+};
 
-  // Find if the toUserId has liked the fromUserId
-  const isMatch = await prisma.like.findFirst({
-    where: {
-      fromUserId: toUserId,
-      toUserId: fromUserId,
-    },
+export const deleteLike = async (req: Request, res: Response) => {
+  const { id } = req.body;
+  console.log("deleteLike", id);
+  await prisma.like.delete({
+    where: { id },
   });
-
-  if (isMatch) {
-    await prisma.match.create({
-      data: {
-        users: { connect: [{ id: fromUserId }, { id: toUserId }] },
-      },
-    });
-  }
-
   res.status(200);
 };

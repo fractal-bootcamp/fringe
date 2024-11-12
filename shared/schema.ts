@@ -4,7 +4,9 @@ import { z } from "zod";
 export const ProfileTypeSchema = z.enum(["applicant", "company"]);
 export const IndustrySchema = z.enum(["software", "finance", "design"]);
 export const FundingRoundSchema = z.enum(["seed", "seriesA", "seriesB", "seriesC"]);
-const DateStringSchema = z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' });
+const DateStringSchema = z
+  .string()
+  .refine((val: string) => !isNaN(Date.parse(val)), { message: "Invalid date" });
 // Base schemas
 export const PromptSchema = z.object({
   id: z.string().uuid(),
@@ -31,25 +33,6 @@ export const MessageSchema = z.object({
   createdAt: DateStringSchema,
 });
 
-export const ApplicantPreferenceSchema = z.object({
-  id: z.string().uuid(),
-  applicantId: z.string().uuid(),
-  role: z.array(z.string()),
-  industry: z.array(IndustrySchema),
-  location: z.array(z.string()),
-  fundingRound: z.array(FundingRoundSchema),
-});
-
-export const CompanyPreferenceSchema = z.object({
-  id: z.string().uuid(),
-  companyId: z.string().uuid(),
-  role: z.array(z.string()),
-  industry: z.array(IndustrySchema),
-  location: z.array(z.string()),
-  educationalExperiences: z.array(z.string()),
-  professionalExperiences: z.array(z.string()),
-});
-
 export const ApplicantSchema = z.object({
   id: z.string().uuid(),
   userId: z.string().uuid(),
@@ -57,7 +40,6 @@ export const ApplicantSchema = z.object({
   educationalExperiences: z.array(z.string()),
   professionalExperiences: z.array(z.string()),
   prompts: z.array(PromptSchema),
-  preferences: ApplicantPreferenceSchema.optional(),
 });
 
 export const CompanySchema = z.object({
@@ -67,7 +49,6 @@ export const CompanySchema = z.object({
   industry: IndustrySchema,
   fundingRound: FundingRoundSchema,
   prompts: z.array(PromptSchema),
-  preferences: CompanyPreferenceSchema.optional(),
 });
 
 export const UserSchema = z.object({
@@ -75,8 +56,8 @@ export const UserSchema = z.object({
   name: z.string(),
   location: z.string(),
   profilePhotoIds: z.array(z.string()),
-  createdAt: DateStringSchema,  
-  updatedAt: DateStringSchema,  
+  createdAt: DateStringSchema,
+  updatedAt: DateStringSchema,
   profileType: ProfileTypeSchema,
   applicantProfile: ApplicantSchema.optional(),
   companyProfile: CompanySchema.optional(),
@@ -90,7 +71,7 @@ export const MatchSchema = z.object({
   id: z.string().uuid(),
   userIds: z.array(z.string().uuid()),
   messages: z.array(MessageSchema),
-  createdAt: DateStringSchema,  
+  createdAt: DateStringSchema,
 });
 
 // Types
@@ -100,8 +81,6 @@ export type FundingRound = z.infer<typeof FundingRoundSchema>;
 export type Prompt = z.infer<typeof PromptSchema>;
 export type Like = z.infer<typeof LikeSchema>;
 export type Message = z.infer<typeof MessageSchema>;
-export type ApplicantPreference = z.infer<typeof ApplicantPreferenceSchema>;
-export type CompanyPreference = z.infer<typeof CompanyPreferenceSchema>;
 export type Applicant = z.infer<typeof ApplicantSchema>;
 export type Company = z.infer<typeof CompanySchema>;
 export type User = z.infer<typeof UserSchema>;

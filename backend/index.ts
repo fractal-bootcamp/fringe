@@ -1,5 +1,6 @@
 // App setup
 import express from "express";
+import cors from "cors";
 import routesUser from "./routes/routesUser";
 import routesCompany from "./routes/routesCompany";
 import routesApplicant from "./routes/routesApplicant";
@@ -7,7 +8,6 @@ import routesMatches from "./routes/routesMatches";
 import routesChat from "./routes/routesChat";
 import routesLike from "./routes/routesLike";
 
-const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3005;
 

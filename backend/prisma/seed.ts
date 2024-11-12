@@ -8,8 +8,6 @@ async function main() {
   await prisma.match.deleteMany();
   await prisma.like.deleteMany();
   await prisma.prompt.deleteMany();
-  await prisma.applicantPreference.deleteMany();
-  await prisma.companyPreference.deleteMany();
   await prisma.applicant.deleteMany();
   await prisma.company.deleteMany();
   await prisma.user.deleteMany();

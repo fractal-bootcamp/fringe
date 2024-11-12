@@ -3,7 +3,8 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/cors": "^2.8.17"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -12,6 +13,7 @@
     "@prisma/client": "^5.22.0",
     "@types/express": "^5.0.0",
     "@types/node": "^22.9.0",
+    "backend": ".",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "prisma": "^5.22.0"
