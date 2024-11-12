@@ -6,8 +6,16 @@ export const getUserById = async (req: Request, res: Response) => {
   const user = await prisma.user.findUnique({
     where: { id },
     include: {
-      applicantProfile: true,
-      companyProfile: true,
+      applicantProfile: {
+        include: {
+          prompts: true,
+        },
+      },
+      companyProfile: {
+        include: {
+          prompts: true,
+        },
+      },
       matches: true,
       messages: true,
     },
@@ -18,8 +26,16 @@ export const getUserById = async (req: Request, res: Response) => {
 export const getAllUsers = async (req: Request, res: Response) => {
   const users = await prisma.user.findMany({
     include: {
-      applicantProfile: true,
-      companyProfile: true,
+      applicantProfile: {
+        include: {
+          prompts: true,
+        },
+      },
+      companyProfile: {
+        include: {
+          prompts: true,
+        },
+      },
       matches: true,
       messages: true,
     },

@@ -7,8 +7,6 @@ import useUsers from "@/hooks/useUsers";
 
 export default function Feed() {
   const { applicants, companies } = useUsers();
-  console.log(applicants);
-  console.log(companies);
 
   const searchParams = useSearchParams();
   const type = searchParams.get("type") as "client" | "company";
@@ -40,7 +38,7 @@ export default function Feed() {
     <div className="container mx-auto px-4 py-8 mb-16 max-w-2xl">
       <div className="relative">
         <FeedCard
-          item={items[currentIndex]}
+          user={items[currentIndex]}
           type={displayType}
           onReject={handleReject}
           onLikeSection={handleLikeSection}
