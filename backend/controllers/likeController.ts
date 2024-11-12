@@ -11,22 +11,13 @@ export const sendLike = async (req: Request, res: Response) => {
       content,
     },
   });
+  res.status(200);
+};
 
-  // Find if the toUserId has liked the fromUserId
-  const isMatch = await prisma.like.findFirst({
-    where: {
-      fromUserId: toUserId,
-      toUserId: fromUserId,
-    },
+export const deleteLike = async (req: Request, res: Response) => {
+  const { id } = req.body;
+  await prisma.like.delete({
+    where: { id },
   });
-
-  if (isMatch) {
-    await prisma.match.create({
-      data: {
-        users: { connect: [{ id: fromUserId }, { id: toUserId }] },
-      },
-    });
-  }
-
   res.status(200);
 };
