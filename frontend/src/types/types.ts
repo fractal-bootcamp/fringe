@@ -65,8 +65,6 @@ export interface Like {
   fromUserId: string;
   toUser: User;
   toUserId: string;
-  section: string;
-  content: string;
   createdAt: Date;
 }
 

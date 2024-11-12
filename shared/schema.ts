@@ -4,7 +4,9 @@ import { z } from "zod";
 export const ProfileTypeSchema = z.enum(["applicant", "company"]);
 export const IndustrySchema = z.enum(["software", "finance", "design"]);
 export const FundingRoundSchema = z.enum(["seed", "seriesA", "seriesB", "seriesC"]);
-const DateStringSchema = z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' });
+const DateStringSchema = z
+  .string()
+  .refine((val: string) => !isNaN(Date.parse(val)), { message: "Invalid date" });
 // Base schemas
 export const PromptSchema = z.object({
   id: z.string().uuid(),
@@ -32,7 +34,6 @@ export const MessageSchema = z.object({
   createdAt: DateStringSchema,
 });
 
-
 export const ApplicantSchema = z.object({
   id: z.string().uuid(),
   userId: z.string().uuid(),
@@ -56,8 +57,8 @@ export const UserSchema = z.object({
   name: z.string(),
   location: z.string(),
   profilePhotoIds: z.array(z.string()),
-  createdAt: DateStringSchema,  
-  updatedAt: DateStringSchema,  
+  createdAt: DateStringSchema,
+  updatedAt: DateStringSchema,
   profileType: ProfileTypeSchema,
   applicantProfile: ApplicantSchema.optional(),
   companyProfile: CompanySchema.optional(),

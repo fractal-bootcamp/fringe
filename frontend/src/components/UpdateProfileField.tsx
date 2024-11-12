@@ -6,7 +6,13 @@ export interface UpdateProfileFieldProps {
   onImageUpload?: (file: File) => void;
 }
 
-const UpdateProfileField = ({ title, value, callback, type = "text", onImageUpload }: UpdateProfileFieldProps) => {
+const UpdateProfileField = ({
+  title,
+  value,
+  callback,
+  type = "text",
+  onImageUpload,
+}: UpdateProfileFieldProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && onImageUpload) {
@@ -19,7 +25,9 @@ const UpdateProfileField = ({ title, value, callback, type = "text", onImageUplo
       <label>{title}</label>
       {type === "image" ? (
         <div>
-          {value && <img src={value} alt="Profile" className="w-24 h-24 object-cover rounded-full mb-2" />}
+          {value && (
+            <img src={value} alt="Profile" className="w-24 h-24 object-cover rounded-full mb-2" />
+          )}
           <input
             type="file"
             accept="image/*"

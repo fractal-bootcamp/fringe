@@ -62,8 +62,6 @@ model Like {
   fromUserId String
   toUser     User     @relation("ReceivedLikes", fields: [toUserId], references: [id])
   toUserId   String
-  section    String
-  content    String
   createdAt  DateTime @default(now())
 }
 

@@ -1,29 +1,36 @@
-import { getUserById } from "@/api/apiUsers";
+import { apiAddLike, apiDeleteLike } from "@/api/apiLikes";
+import { apiGetUserById } from "@/api/apiUsers";
 import { Like, User } from "@/types/types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import storeLike from "@/stores/storeLike";
 
 const useLikes = () => {
-  const [likes, setLikes] = useState<Like[]>([]);
-  const [likesUsers, setLikesUsers] = useState<User[]>([]);
+  const { likes, loadLikes, deleteLike } = storeLike();
 
+  // Get likes
   const fetchLikes = async () => {
     const userId = "1"; // TODO: get user id from store
-    const user: User = await getUserById(userId);
+    const user: User = await apiGetUserById(userId);
     const receivedLikes: Like[] = user.receivedLikes;
-    const likesFromUsers: User[] = Array.from(
-      new Map(receivedLikes.map((like: Like) => [like.fromUser.id, like.fromUser])).values()
-    ); // remove duplicates
+    loadLikes(receivedLikes);
+  };
 
-    setLikes(receivedLikes);
-    setLikesUsers(likesFromUsers);
-    console.log(likesFromUsers);
+  // Delete like
+  const handleDeleteLike = async (id: string) => {
+    await apiDeleteLike(id);
+    await deleteLike(id);
+  };
+
+  // Add like
+  const handleAddLike = async (fromUserId: string, toUserId: string) => {
+    await apiAddLike(fromUserId, toUserId);
   };
 
   useEffect(() => {
     fetchLikes();
   }, []);
 
-  return { likes, likesUsers };
+  return { likes, handleDeleteLike, handleAddLike };
 };
 
 export default useLikes;

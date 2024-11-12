@@ -1,4 +1,4 @@
-import { Applicant, Company, Prompt, User } from "@/types/types";
+import { User } from "@/types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faX,
@@ -7,15 +7,18 @@ import {
   faCalendarDays,
   faBriefcase,
 } from "@fortawesome/free-solid-svg-icons";
+import useLikes from "@/hooks/useLikes";
 
 interface FeedCardProps {
   user: User;
-  type: "client" | "company";
   onReject: () => void;
   onLikeSection: (section: string, content: string) => void;
 }
 
-export default function FeedCard({ user, type, onReject, onLikeSection }: FeedCardProps) {
+export default function FeedCard({ user, onReject, onLikeSection }: FeedCardProps) {
+  const { handleAddLike } = useLikes();
+
+  // Like Button
   const LikeButton = ({ section, content }: { section: string; content: string }) => (
     <button
       onClick={() => onLikeSection(section, content)}
@@ -26,6 +29,7 @@ export default function FeedCard({ user, type, onReject, onLikeSection }: FeedCa
     </button>
   );
 
+  // Applicant version
   if (user.profileType === "applicant" && user.applicantProfile) {
     const applicantProfile = user.applicantProfile;
     return (
@@ -41,7 +45,6 @@ export default function FeedCard({ user, type, onReject, onLikeSection }: FeedCa
             {user.profilePhotoIds?.[0] && (
               <div className="w-full h-full">{/* Add Image component here */}</div>
             )}
-            <LikeButton section="photo" content="profile photo" />
           </div>
         </div>
 
@@ -76,7 +79,6 @@ export default function FeedCard({ user, type, onReject, onLikeSection }: FeedCa
               <div key={index} className="bg-white rounded-xl p-6 shadow-md relative">
                 <p className="font-semibold text-gray-900 mb-2">{prompt.question}</p>
                 <p className="text-gray-700">{prompt.answer}</p>
-                <LikeButton section={`prompt_${index}`} content={prompt.answer} />
               </div>
             ))}
         </div>
@@ -84,11 +86,22 @@ export default function FeedCard({ user, type, onReject, onLikeSection }: FeedCa
         {/* Reject Button */}
         <div className="fixed bottom-16 left-8">
           <button
-            onClick={onReject}
+            onClick={() => handleAddLike(user.id, "1")}
             className="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center 
               border-2 border-black text-black hover:bg-gray-50 transition-colors"
           >
             <FontAwesomeIcon icon={faX} className="text-2xl" />
+          </button>
+        </div>
+
+        {/* Like Button */}
+        <div className="fixed bottom-16 right-8">
+          <button
+            onClick={() => handleAddLike("1", user.id)}
+            className="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center 
+              border-2 border-black text-black hover:bg-gray-50 transition-colors"
+          >
+            <FontAwesomeIcon icon={faHeart} className="text-2xl" />
           </button>
         </div>
       </div>

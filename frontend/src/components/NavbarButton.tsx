@@ -2,7 +2,6 @@
 
 import { NavigationItem } from "@/types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface NavbarButtonProps {
