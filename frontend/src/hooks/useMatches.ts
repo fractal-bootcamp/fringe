@@ -1,26 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Match, User } from "@/types/types";
 import { apiGetUserById } from "@/api/apiUsers";
+import storeMatch from "@/stores/storeMatch";
+import { apiDeleteMatch } from "@/api/apiMatches";
 
 const useMatches = () => {
-  const [matches, setMatches] = useState<Match[]>([]);
+  const { matches, loadMatches, deleteMatch } = storeMatch();
 
+  // Get matches
   const fetchMatches = async () => {
     const userId = "1"; // CHANGE THIS WHEN WE HAVE AUTH
-    const currentUser: User = await apiGetUserById(userId);
-    const matchesParsed: Match[] = currentUser.matches.map((match) => {
+    const user: User = await apiGetUserById(userId);
+    const matchesParsed: Match[] = user.matches.map((match) => {
       const matchUser = match.users.find((user) => user.id !== userId);
       return { ...match, users: matchUser ? [matchUser] : [] };
     });
-    setMatches(matchesParsed);
-    console.log(matchesParsed);
+    loadMatches(matchesParsed);
+  };
+
+  // Delete match
+  const handleDeleteMatch = async (matchId: string) => {
+    await apiDeleteMatch(matchId);
+    deleteMatch(matchId);
   };
 
   useEffect(() => {
     fetchMatches();
   }, []);
 
-  return { matches };
+  return { matches, handleDeleteMatch };
 };
 
 export default useMatches;

@@ -9,6 +9,5 @@ export const apiAddLike = (fromUserId: string, toUserId: string) => {
 };
 
 export const apiDeleteLike = (id: string) => {
-  console.log("apiDeleteLike", id);
-  axiosClient.post(`/like/delete`, { id: id });
+  axiosClient.post("/like/delete", { id });
 };

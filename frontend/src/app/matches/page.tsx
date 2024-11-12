@@ -6,6 +6,8 @@ import MatchPage from "@/components/MatchPage";
 const Page = () => {
   const { matches } = useMatches();
 
+  console.log(matches);
+
   // Split matches into two groups for demo purposes
   // TODO: Remove this when we have real data
   const yourTurnMatches = matches.slice(0, 3);
