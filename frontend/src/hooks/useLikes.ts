@@ -18,7 +18,7 @@ const useLikes = () => {
   // Delete like
   const handleDeleteLike = async (id: string) => {
     await apiDeleteLike(id);
-    await deleteLike(id);
+    deleteLike(id);
   };
 
   // Add like

@@ -26,3 +26,21 @@ export const getMatchById = logging("getMatchById", false, async (req: Request, 
   });
   res.status(200).json(match);
 });
+
+export const deleteMatch = logging("deleteMatch", false, async (req: Request, res: Response) => {
+  const { id } = req.body;
+
+  // Delete all related messages first
+  await prisma.message.deleteMany({
+    where: { matchId: id },
+  });
+
+  // Now delete the match
+  await prisma.match.delete({
+    where: { id: id },
+  });
+
+  console.log("Match deleted");
+
+  res.status(200).send("Match deleted");
+});
