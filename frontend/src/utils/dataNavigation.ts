@@ -22,9 +22,4 @@ export const dataNavigation: NavigationItem[] = [
     path: "/profile",
     iconDefinition: faUser,
   },
-  {
-    title: "preferences",
-    path: "/preferences",
-    iconDefinition: faGears,
-  },
 ];

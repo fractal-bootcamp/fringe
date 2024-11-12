@@ -5,5 +5,7 @@ docker-compose up -d
 npx prisma migrate dev
 # Start the server
 bun run prisma/seed.ts
+# Seed preferences
+bun run prisma/seedPreferences.ts
 # Seed matches and messages
-bun run prisma/seedMatchesAndMessages.ts
+# bun run prisma/seedMatchesAndMessages.ts
