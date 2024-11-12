@@ -9,8 +9,9 @@ const useUsers = () => {
 
   const fetchCompanies = async () => {
     const res = await getAllUsers();
-    const resCompanies = res.filter((user: User) => user.companyProfile !== null);
-    const resApplicants = res.filter((user: User) => user.applicantProfile !== null);
+    // console.log(res);
+    const resCompanies = res.filter((user: User) => user.profileType === "company");
+    const resApplicants = res.filter((user: User) => user.profileType === "applicant");
 
     setCompanies(resCompanies);
     setApplicants(resApplicants);
@@ -18,8 +19,6 @@ const useUsers = () => {
 
   useEffect(() => {
     fetchCompanies();
-    console.log(applicants);
-    console.log(companies);
   }, []);
 
   return { companies, applicants };

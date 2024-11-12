@@ -8,14 +8,13 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(uuid())
+  id               String      @id @default(uuid())
   // clerkId          String     @unique
-  name            String
-  location        String
-  profilePhotoIds String[]
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
+  name             String
+  location         String
+  profilePhotoIds  String[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
   profileType      ProfileType
   applicantProfile Applicant?
   companyProfile   Company?
