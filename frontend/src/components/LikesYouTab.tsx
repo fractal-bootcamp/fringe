@@ -11,12 +11,7 @@ interface LikesYouTabProps {
 
 const LikesYouTab = ({ like, user }: LikesYouTabProps) => {
   const router = useRouter();
-  const { deleteLike } = useLikes();
-  const handleUnmatch = async () => {
-    await deleteLike(like.id);
-  };
-
-  console.log(like.id);
+  const { handleDeleteLike } = useLikes();
 
   return (
     <div className="rounded-xl bg-white m-1 p-2">
@@ -24,7 +19,7 @@ const LikesYouTab = ({ like, user }: LikesYouTabProps) => {
         <p className="italic text-xs text-left">Liked your photo</p>
         <p className="font-semibold text-left">{user.name}</p>
       </button>
-      <button onClick={handleUnmatch} className="flex items-center gap-2">
+      <button onClick={() => handleDeleteLike(like.id)} className="flex items-center gap-2">
         <FontAwesomeIcon icon={faXmark} />
         <p className="text-xs">Unmatch</p>
       </button>

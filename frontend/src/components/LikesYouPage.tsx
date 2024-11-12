@@ -1,5 +1,6 @@
 import { Like, User } from "@/types/types";
 import LikesYouTab from "./LikesYouTab";
+import useLikes from "@/hooks/useLikes";
 
 interface LikesYouPageProps {
   likes: Like[];
