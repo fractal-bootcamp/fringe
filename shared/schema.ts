@@ -4,7 +4,7 @@ import { z } from "zod";
 export const ProfileTypeSchema = z.enum(["applicant", "company"]);
 export const IndustrySchema = z.enum(["software", "finance", "design"]);
 export const FundingRoundSchema = z.enum(["seed", "seriesA", "seriesB", "seriesC"]);
-
+const DateStringSchema = z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' });
 // Base schemas
 export const PromptSchema = z.object({
   id: z.string().uuid(),
@@ -20,7 +20,7 @@ export const LikeSchema = z.object({
   toUserId: z.string().uuid(),
   section: z.string(),
   content: z.string(),
-  createdAt: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' }),  
+  createdAt: DateStringSchema,
 });
 
 export const MessageSchema = z.object({
@@ -28,7 +28,7 @@ export const MessageSchema = z.object({
   content: z.string(),
   matchId: z.string().uuid(),
   senderId: z.string().uuid(),
-  createdAt: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' }),  
+  createdAt: DateStringSchema,
 });
 
 export const ApplicantPreferenceSchema = z.object({
@@ -75,8 +75,8 @@ export const UserSchema = z.object({
   name: z.string(),
   location: z.string(),
   profilePhotoIds: z.array(z.string()),
-  createdAt: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' }),  
-  updatedAt: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' }),  
+  createdAt: DateStringSchema,  
+  updatedAt: DateStringSchema,  
   profileType: ProfileTypeSchema,
   applicantProfile: ApplicantSchema.optional(),
   companyProfile: CompanySchema.optional(),
@@ -90,7 +90,7 @@ export const MatchSchema = z.object({
   id: z.string().uuid(),
   userIds: z.array(z.string().uuid()),
   messages: z.array(MessageSchema),
-  createdAt: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' }),  
+  createdAt: DateStringSchema,  
 });
 
 // Types
