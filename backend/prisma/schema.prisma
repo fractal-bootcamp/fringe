@@ -9,18 +9,19 @@ datasource db {
 }
 
 model User {
-  id               String     @id @default(uuid())
+  id               String      @id @default(uuid())
   // clerkId          String     @unique
   name             String
   location         String
   profilePhotoIds  String[]
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  profileType      ProfileType
   applicantProfile Applicant?
   companyProfile   Company?
-  sentLikes        Like[]     @relation("SentLikes")
-  receivedLikes    Like[]     @relation("ReceivedLikes")
-  matches          Match[]    @relation("UserMatches")
+  sentLikes        Like[]      @relation("SentLikes")
+  receivedLikes    Like[]      @relation("ReceivedLikes")
+  matches          Match[]     @relation("UserMatches")
   messages         Message[]
 }
 
@@ -104,6 +105,11 @@ model CompanyPreference {
   location                String[]
   educationalExperiences  String[]
   professionalExperiences String[]
+}
+
+enum ProfileType {
+  applicant
+  company
 }
 
 enum Industry {
