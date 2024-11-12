@@ -1,30 +1,38 @@
 import React, { useState} from "react";
-import { MessageRequest } from "@/types/types";
-import { sendMessage} from "../api/apiChat";
+import { Message} from "@/types/types";
+import { sendMessage} from "../api/apiMessages";
+import useMessages from "@/hooks/useMessages";
 
+import { Match} from "@/types/types";
 
-  const ChatPage = () => {
-  const userId = "123";
-  const matchId = "c27f862f-ce40-4379-9ac9-65a46730df5c";
+interface ChatPageProps {
+  match: Match;
+}
+
+const ChatPage = ({ match }: ChatPageProps) => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<MessageRequest[]>([]);
+  const { messages, setMessages } = useMessages(match.id);
 
 
   async function handleSend(): Promise<void> {
     if (!message.trim()) return;
-    
-    const newMessage: MessageRequest = {
-      content: message,
-      matchId: matchId,
-      senderId: userId,
-    };
-    setMessages(prev => [...prev, newMessage]);
-    setMessage(""); 
 
+    const newMessage: Message = {
+      id: "",
+      content: message.trim(),
+      matchId: match.id,
+      senderId: "1",
+      createdAt: new Date(),
+      match: match,
+      sender: match.users[0],
+    };
+
+    setMessages((prev: Message[]) => [...prev, newMessage]);    
+    setMessage("");
     await sendMessage({
       content: message,
-      matchId: matchId, 
-      senderId: userId,
+      matchId: match.id, 
+      senderId: "1",
     });
   }
 
@@ -53,11 +61,11 @@ import { sendMessage} from "../api/apiChat";
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`flex ${msg.senderId === userId ? "justify-end" : "justify-start"}`}
+              className={`flex ${msg.senderId === "1" ? "justify-end" : "justify-start"}`}
             >
               <div
                 className={`rounded-lg p-3 max-w-[80%] ${
-                  msg.senderId === userId ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
+                  msg.senderId === "1" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
                 }`}
               > 
                 {msg.content}

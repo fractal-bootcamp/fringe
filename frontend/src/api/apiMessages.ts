@@ -1,7 +1,8 @@
 import axiosClient from "./axiosClient";
+import { MessageRequest } from "@/types/types";
 
-export const sendMessage = async (message: {senderId: string, matchId: string, content: string}) => {
-  const response = await axiosClient.post("/chat/message", message);
+export const sendMessage = async (message: MessageRequest) => {
+  const response = await axiosClient.post("/chat/send", message);
   return response.data;
 };
 

@@ -1,20 +1,24 @@
 import { apiGetMatchById } from "@/api/apiMatches";
-import { Message } from "@/types/types";
-import { User } from "@/types/types";
+import { Match } from "@/types/types";
 import { useEffect, useState } from "react";
 
 const useMatch = (matchId: string) => {
-  const [match, setMatch] = useState<{id: string, users: User[], messages: Message[]}>();
+  const [match, setMatch] = useState<Match | null>(null);
 
   useEffect(() => {
     const fetchMatch = async () => {
       const match = await apiGetMatchById(matchId);
       setMatch(match);
     };
-    fetchMatch();
-  }, []);
 
-  return { ...match, id: matchId };
+    fetchMatch();
+
+    const intervalId = setInterval(fetchMatch, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [matchId]);
+
+  return { match };
 };
 
 export default useMatch;
