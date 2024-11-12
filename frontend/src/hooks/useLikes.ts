@@ -1,5 +1,5 @@
-import { apiAddLike, apiDeleteLike } from "@/api/apiLikes";
-import { apiGetUserById } from "@/api/apiUsers";
+import { apiAddLike, apiDeleteLike } from "@/api/apiLike";
+import { apiGetUserById } from "@/api/apiUser";
 import { Like, User } from "@/types/types";
 import { useEffect } from "react";
 import storeLike from "@/stores/storeLike";

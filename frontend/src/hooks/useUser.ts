@@ -1,4 +1,4 @@
-import { apiGetUserById } from "@/api/apiUsers";
+import { apiGetUserById } from "@/api/apiUser";
 import { User } from "@/types/types";
 import { useEffect, useState } from "react";
 
