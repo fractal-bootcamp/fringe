@@ -1,9 +1,10 @@
 import { apiGetMatchById } from "@/api/apiMatches";
-import { Match } from "@/types/types";
+import { Message } from "@/types/types";
+import { User } from "@/types/types";
 import { useEffect, useState } from "react";
 
 const useMatch = (matchId: string) => {
-  const [match, setMatch] = useState<Match | null>(null);
+  const [match, setMatch] = useState<{id: string, users: User[], messages: Message[]}>();
 
   useEffect(() => {
     const fetchMatch = async () => {
@@ -13,7 +14,7 @@ const useMatch = (matchId: string) => {
     fetchMatch();
   }, []);
 
-  return { match };
+  return { ...match, id: matchId };
 };
 
 export default useMatch;

@@ -1,4 +1,4 @@
-import { Match } from "../../../shared/schema";
+import { Match} from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const apiGetMatches = async () => {

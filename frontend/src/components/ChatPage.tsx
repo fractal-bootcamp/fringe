@@ -1,27 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Match, MessageRequest } from "@/types/types";
-import { useParams } from "next/navigation";
-import { sendMessage, getMessageHistory } from "../api/apiChat";
-import useUser from "@/hooks/useUser";
+import React, { useState} from "react";
+import { MessageRequest } from "@/types/types";
+import { sendMessage} from "../api/apiChat";
 
-const ChatPage = ({ matchId }: { matchId: string }) => {
+
+  const ChatPage = () => {
   const userId = "123";
+  const matchId = "c27f862f-ce40-4379-9ac9-65a46730df5c";
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<MessageRequest[]>([]);
 
-  useEffect(() => {
-    const pollMessages = async () => {
-      const history = await getMessageHistory(matchId);
-      setMessages(history);
-    };
-
-  // Poll every 3 seconds
-  const interval = setInterval(pollMessages, 3000);
-
-  pollMessages();
-
-  return () => clearInterval(interval);
-  }, [matchId]);
 
   async function handleSend(): Promise<void> {
     if (!message.trim()) return;

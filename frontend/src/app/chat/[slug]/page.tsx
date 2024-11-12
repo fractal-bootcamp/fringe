@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import ChatPage from "@/components/ChatPage";
 import useMatch from "@/hooks/useMatch";
 
@@ -10,10 +9,14 @@ import useMatch from "@/hooks/useMatch";
 //   timestamp: Date;
 // }
 
-const Page = ({ matchId }: { matchId: string }) => {
+const Page = ({matchId}: {matchId: string}) => {
+
+  //const match = useMatch(matchId);
+
   return (
     <div>
-      <ChatPage matchId={matchId}/>
+      {/* <ChatPage match={match} /> */}
+      <ChatPage/>
     </div>
   );
 };
