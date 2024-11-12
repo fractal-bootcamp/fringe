@@ -16,4 +16,4 @@ const storeMatch = create<MatchState>((set) => ({
     set((state) => ({ matches: state.matches.filter((match) => match.id !== matchId) })),
 }));
 
-export default { storeMatch };
+export default storeMatch;
