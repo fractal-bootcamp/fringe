@@ -4,6 +4,7 @@ import routesUser from "./routes/routesUser";
 import routesCompany from "./routes/routesCompany";
 import routesApplicant from "./routes/routesApplicant";
 import routesMatches from "./routes/routesMatches";
+import routesChat from "./routes/routesChat";
 
 const cors = require("cors");
 const app = express();
@@ -24,3 +25,4 @@ app.use("/user", routesUser);
 app.use("/company", routesCompany);
 app.use("/applicant", routesApplicant);
 app.use("/match", routesMatches);
+app.use("/chat", routesChat);
