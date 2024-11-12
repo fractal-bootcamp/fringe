@@ -1,18 +1,18 @@
-import { FundingRound, Industry, PrismaClient } from '@prisma/client'
+import { FundingRound, Industry, PrismaClient, ProfileType } from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
   // Clear existing data
-  await prisma.message.deleteMany()
-  await prisma.match.deleteMany()
-  await prisma.like.deleteMany()
-  await prisma.prompt.deleteMany()
-  await prisma.applicantPreference.deleteMany()
-  await prisma.companyPreference.deleteMany()
-  await prisma.applicant.deleteMany()
-  await prisma.company.deleteMany()
-  await prisma.user.deleteMany()
+  await prisma.message.deleteMany();
+  await prisma.match.deleteMany();
+  await prisma.like.deleteMany();
+  await prisma.prompt.deleteMany();
+  await prisma.applicantPreference.deleteMany();
+  await prisma.companyPreference.deleteMany();
+  await prisma.applicant.deleteMany();
+  await prisma.company.deleteMany();
+  await prisma.user.deleteMany();
 
   // Seed Applicants
   const applicantUsers = [
@@ -21,6 +21,7 @@ async function main() {
       name: "Alice Smith",
       location: "New York, NY",
       profilePhotoIds: ["photo1", "photo2"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
@@ -32,7 +33,10 @@ async function main() {
           prompts: {
             create: [
               { question: "What is your greatest strength?", answer: "Problem-solving skills." },
-              { question: "Why do you want to work here?", answer: "I admire the company's innovation." },
+              {
+                question: "Why do you want to work here?",
+                answer: "I admire the company's innovation.",
+              },
             ],
           },
         },
@@ -43,6 +47,7 @@ async function main() {
       name: "Bob Johnson",
       location: "San Francisco, CA",
       profilePhotoIds: ["photo3"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 3,
@@ -62,6 +67,7 @@ async function main() {
       name: "Charlie Brown",
       location: "Austin, TX",
       profilePhotoIds: ["photo4"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 4,
@@ -69,7 +75,10 @@ async function main() {
           professionalExperiences: ["Backend Developer at DataSolutions"],
           prompts: {
             create: [
-              { question: "What is your biggest achievement?", answer: "Led a successful project." },
+              {
+                question: "What is your biggest achievement?",
+                answer: "Led a successful project.",
+              },
               { question: "How do you handle stress?", answer: "I prioritize and stay organized." },
             ],
           },
@@ -81,6 +90,7 @@ async function main() {
       name: "Diana Prince",
       location: "Seattle, WA",
       profilePhotoIds: ["photo5"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 6,
@@ -89,7 +99,10 @@ async function main() {
           prompts: {
             create: [
               { question: "What are your career goals?", answer: "To become a data scientist." },
-              { question: "How do you work in a team?", answer: "I communicate openly and support my teammates." },
+              {
+                question: "How do you work in a team?",
+                answer: "I communicate openly and support my teammates.",
+              },
             ],
           },
         },
@@ -100,6 +113,7 @@ async function main() {
       name: "Ethan Hunt",
       location: "Los Angeles, CA",
       profilePhotoIds: ["photo6"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 2,
@@ -119,6 +133,7 @@ async function main() {
       name: "Fiona Gallagher",
       location: "Chicago, IL",
       profilePhotoIds: ["photo7"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 7,
@@ -138,6 +153,7 @@ async function main() {
       name: "George Smith",
       location: "Miami, FL",
       profilePhotoIds: ["photo8"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 1,
@@ -157,6 +173,7 @@ async function main() {
       name: "Hannah Baker",
       location: "Boston, MA",
       profilePhotoIds: ["photo9"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
@@ -165,7 +182,10 @@ async function main() {
           prompts: {
             create: [
               { question: "What inspires your designs?", answer: "User experience and feedback." },
-              { question: "How do you stay updated with design trends?", answer: "I follow industry leaders and blogs." },
+              {
+                question: "How do you stay updated with design trends?",
+                answer: "I follow industry leaders and blogs.",
+              },
             ],
           },
         },
@@ -176,6 +196,7 @@ async function main() {
       name: "Ian Malcolm",
       location: "Orlando, FL",
       profilePhotoIds: ["photo10"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 8,
@@ -183,8 +204,14 @@ async function main() {
           professionalExperiences: ["Security Analyst at SecureTech"],
           prompts: {
             create: [
-              { question: "What is your approach to cybersecurity?", answer: "Proactive and preventive measures." },
-              { question: "What challenges do you face in your role?", answer: "Keeping up with evolving threats." },
+              {
+                question: "What is your approach to cybersecurity?",
+                answer: "Proactive and preventive measures.",
+              },
+              {
+                question: "What challenges do you face in your role?",
+                answer: "Keeping up with evolving threats.",
+              },
             ],
           },
         },
@@ -195,6 +222,7 @@ async function main() {
       name: "Jack Sparrow",
       location: "Port Royal, Jamaica",
       profilePhotoIds: ["photo11"],
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
@@ -202,14 +230,20 @@ async function main() {
           professionalExperiences: ["Captain at The Black Pearl"],
           prompts: {
             create: [
-              { question: "What is your leadership philosophy?", answer: "To inspire loyalty and courage." },
-              { question: "How do you handle unexpected challenges?", answer: "With creativity and a bit of luck." },
+              {
+                question: "What is your leadership philosophy?",
+                answer: "To inspire loyalty and courage.",
+              },
+              {
+                question: "How do you handle unexpected challenges?",
+                answer: "With creativity and a bit of luck.",
+              },
             ],
           },
         },
       },
     },
-  ]
+  ];
 
   // Seed Companies
   const companyUsers = [
@@ -218,6 +252,7 @@ async function main() {
       name: "Tech Innovations",
       location: "San Francisco, CA",
       profilePhotoIds: ["photo1", "photo2"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 5,
@@ -238,6 +273,7 @@ async function main() {
       name: "Finance Solutions",
       location: "New York, NY",
       profilePhotoIds: ["photo3", "photo4"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 10,
@@ -258,6 +294,7 @@ async function main() {
       name: "Creative Designs",
       location: "Austin, TX",
       profilePhotoIds: ["photo5", "photo6"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 3,
@@ -278,6 +315,7 @@ async function main() {
       name: "HealthTech Corp",
       location: "Boston, MA",
       profilePhotoIds: ["photo7", "photo8"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 7,
@@ -286,7 +324,10 @@ async function main() {
           fundingRound: FundingRound.seriesC,
           prompts: {
             create: [
-              { question: "What is your mission?", answer: "To improve healthcare through technology." },
+              {
+                question: "What is your mission?",
+                answer: "To improve healthcare through technology.",
+              },
               { question: "What products do you offer?", answer: "Health management software." },
             ],
           },
@@ -298,6 +339,7 @@ async function main() {
       name: "EcoFinance",
       location: "Seattle, WA",
       profilePhotoIds: ["photo9", "photo10"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 4,
@@ -307,7 +349,10 @@ async function main() {
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To promote sustainable investments." },
-              { question: "What services do you offer?", answer: "Eco-friendly financial planning." },
+              {
+                question: "What services do you offer?",
+                answer: "Eco-friendly financial planning.",
+              },
             ],
           },
         },
@@ -318,6 +363,7 @@ async function main() {
       name: "Design Studio",
       location: "Los Angeles, CA",
       profilePhotoIds: ["photo11", "photo12"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 2,
@@ -326,7 +372,10 @@ async function main() {
           fundingRound: FundingRound.seed,
           prompts: {
             create: [
-              { question: "What is your mission?", answer: "To bring ideas to life through design." },
+              {
+                question: "What is your mission?",
+                answer: "To bring ideas to life through design.",
+              },
               { question: "What do you specialize in?", answer: "Web design." },
             ],
           },
@@ -338,6 +387,7 @@ async function main() {
       name: "FinTech Innovations",
       location: "Chicago, IL",
       profilePhotoIds: ["photo13", "photo14"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 6,
@@ -358,6 +408,7 @@ async function main() {
       name: "Software Solutions",
       location: "Denver, CO",
       profilePhotoIds: ["photo15", "photo16"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 8,
@@ -366,7 +417,10 @@ async function main() {
           fundingRound: FundingRound.seriesC,
           prompts: {
             create: [
-              { question: "What is your mission?", answer: "To provide robust software solutions." },
+              {
+                question: "What is your mission?",
+                answer: "To provide robust software solutions.",
+              },
               { question: "What do you specialize in?", answer: "Enterprise software." },
             ],
           },
@@ -378,6 +432,7 @@ async function main() {
       name: "Creative Agency",
       location: "Miami, FL",
       profilePhotoIds: ["photo17", "photo18"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 1,
@@ -398,6 +453,7 @@ async function main() {
       name: "Tech Finance",
       location: "Atlanta, GA",
       profilePhotoIds: ["photo19", "photo20"],
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 9,
@@ -406,60 +462,53 @@ async function main() {
           fundingRound: FundingRound.seriesB,
           prompts: {
             create: [
-              { question: "What is your mission?", answer: "To integrate technology with finance." },
+              {
+                question: "What is your mission?",
+                answer: "To integrate technology with finance.",
+              },
               { question: "What services do you offer?", answer: "Financial consulting." },
             ],
           },
         },
       },
     },
-  ]
+  ];
 
   // Create users with their profiles
-  console.log('Seeding applicants...')
+  console.log("Seeding applicants...");
   for (const userData of applicantUsers) {
+    console.log(userData);
     await prisma.user.create({
       data: userData,
-    })
+    });
   }
 
-  console.log('Seeding companies...')
+  console.log("Seeding companies...");
   for (const userData of companyUsers) {
+    console.log(userData);
     await prisma.user.create({
-      data: {
-        ...userData,
-        companyProfile: {
-          create: {
-            ...userData.companyProfile.create,
-            industry: userData.companyProfile.create.industry as Industry,
-            fundingRound: userData.companyProfile.create.fundingRound as FundingRound
-          }
-        }
-      }
-    })
+      data: userData,
+    });
   }
 
   // Create some example matches and likes
-  console.log('Creating example matches and likes...')
+  console.log("Creating example matches and likes...");
   const firstApplicant = await prisma.user.findFirst({
     where: { applicantProfile: { isNot: null } },
-  })
+  });
   const firstCompany = await prisma.user.findFirst({
     where: { companyProfile: { isNot: null } },
-  })
+  });
 
   if (firstApplicant && firstCompany) {
     // Create a match
     const match = await prisma.match.create({
       data: {
         users: {
-          connect: [
-            { id: firstApplicant.id },
-            { id: firstCompany.id },
-          ],
+          connect: [{ id: firstApplicant.id }, { id: firstCompany.id }],
         },
       },
-    })
+    });
 
     // Create some messages
     await prisma.message.createMany({
@@ -475,7 +524,7 @@ async function main() {
           senderId: firstCompany.id,
         },
       ],
-    })
+    });
 
     // Create some likes
     await prisma.like.create({
@@ -485,17 +534,17 @@ async function main() {
         section: "About",
         content: "Company mission",
       },
-    })
+    });
   }
 
-  console.log('Database has been seeded!')
+  console.log("Database has been seeded!");
 }
 
 main()
   .catch((e) => {
-    console.error(e)
-    process.exit(1)
+    console.error(e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });
