@@ -8,7 +8,7 @@ export default function Home() {
   const { updateUserType } = userTypeStore();
   return (
     <div className="min-h-screen flex flex-col items-center bg-white">
-      <h1 className="text-5xl font-bold mb-20 tracking-widest mt-24 font-mono">FRINGE</h1>
+      <h1 className="text-5xl font-bold mb-20 tracking-widest mt-24">FRINGE</h1>
 
       <div className="flex flex-col md:flex-row md:space-x-8 space-y-6 md:space-y-0">
         <Link

@@ -16,7 +16,11 @@ export const getUserById = async (req: Request, res: Response) => {
           prompts: true,
         },
       },
-      matches: true,
+      matches: {
+        include: {
+          users: true,
+        },
+      },
       messages: true,
     },
   });
