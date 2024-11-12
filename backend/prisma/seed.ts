@@ -569,6 +569,8 @@ async function main() {
         content: "Company mission",
       },
     });
+  } else {
+    console.error("Could not find both an applicant and a company to create a match.");
   }
 
   console.log("Database has been seeded!");

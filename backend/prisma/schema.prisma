@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -26,26 +26,24 @@ model User {
 }
 
 model Applicant {
-  id                      String               @id @default(uuid())
-  userId                  String               @unique
-  user                    User                 @relation(fields: [userId], references: [id])
+  id                      String   @id @default(uuid())
+  userId                  String   @unique
+  user                    User     @relation(fields: [userId], references: [id])
   yearsOfExperience       Int
   educationalExperiences  String[]
   professionalExperiences String[]
   prompts                 Prompt[]
-  preferences             ApplicantPreference?
 }
 
 model Company {
-  id               String             @id @default(uuid())
-  userId           String             @unique
-  user             User               @relation(fields: [userId], references: [id])
+  id               String       @id @default(uuid())
+  userId           String       @unique
+  user             User         @relation(fields: [userId], references: [id])
   yearsOfOperation Int
   employeeCount    Int
   industry         Industry
   fundingRound     FundingRound
   prompts          Prompt[]
-  preferences      CompanyPreference?
 }
 
 model Prompt {
@@ -84,27 +82,6 @@ model Message {
   sender    User     @relation(fields: [senderId], references: [id])
   senderId  String
   createdAt DateTime @default(now())
-}
-
-model ApplicantPreference {
-  id           String         @id @default(uuid())
-  applicant    Applicant      @relation(fields: [applicantId], references: [id])
-  applicantId  String         @unique
-  role         String[]
-  industry     Industry[]
-  location     String[]
-  fundingRound FundingRound[]
-}
-
-model CompanyPreference {
-  id                      String     @id @default(uuid())
-  company                 Company    @relation(fields: [companyId], references: [id])
-  companyId               String     @unique
-  role                    String[]
-  industry                Industry[]
-  location                String[]
-  educationalExperiences  String[]
-  professionalExperiences String[]
 }
 
 enum ProfileType {

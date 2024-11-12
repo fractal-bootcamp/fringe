@@ -9,11 +9,13 @@ export const getUserById = async (req: Request, res: Response) => {
       applicantProfile: {
         include: {
           prompts: true,
+          preferences: true,
         },
       },
       companyProfile: {
         include: {
           prompts: true,
+          preferences: true,
         },
       },
       matches: {
