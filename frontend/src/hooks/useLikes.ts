@@ -1,15 +1,11 @@
 import { apiDeleteLike } from "@/api/apiLikes";
 import { apiGetUserById } from "@/api/apiUsers";
-import storeLike from "@/stores/storeLike";
 import { Like, User } from "@/types/types";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect } from "react";
+import storeLike from "@/stores/storeLike";
 
 const useLikes = () => {
-  // const [likes, setLikes] = useState<Like[]>([]);
-
   const { likes, loadLikes, deleteLike } = storeLike();
-
-  console.log(likes);
 
   // Get likes
   const fetchLikes = async () => {
@@ -27,7 +23,7 @@ const useLikes = () => {
 
   useEffect(() => {
     fetchLikes();
-  }, []); // Keep only one useEffect for initial load
+  }, []);
 
   return { likes, handleDeleteLike };
 };

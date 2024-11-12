@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Match, Message, User } from "@/types/types";
-import { useParams } from "next/navigation";
+import { Match, User } from "@/types/types";
 
 interface ChatPageProps {
   match: Match;

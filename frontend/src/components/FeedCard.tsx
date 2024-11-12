@@ -1,4 +1,4 @@
-import { Applicant, Company, Prompt, User } from "@/types/types";
+import { User } from "@/types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faX,
