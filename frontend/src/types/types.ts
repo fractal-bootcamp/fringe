@@ -33,7 +33,6 @@ export interface Applicant {
   educationalExperiences: string[];
   professionalExperiences: string[];
   prompts: Prompt[];
-  preferences?: ApplicantPreference;
 }
 
 // Companies
@@ -46,7 +45,6 @@ export interface Company {
   industry: Industry;
   fundingRound: FundingRound;
   prompts: Prompt[];
-  preferences?: CompanyPreference;
 }
 
 // Prompts
@@ -89,29 +87,6 @@ export interface Message {
   sender: User;
   senderId: string;
   createdAt: Date;
-}
-
-// Applicant Preferences
-export interface ApplicantPreference {
-  id: string;
-  applicant: Applicant;
-  applicantId: string;
-  role: string[];
-  industry: Industry[];
-  location: string[];
-  fundingRound: FundingRound[];
-}
-
-// Company Preferences
-export interface CompanyPreference {
-  id: string;
-  company: Company;
-  companyId: string;
-  role: string[];
-  industry: Industry[];
-  location: string[];
-  educationalExperiences: string[];
-  professionalExperiences: string[];
 }
 
 // Enum: Profile Type

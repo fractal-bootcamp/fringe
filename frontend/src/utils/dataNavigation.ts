@@ -1,5 +1,5 @@
 import { NavigationItem } from "@/types/types";
-import { faComment, faGears, faHeart, faRss, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faComment, faHeart, faRss, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const dataNavigation: NavigationItem[] = [
   {
