@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { Match, User } from "@/types/types";
 import { apiGetUserById } from "@/api/apiUsers";
 import storeMatch from "@/stores/storeMatch";
-import { apiDeleteMatch } from "@/api/apiMatches";
+import { apiAddMatch, apiDeleteMatch } from "@/api/apiMatches";
 
 const useMatches = () => {
-  const { matches, loadMatches, deleteMatch } = storeMatch();
+  const { matches, loadMatches, addMatch, deleteMatch } = storeMatch();
 
   // Get matches
   const fetchMatches = async () => {
@@ -18,6 +18,12 @@ const useMatches = () => {
     loadMatches(matchesParsed);
   };
 
+  // Add match
+  const handleAddMatch = async (userId1: string, userId2: string) => {
+    const match: Match = await apiAddMatch(userId1, userId2);
+    addMatch(match);
+  };
+
   // Delete match
   const handleDeleteMatch = async (matchId: string) => {
     await apiDeleteMatch(matchId);
@@ -28,7 +34,7 @@ const useMatches = () => {
     fetchMatches();
   }, []);
 
-  return { matches, handleDeleteMatch };
+  return { matches, handleAddMatch, handleDeleteMatch };
 };
 
 export default useMatches;
