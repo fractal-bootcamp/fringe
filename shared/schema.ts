@@ -20,7 +20,7 @@ export const LikeSchema = z.object({
   toUserId: z.string().uuid(),
   section: z.string(),
   content: z.string(),
-  createdAt: z.date(),
+  createdAt: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' }),  
 });
 
 export const MessageSchema = z.object({
@@ -28,7 +28,7 @@ export const MessageSchema = z.object({
   content: z.string(),
   matchId: z.string().uuid(),
   senderId: z.string().uuid(),
-  createdAt: z.date(),
+  createdAt: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' }),  
 });
 
 export const ApplicantPreferenceSchema = z.object({
@@ -90,7 +90,7 @@ export const MatchSchema = z.object({
   id: z.string().uuid(),
   userIds: z.array(z.string().uuid()),
   messages: z.array(MessageSchema),
-  createdAt: z.date(),
+  createdAt: z.string().refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date' }),  
 });
 
 // Types
