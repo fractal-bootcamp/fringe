@@ -10,14 +10,10 @@ import useMatch from "@/hooks/useMatch";
 //   timestamp: Date;
 // }
 
-const Page = () => {
-  const { slug } = useParams();
-  const { match } = useMatch(slug as string);
-
-  if (!match) return <div>Loading...</div>;
+const Page = ({ matchId }: { matchId: string }) => {
   return (
     <div>
-      <ChatPage match={match} />
+      <ChatPage matchId={matchId}/>
     </div>
   );
 };

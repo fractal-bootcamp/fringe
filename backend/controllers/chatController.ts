@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import type { Request, Response } from "express";
-
-const prisma = new PrismaClient();
+import prisma from "../prisma/client";
 
 export const sendMessage = async (req: Request, res: Response) => {
   const { message, matchId, senderId } = req.body;
