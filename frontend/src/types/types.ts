@@ -30,8 +30,8 @@ export interface Applicant {
   userId: string;
   user: User;
   yearsOfExperience: number;
-  educationalExperiences: string[];
-  professionalExperiences: string[];
+  educationalExperiences: string;
+  professionalExperiences: string;
   prompts: Prompt[];
 }
 

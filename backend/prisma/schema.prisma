@@ -30,8 +30,8 @@ model Applicant {
   userId                  String   @unique
   user                    User     @relation(fields: [userId], references: [id])
   yearsOfExperience       Int
-  educationalExperiences  String[]
-  professionalExperiences String[]
+  educationalExperiences  String
+  professionalExperiences String
   prompts                 Prompt[]
 }
 
