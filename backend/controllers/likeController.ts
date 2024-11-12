@@ -11,5 +11,22 @@ export const sendLike = async (req: Request, res: Response) => {
       content,
     },
   });
+
+  // Find if the toUserId has liked the fromUserId
+  const isMatch = await prisma.like.findFirst({
+    where: {
+      fromUserId: toUserId,
+      toUserId: fromUserId,
+    },
+  });
+
+  if (isMatch) {
+    await prisma.match.create({
+      data: {
+        users: { connect: [{ id: fromUserId }, { id: toUserId }] },
+      },
+    });
+  }
+
   res.status(200);
 };

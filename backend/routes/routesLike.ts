@@ -3,6 +3,6 @@ import { sendLike } from "../controllers/likeController";
 
 const router = express.Router();
 
-router.post("/sendLike", sendLike);
+router.post("/send", sendLike);
 
 export default router;
