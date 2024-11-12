@@ -13,6 +13,11 @@ export const apiGetMatchById = async (id: string) => {
   return match;
 };
 
+export const apiAddMatch = async (userId1: string, userId2: string) => {
+  const response: Match = await axiosClient.post("/match/add", { userId1, userId2 });
+  return response.data;
+};
+
 export const apiDeleteMatch = async (id: string) => {
   const response = await axiosClient.post("/match/delete", { id });
   return response.data;

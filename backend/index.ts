@@ -4,7 +4,7 @@ import cors from "cors";
 import routesUser from "./routes/routesUser";
 import routesCompany from "./routes/routesCompany";
 import routesApplicant from "./routes/routesApplicant";
-import routesMatches from "./routes/routesMatches";
+import routesMatches from "./routes/routesMatch";
 import routesChat from "./routes/routesChat";
 import routesLike from "./routes/routesLike";
 

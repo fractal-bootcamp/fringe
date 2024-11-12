@@ -16,6 +16,18 @@ export const getAllMatches = logging(
   }
 );
 
+export const addMatch = logging("addMatch", false, async (req: Request, res: Response) => {
+  const { userId1, userId2 } = req.body;
+  const match = await prisma.match.create({
+    data: { users: { connect: [{ id: userId1 }, { id: userId2 }] } },
+  });
+  const matchWithUsers = await prisma.match.findUnique({
+    where: { id: match.id },
+    include: { users: true },
+  });
+  res.status(200).json(matchWithUsers);
+});
+
 export const getMatchById = logging("getMatchById", false, async (req: Request, res: Response) => {
   const match = await prisma.match.findUnique({
     where: { id: req.params.id },
