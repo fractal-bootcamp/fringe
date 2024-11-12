@@ -7,12 +7,16 @@ const useLikes = () => {
   const [likesUsers, setLikesUsers] = useState<User[]>([]);
 
   const fetchLikes = async () => {
-    const userId = "1";
+    const userId = "1"; // TODO: get user id from store
     const user: User = await getUserById(userId);
     const receivedLikes: Like[] = user.receivedLikes;
-    const likesFromUsers: User[] = receivedLikes.map((like: Like) => like.fromUser);
+    const likesFromUsers: User[] = Array.from(
+      new Map(receivedLikes.map((like: Like) => [like.fromUser.id, like.fromUser])).values()
+    ); // remove duplicates
+
     setLikes(receivedLikes);
     setLikesUsers(likesFromUsers);
+    console.log(likesFromUsers);
   };
 
   useEffect(() => {
