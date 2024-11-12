@@ -21,7 +21,11 @@ export const getUserById = async (req: Request, res: Response) => {
           users: true,
         },
       },
-      receivedLikes: true,
+      receivedLikes: {
+        include: {
+          fromUser: true,
+        },
+      },
       messages: true,
     },
   });

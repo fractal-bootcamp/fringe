@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import "./globals.css";
-import { dataNavigation } from "@/api/dataNavigation";
+import { dataNavigation } from "@/utils/dataNavigation";
 
 export default function RootLayout({
   children,
