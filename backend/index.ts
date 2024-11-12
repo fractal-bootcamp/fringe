@@ -5,6 +5,7 @@ import routesCompany from "./routes/routesCompany";
 import routesApplicant from "./routes/routesApplicant";
 import routesMatches from "./routes/routesMatches";
 import routesChat from "./routes/routesChat";
+import routesLike from "./routes/routesLike";
 
 const cors = require("cors");
 const app = express();
@@ -27,3 +28,4 @@ app.use("/company", routesCompany);
 app.use("/applicant", routesApplicant);
 app.use("/match", routesMatches);
 app.use("/chat", routesChat);
+app.use("/like", routesLike);
