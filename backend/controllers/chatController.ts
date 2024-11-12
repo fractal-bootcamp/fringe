@@ -15,5 +15,11 @@ export const sendMessage = async (req: Request, res: Response) => {
   res.status(200).json(newMessage);
 };
 
-
-
+export const messageHistory = async (req: Request, res: Response) => {
+  const { matchId } = req.params;
+  const messages = await prisma.message.findMany({
+    where: { matchId },
+    orderBy: { createdAt: 'asc' },
+  });
+  res.status(200).json(messages);
+};
