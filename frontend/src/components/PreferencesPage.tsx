@@ -3,7 +3,7 @@
 import { Preference } from "@/types/types";
 import PreferenceIndividual from "./PreferenceIndividual";
 import { userTypeStore } from "@/stores/userTypeStore";
-import { preferencesApplicant, preferencesCompany } from "@/api/dataPreferences";
+import { preferencesApplicant, preferencesCompany } from "@/utils/dataPreferences";
 
 const PreferencesPage = () => {
   const { userType } = userTypeStore();
