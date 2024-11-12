@@ -491,6 +491,40 @@ async function main() {
     });
   }
 
+  // Create likes for each applicant liking companies
+  for (const applicant of applicantUsers) {
+    const likes = [];
+    for (let j = 0; j < 6; j++) {
+      const randomCompany = companyUsers[Math.floor(Math.random() * companyUsers.length)];
+      likes.push({
+        fromUserId: applicant.id,
+        toUserId: randomCompany.id,
+        section: "likes",
+        content: `Liked your company! - ${applicant.name}`,
+      });
+    }
+    await prisma.like.createMany({
+      data: likes,
+    });
+  }
+
+  // Create likes for each company liking applicants
+  for (const company of companyUsers) {
+    const likes = [];
+    for (let j = 0; j < 6; j++) {
+      const randomApplicant = applicantUsers[Math.floor(Math.random() * applicantUsers.length)];
+      likes.push({
+        fromUserId: company.id,
+        toUserId: randomApplicant.id,
+        section: "likes",
+        content: `Liked your profile! - ${company.name}`,
+      });
+    }
+    await prisma.like.createMany({
+      data: likes,
+    });
+  }
+
   // Create some example matches and likes
   console.log("Creating example matches and likes...");
   const firstApplicant = await prisma.user.findFirst({
