@@ -14,6 +14,7 @@ export const PromptSchema = z.object({
   answer: z.string(),
   applicantId: z.string().uuid().optional(),
   companyId: z.string().uuid().optional(),
+  createdAt: DateStringSchema,
 });
 
 export const LikeSchema = z.object({
@@ -69,7 +70,7 @@ export const UserSchema = z.object({
 
 export const MatchSchema = z.object({
   id: z.string().uuid(),
-  userIds: z.array(z.string().uuid()),
+  users: z.array(UserSchema).length(2),
   messages: z.array(MessageSchema),
   createdAt: DateStringSchema,
 });
