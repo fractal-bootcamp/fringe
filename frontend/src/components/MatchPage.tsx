@@ -33,7 +33,12 @@ const MatchPage = ({ matchesYourTurn, matchesTheirTurn }: MatchPageProps) => {
         {yourTurnExpanded && (
           <div className="space-y-4">
             {matchesYourTurn.map((match) => (
-              <MatchCard key={match.id} profile={match.users[0]} isYourTurn={true} />
+              <MatchCard
+                key={match.id}
+                matchId={match.id}
+                profile={match.users[0]}
+                isYourTurn={true}
+              />
             ))}
           </div>
         )}
@@ -54,7 +59,12 @@ const MatchPage = ({ matchesYourTurn, matchesTheirTurn }: MatchPageProps) => {
         {theirTurnExpanded && (
           <div className="space-y-4">
             {matchesTheirTurn.map((match) => (
-              <MatchCard key={match.id} profile={match.users[0]} isYourTurn={false} />
+              <MatchCard
+                key={match.id}
+                matchId={match.id}
+                profile={match.users[0]}
+                isYourTurn={false}
+              />
             ))}
           </div>
         )}

@@ -10,3 +10,14 @@ export const getAllMatches = async (req: Request, res: Response) => {
   });
   res.status(200).json(matches);
 };
+
+export const getMatchById = async (req: Request, res: Response) => {
+  const match = await prisma.match.findUnique({
+    where: { id: req.params.id },
+    include: {
+      users: true,
+      messages: true,
+    },
+  });
+  res.status(200).json(match);
+};

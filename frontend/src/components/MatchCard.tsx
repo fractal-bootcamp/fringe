@@ -2,6 +2,7 @@ import { Applicant, Company } from "@/types/types";
 import { useRouter } from "next/navigation";
 
 interface MatchCardProps {
+  matchId: string;
   profile: {
     id: string;
     name: string;
@@ -10,13 +11,13 @@ interface MatchCardProps {
   isYourTurn: boolean;
 }
 
-const MatchCard = ({ profile, isYourTurn }: MatchCardProps) => {
+const MatchCard = ({ matchId, profile, isYourTurn }: MatchCardProps) => {
   const router = useRouter();
 
   return (
     <div
       className="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-shadow"
-      onClick={() => router.push(`/chat/${profile.id}`)}
+      onClick={() => router.push(`/chat/${matchId}`)}
     >
       <div className="flex items-start space-x-4">
         <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
