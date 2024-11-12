@@ -14,3 +14,15 @@ export const getUserById = async (req: Request, res: Response) => {
   });
   res.status(200).json(user);
 };
+
+export const getAllUsers = async (req: Request, res: Response) => {
+  const users = await prisma.user.findMany({
+    include: {
+      applicantProfile: true,
+      companyProfile: true,
+      matches: true,
+      messages: true,
+    },
+  });
+  res.status(200).json(users);
+};
