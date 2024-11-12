@@ -1,4 +1,4 @@
-import { ProfileType } from "@/types/types";
+// import { ProfileType } from "@/types/types";
 import { User } from "../../../shared/schema";
 import axiosClient from "./axiosClient";
 
@@ -17,15 +17,15 @@ export const apiGetUserById = async (id: string) => {
 export const apiUpdateUserProfile = async (
   id: string,
   name: string,
-  location: string,
-  profilePhotoIds: string[],
-  profileType: ProfileType
+  location: string
+  // profilePhotoIds: string[],
+  // profileType: ProfileType
 ) => {
   const response = await axiosClient.post(`/user/update/${id}`, {
     name,
     location,
-    profilePhotoIds,
-    profileType,
+    // profilePhotoIds,
+    // profileType,
   });
   return response.data;
 };

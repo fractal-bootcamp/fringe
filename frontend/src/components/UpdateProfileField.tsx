@@ -21,7 +21,7 @@ const UpdateProfileField = ({
   };
 
   return (
-    <div>
+    <div className="flex flex-col space-y-2">
       <label>{title}</label>
       {type === "image" ? (
         <div>
