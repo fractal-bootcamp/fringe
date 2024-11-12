@@ -1,9 +1,9 @@
 import express from "express";
-import { getAllCompanies } from "../controllers/controllerCompany";
+import { getAllCompanies, updateCompanyProfile } from "../controllers/controllerCompany";
 
 const router = express.Router();
 
-// Get user by ID
 router.get("/companies", getAllCompanies);
+router.post("/update/:id", updateCompanyProfile);
 
 export default router;

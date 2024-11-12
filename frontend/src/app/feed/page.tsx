@@ -10,7 +10,11 @@ export default function Feed() {
 
   const searchParams = useSearchParams();
   const type = searchParams.get("type") as "client" | "company";
-  const items = type === "client" ? companies : applicants;
+  const items = (type === "client" ? companies : applicants).sort(
+    (a, b) => Number(a.id) - Number(b.id)
+  );
+
+  console.log(items);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
