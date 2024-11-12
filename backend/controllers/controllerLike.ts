@@ -10,14 +10,12 @@ export const getLikes = logging("getLikes", false, async (req: Request, res: Res
   res.status(200).json({ likes });
 });
 
-export const sendLike = logging("sendLike", false, async (req: Request, res: Response) => {
-  const { fromUserId, toUserId, section, content } = req.body;
+export const addLike = logging("addLike", false, async (req: Request, res: Response) => {
+  const { fromUserId, toUserId } = req.body;
   await prisma.like.create({
     data: {
       fromUserId,
       toUserId,
-      section,
-      content,
     },
   });
   res.status(200);

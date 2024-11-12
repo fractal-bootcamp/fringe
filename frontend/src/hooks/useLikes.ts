@@ -1,4 +1,4 @@
-import { apiDeleteLike } from "@/api/apiLikes";
+import { apiAddLike, apiDeleteLike } from "@/api/apiLikes";
 import { apiGetUserById } from "@/api/apiUsers";
 import { Like, User } from "@/types/types";
 import { useEffect } from "react";
@@ -21,11 +21,16 @@ const useLikes = () => {
     await deleteLike(id);
   };
 
+  // Add like
+  const handleAddLike = async (fromUserId: string, toUserId: string) => {
+    await apiAddLike(fromUserId, toUserId);
+  };
+
   useEffect(() => {
     fetchLikes();
   }, []);
 
-  return { likes, handleDeleteLike };
+  return { likes, handleDeleteLike, handleAddLike };
 };
 
 export default useLikes;

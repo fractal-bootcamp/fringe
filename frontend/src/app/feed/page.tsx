@@ -11,11 +11,8 @@ export default function Feed() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type") as "client" | "company";
   const items = type === "client" ? companies : applicants;
-  const displayType = type === "client" ? "company" : "client";
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  console.log(displayType);
 
   const handleReject = () => {
     if (currentIndex < items.length - 1) {
@@ -39,7 +36,6 @@ export default function Feed() {
       <div className="relative">
         <FeedCard
           user={items[currentIndex]}
-          type={displayType}
           onReject={handleReject}
           onLikeSection={handleLikeSection}
         />
