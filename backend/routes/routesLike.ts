@@ -4,6 +4,6 @@ import { deleteLike, sendLike } from "../controllers/likeController";
 const router = express.Router();
 
 router.post("/send", sendLike);
-router.delete("/delete", deleteLike);
+router.post("/delete", deleteLike);
 
 export default router;

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const useLikes = () => {
   const [likes, setLikes] = useState<Like[]>([]);
 
+  // Get likes
   const fetchLikes = async () => {
     const userId = "1"; // TODO: get user id from store
     const user: User = await apiGetUserById(userId);
@@ -13,8 +14,10 @@ const useLikes = () => {
     setLikes(receivedLikes);
   };
 
+  // Delete like
   const deleteLike = async (id: string) => {
     await apiDeleteLike(id);
+    setLikes(likes.filter((like) => like.id !== id));
   };
 
   useEffect(() => {

@@ -16,6 +16,8 @@ const LikesYouTab = ({ like, user }: LikesYouTabProps) => {
     await deleteLike(like.id);
   };
 
+  console.log(like.id);
+
   return (
     <div className="rounded-xl bg-white m-1 p-2">
       <button onClick={() => router.push("/feed")}>
