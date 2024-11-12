@@ -1,5 +1,3 @@
-"use client";
-
 import useMatches from "@/hooks/useMatches";
 import { useRouter } from "next/navigation";
 
@@ -16,7 +14,6 @@ interface MatchCardProps {
 const MatchCard = ({ matchId, profile, isYourTurn }: MatchCardProps) => {
   const router = useRouter();
   const { handleDeleteMatch } = useMatches();
-  console.log(matchId);
 
   return (
     <div className="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-shadow">

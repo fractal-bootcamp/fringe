@@ -14,5 +14,6 @@ export const apiGetMatchById = async (id: string) => {
 };
 
 export const apiDeleteMatch = async (id: string) => {
-  await axiosClient.delete(`/match/${id}`);
+  const response = await axiosClient.post("/match/delete", { id });
+  return response.data;
 };

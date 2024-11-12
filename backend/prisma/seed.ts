@@ -519,52 +519,6 @@ async function main() {
     });
   }
 
-  // Create some example matches and likes
-  console.log("Creating example matches and likes...");
-  const firstApplicant = await prisma.user.findFirst({
-    where: { applicantProfile: { isNot: null } },
-  });
-  const firstCompany = await prisma.user.findFirst({
-    where: { companyProfile: { isNot: null } },
-  });
-
-  if (firstApplicant && firstCompany) {
-    // Create a match
-    const match = await prisma.match.create({
-      data: {
-        users: {
-          connect: [{ id: firstApplicant.id }, { id: firstCompany.id }],
-        },
-      },
-    });
-
-    // Create some messages
-    await prisma.message.createMany({
-      data: [
-        {
-          content: "Hello! I'm interested in your company.",
-          matchId: match.id,
-          senderId: firstApplicant.id,
-        },
-        {
-          content: "Hi! Thanks for reaching out. Would you like to schedule an interview?",
-          matchId: match.id,
-          senderId: firstCompany.id,
-        },
-      ],
-    });
-
-    // Create some likes
-    await prisma.like.create({
-      data: {
-        fromUserId: firstApplicant.id,
-        toUserId: firstCompany.id,
-      },
-    });
-  } else {
-    console.error("Could not find both an applicant and a company to create a match.");
-  }
-
   console.log("Database has been seeded!");
 }
 

@@ -22,7 +22,7 @@ export const addLike = logging("addLike", false, async (req: Request, res: Respo
 });
 
 export const deleteLike = logging("deleteLike", false, async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { id } = req.body;
   console.log("deleteLike", id);
   await prisma.like.delete({
     where: { id },

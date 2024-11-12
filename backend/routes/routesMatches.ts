@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get("/", getAllMatches);
 router.get("/:id", getMatchById);
-router.delete("/:id", deleteMatch);
+router.post("/delete", deleteMatch);
 
 export default router;

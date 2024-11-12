@@ -21,9 +21,7 @@ const useMatches = () => {
   // Delete match
   const handleDeleteMatch = async (matchId: string) => {
     await apiDeleteMatch(matchId);
-    await deleteMatch(matchId);
-    console.log(`Match deleted: ${matchId}`);
-    console.log(matches);
+    deleteMatch(matchId);
   };
 
   useEffect(() => {
