@@ -23,11 +23,9 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
-          educationalExperiences: ["BSc Computer Science", "MSc Software Engineering"],
-          professionalExperiences: [
-            "Software Engineer at TechCorp",
-            "Frontend Developer at WebSolutions",
-          ],
+          educationalExperiences: "BSc Computer Science, MSc Software Engineering",
+          professionalExperiences:
+            "Software Engineer at TechCorp, Frontend Developer at WebSolutions",
           prompts: {
             create: [
               { question: "What is your greatest strength?", answer: "Problem-solving skills." },
@@ -49,8 +47,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 3,
-          educationalExperiences: ["BSc Information Technology"],
-          professionalExperiences: ["Junior Developer at CodeFactory"],
+          educationalExperiences: "BSc Information Technology",
+          professionalExperiences: "Junior Developer at CodeFactory",
           prompts: {
             create: [
               { question: "What motivates you?", answer: "Learning new technologies." },
@@ -69,8 +67,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 4,
-          educationalExperiences: ["BSc Software Engineering"],
-          professionalExperiences: ["Backend Developer at DataSolutions"],
+          educationalExperiences: "BSc Software Engineering",
+          professionalExperiences: "Backend Developer at DataSolutions",
           prompts: {
             create: [
               {
@@ -92,8 +90,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 6,
-          educationalExperiences: ["BSc Computer Science", "MSc Data Science"],
-          professionalExperiences: ["Data Analyst at InfoTech"],
+          educationalExperiences: "BSc Computer Science, MSc Data Science",
+          professionalExperiences: "Data Analyst at InfoTech",
           prompts: {
             create: [
               { question: "What are your career goals?", answer: "To become a data scientist." },
@@ -115,8 +113,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 2,
-          educationalExperiences: ["BSc Web Development"],
-          professionalExperiences: ["Intern at WebCreators"],
+          educationalExperiences: "BSc Web Development",
+          professionalExperiences: "Intern at WebCreators",
           prompts: {
             create: [
               { question: "What do you enjoy about coding?", answer: "The creativity it allows." },
@@ -135,8 +133,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 7,
-          educationalExperiences: ["BSc Information Systems"],
-          professionalExperiences: ["Project Manager at TechSolutions"],
+          educationalExperiences: "BSc Information Systems",
+          professionalExperiences: "Project Manager at TechSolutions",
           prompts: {
             create: [
               { question: "How do you manage projects?", answer: "I use Agile methodologies." },
@@ -155,8 +153,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 1,
-          educationalExperiences: ["BSc Computer Science"],
-          professionalExperiences: ["Junior Developer at CodeBase"],
+          educationalExperiences: "BSc Computer Science",
+          professionalExperiences: "Junior Developer at CodeBase",
           prompts: {
             create: [
               { question: "What are your strengths?", answer: "Quick learner and adaptable." },
@@ -175,8 +173,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
-          educationalExperiences: ["BSc Graphic Design"],
-          professionalExperiences: ["UI/UX Designer at CreativeWorks"],
+          educationalExperiences: "BSc Graphic Design",
+          professionalExperiences: "UI/UX Designer at CreativeWorks",
           prompts: {
             create: [
               { question: "What inspires your designs?", answer: "User experience and feedback." },
@@ -198,8 +196,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 8,
-          educationalExperiences: ["BSc Computer Science", "MSc Cybersecurity"],
-          professionalExperiences: ["Security Analyst at SecureTech"],
+          educationalExperiences: "BSc Computer Science, MSc Cybersecurity",
+          professionalExperiences: "Security Analyst at SecureTech",
           prompts: {
             create: [
               {
@@ -224,8 +222,8 @@ async function main() {
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
-          educationalExperiences: ["BSc Nautical Science"],
-          professionalExperiences: ["Captain at The Black Pearl"],
+          educationalExperiences: "BSc Nautical Science",
+          professionalExperiences: "Captain at The Black Pearl",
           prompts: {
             create: [
               {

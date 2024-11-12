@@ -15,3 +15,18 @@ export const getAllCompanies = logging(
     res.status(200).json(companies);
   }
 );
+
+export const updateCompanyProfile = logging(
+  "updateCompanyProfile",
+  false,
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const updatedCompany = await prisma.company.update({
+      where: { id },
+      data: updatedData,
+    });
+    res.status(200).json(updatedCompany);
+  }
+);

@@ -55,7 +55,7 @@ export default function FeedCard({ user, onReject, onLikeSection }: FeedCardProp
               <span className="text-xl text-gray-600">
                 <FontAwesomeIcon icon={faBriefcase} />
               </span>
-              <span>{applicantProfile.professionalExperiences?.[0]}</span>
+              <span>{applicantProfile.professionalExperiences}</span>
             </div>
             <div className="py-4 flex items-center gap-4">
               <span className="text-xl text-gray-600">

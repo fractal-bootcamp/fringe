@@ -52,3 +52,18 @@ export const getAllUsers = logging("getAllUsers", false, async (req: Request, re
   });
   res.status(200).json(users);
 });
+
+export const updateUserProfile = logging(
+  "updateUserProfile",
+  false,
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: updatedData,
+    });
+    res.status(200).json(updatedUser);
+  }
+);

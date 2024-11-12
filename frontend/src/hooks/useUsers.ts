@@ -1,4 +1,4 @@
-import { apiGetAllUsers } from "@/api/apiUsers";
+import { apiGetAllUsers } from "@/api/apiUser";
 import { User } from "../../../shared/schema";
 import { useEffect, useState } from "react";
 

@@ -1,4 +1,4 @@
-import { apiGetMatchById } from "@/api/apiMatches";
+import { apiGetMatchById } from "@/api/apiMatch";
 import { Match } from "@/types/types";
 import { useEffect, useState } from "react";
 

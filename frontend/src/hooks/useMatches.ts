@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Match, User } from "@/types/types";
-import { apiGetUserById } from "@/api/apiUsers";
+import { apiGetUserById } from "@/api/apiUser";
 import storeMatch from "@/stores/storeMatch";
-import { apiAddMatch, apiDeleteMatch } from "@/api/apiMatches";
+import { apiAddMatch, apiDeleteMatch } from "@/api/apiMatch";
 
 const useMatches = () => {
   const { matches, loadMatches, addMatch, deleteMatch } = storeMatch();
