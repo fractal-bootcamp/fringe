@@ -43,9 +43,9 @@ const ChatPage = ({ match }: ChatPageProps) => {
       <div className="bg-white border-b p-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-            <span className="text-lg text-gray-600">Test</span>
+            <span className="text-lg text-gray-600">{match.users[1].name.charAt(0)}</span>
           </div>
-          <h1 className="font-semibold">Test</h1>
+          <h1 className="font-semibold">{match.users[1].name}</h1>
         </div>
       </div>
 
@@ -53,7 +53,7 @@ const ChatPage = ({ match }: ChatPageProps) => {
       <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
         {/* Match announcement */}
         <div className="text-center text-sm text-gray-500 mb-6">
-          You matched with Test!
+          You matched with {match.users[1].name}!
         </div>
 
         {/* User messages */}
