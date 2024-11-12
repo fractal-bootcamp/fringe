@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Match, User } from "@/types/types";
-import { apiGetMatches } from "@/api/apiMatches";
 import { apiGetUserById } from "@/api/apiUsers";
 
 const useMatches = () => {

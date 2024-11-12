@@ -1,4 +1,3 @@
-import { Applicant, Company } from "@/types/types";
 import { useRouter } from "next/navigation";
 
 interface MatchCardProps {

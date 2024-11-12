@@ -1,4 +1,4 @@
-import { faComment, faGears, faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faComment, faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import OptionTab, { OptionTabProps } from "./OptionTab";
 
 const optionTabs: OptionTabProps[] = [
