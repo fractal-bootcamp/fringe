@@ -1,4 +1,4 @@
-import { FundingRound, Industry, PrismaClient } from "@prisma/client";
+import { FundingRound, Industry, PrismaClient, ProfileType } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -21,7 +21,7 @@ async function main() {
       name: "Alice Smith",
       location: "New York, NY",
       profilePhotoIds: ["photo1", "photo2"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
@@ -47,7 +47,7 @@ async function main() {
       name: "Bob Johnson",
       location: "San Francisco, CA",
       profilePhotoIds: ["photo3"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 3,
@@ -67,7 +67,7 @@ async function main() {
       name: "Charlie Brown",
       location: "Austin, TX",
       profilePhotoIds: ["photo4"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 4,
@@ -90,7 +90,7 @@ async function main() {
       name: "Diana Prince",
       location: "Seattle, WA",
       profilePhotoIds: ["photo5"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 6,
@@ -113,7 +113,7 @@ async function main() {
       name: "Ethan Hunt",
       location: "Los Angeles, CA",
       profilePhotoIds: ["photo6"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 2,
@@ -133,7 +133,7 @@ async function main() {
       name: "Fiona Gallagher",
       location: "Chicago, IL",
       profilePhotoIds: ["photo7"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 7,
@@ -153,7 +153,7 @@ async function main() {
       name: "George Smith",
       location: "Miami, FL",
       profilePhotoIds: ["photo8"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 1,
@@ -173,7 +173,7 @@ async function main() {
       name: "Hannah Baker",
       location: "Boston, MA",
       profilePhotoIds: ["photo9"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
@@ -196,7 +196,7 @@ async function main() {
       name: "Ian Malcolm",
       location: "Orlando, FL",
       profilePhotoIds: ["photo10"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 8,
@@ -222,7 +222,7 @@ async function main() {
       name: "Jack Sparrow",
       location: "Port Royal, Jamaica",
       profilePhotoIds: ["photo11"],
-      profileType: "applicant",
+      profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
           yearsOfExperience: 5,
@@ -252,7 +252,7 @@ async function main() {
       name: "Tech Innovations",
       location: "San Francisco, CA",
       profilePhotoIds: ["photo1", "photo2"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 5,
@@ -273,7 +273,7 @@ async function main() {
       name: "Finance Solutions",
       location: "New York, NY",
       profilePhotoIds: ["photo3", "photo4"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 10,
@@ -294,7 +294,7 @@ async function main() {
       name: "Creative Designs",
       location: "Austin, TX",
       profilePhotoIds: ["photo5", "photo6"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 3,
@@ -315,7 +315,7 @@ async function main() {
       name: "HealthTech Corp",
       location: "Boston, MA",
       profilePhotoIds: ["photo7", "photo8"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 7,
@@ -339,7 +339,7 @@ async function main() {
       name: "EcoFinance",
       location: "Seattle, WA",
       profilePhotoIds: ["photo9", "photo10"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 4,
@@ -363,7 +363,7 @@ async function main() {
       name: "Design Studio",
       location: "Los Angeles, CA",
       profilePhotoIds: ["photo11", "photo12"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 2,
@@ -387,7 +387,7 @@ async function main() {
       name: "FinTech Innovations",
       location: "Chicago, IL",
       profilePhotoIds: ["photo13", "photo14"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 6,
@@ -408,7 +408,7 @@ async function main() {
       name: "Software Solutions",
       location: "Denver, CO",
       profilePhotoIds: ["photo15", "photo16"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 8,
@@ -432,7 +432,7 @@ async function main() {
       name: "Creative Agency",
       location: "Miami, FL",
       profilePhotoIds: ["photo17", "photo18"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 1,
@@ -453,7 +453,7 @@ async function main() {
       name: "Tech Finance",
       location: "Atlanta, GA",
       profilePhotoIds: ["photo19", "photo20"],
-      profileType: "company",
+      profileType: ProfileType.company,
       companyProfile: {
         create: {
           yearsOfOperation: 9,
@@ -477,6 +477,7 @@ async function main() {
   // Create users with their profiles
   console.log("Seeding applicants...");
   for (const userData of applicantUsers) {
+    console.log(userData);
     await prisma.user.create({
       data: userData,
     });
@@ -484,17 +485,9 @@ async function main() {
 
   console.log("Seeding companies...");
   for (const userData of companyUsers) {
+    console.log(userData);
     await prisma.user.create({
-      data: {
-        ...userData,
-        companyProfile: {
-          create: {
-            ...userData.companyProfile.create,
-            industry: userData.companyProfile.create.industry as Industry,
-            fundingRound: userData.companyProfile.create.fundingRound as FundingRound,
-          },
-        },
-      },
+      data: userData,
     });
   }
 
