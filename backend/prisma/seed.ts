@@ -497,8 +497,6 @@ async function main() {
       likes.push({
         fromUserId: applicant.id,
         toUserId: randomCompany.id,
-        section: "likes",
-        content: `Liked your company! - ${applicant.name}`,
       });
     }
     await prisma.like.createMany({
@@ -514,8 +512,6 @@ async function main() {
       likes.push({
         fromUserId: company.id,
         toUserId: randomApplicant.id,
-        section: "likes",
-        content: `Liked your profile! - ${company.name}`,
       });
     }
     await prisma.like.createMany({
@@ -563,8 +559,6 @@ async function main() {
       data: {
         fromUserId: firstApplicant.id,
         toUserId: firstCompany.id,
-        section: "About",
-        content: "Company mission",
       },
     });
   } else {
