@@ -1,8 +1,10 @@
 import express from "express";
-import { getAllMatches, getMatchById } from "../controllers/controllerMatch";
+import { deleteMatch, getAllMatches, getMatchById } from "../controllers/controllerMatch";
 
 const router = express.Router();
 
-router.get("/matches", getAllMatches);
-router.get("/matches/:id", getMatchById);
+router.get("/", getAllMatches);
+router.get("/:id", getMatchById);
+router.delete("/:id", deleteMatch);
+
 export default router;
