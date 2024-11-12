@@ -7,9 +7,8 @@ const useUsers = () => {
   const [companies, setCompanies] = useState<User[]>([]);
   const [applicants, setApplicants] = useState<User[]>([]);
 
-  const fetchCompanies = async () => {
+  const fetchUsers = async () => {
     const res = await getAllUsers();
-    // console.log(res);
     const resCompanies = res.filter((user: User) => user.profileType === "company");
     const resApplicants = res.filter((user: User) => user.profileType === "applicant");
 
@@ -18,7 +17,7 @@ const useUsers = () => {
   };
 
   useEffect(() => {
-    fetchCompanies();
+    fetchUsers();
   }, []);
 
   return { companies, applicants };

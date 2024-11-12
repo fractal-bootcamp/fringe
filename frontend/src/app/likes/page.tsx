@@ -1,18 +1,19 @@
 "use client";
 
-import { dummyApplicants } from "@/api/dummyApplicants";
-import { dummyCompanies } from "@/api/dummyCompanies";
 import LikesYouPage from "@/components/LikesYouPage";
+import useUsers from "@/hooks/useUsers";
 import { userTypeStore } from "@/stores/userTypeStore";
+import { User } from "@/types/types";
 
 const Page = () => {
   const { userType } = userTypeStore();
-  const likesYouApplicants = dummyApplicants.map((applicant) => ({
+  const { applicants, companies } = useUsers();
+  const likesYouApplicants = applicants.map((applicant: User) => ({
     name: applicant.name,
     profilePhoto: applicant.profilePhotoIds[0],
   }));
 
-  const likesYouCompanies = dummyCompanies.map((company) => ({
+  const likesYouCompanies = companies.map((company: User) => ({
     name: company.name,
     profilePhoto: company.profilePhotoIds[0],
   }));
