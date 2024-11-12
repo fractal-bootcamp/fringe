@@ -1,13 +1,12 @@
-import { PrismaClient } from "@prisma/client";
 import type { Request, Response } from "express";
 import prisma from "../prisma/client";
 import { logging } from "../utils/logging";
 
 export const sendMessage = logging("sendMessage", false, async (req: Request, res: Response) => {
-  const { message, matchId, senderId } = req.body;
+  const { matchId, senderId, content } = req.body;
   const newMessage = await prisma.message.create({
     data: {
-      content: message,
+      content,
       matchId,
       senderId,
     },

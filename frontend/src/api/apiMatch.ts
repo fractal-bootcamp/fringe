@@ -1,4 +1,4 @@
-import { Match } from "../../../shared/schema";
+import { Match } from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const apiGetMatches = async () => {
@@ -14,8 +14,9 @@ export const apiGetMatchById = async (id: string) => {
 };
 
 export const apiAddMatch = async (userId1: string, userId2: string) => {
-  const response: Match = await axiosClient.post("/match/add", { userId1, userId2 });
-  return response.data;
+  const response = await axiosClient.post("/match/add", { userId1, userId2 });
+  const match: Match = response.data;
+  return match;
 };
 
 export const apiDeleteMatch = async (id: string) => {

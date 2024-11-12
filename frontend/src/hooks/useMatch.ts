@@ -10,8 +10,13 @@ const useMatch = (matchId: string) => {
       const match = await apiGetMatchById(matchId);
       setMatch(match);
     };
+
     fetchMatch();
-  }, []);
+
+    const intervalId = setInterval(fetchMatch, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [matchId]);
 
   return { match };
 };

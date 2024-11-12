@@ -87,6 +87,12 @@ export interface Message {
   createdAt: Date;
 }
 
+export interface MessageRequest {
+  senderId: string;
+  matchId: string;
+  content: string;
+}
+
 // Enum: Profile Type
 export enum ProfileType {
   applicant = "applicant",
