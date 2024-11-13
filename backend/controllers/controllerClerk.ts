@@ -1,18 +1,10 @@
-import type { Request, RequestHandler, Response } from "express";
+import type { Request, Response } from "express";
 import prisma from "../prisma/client";
-import { verifyWebhookSignature } from "@clerk/clerk-node";
 import { logging } from "../utils/logging";
 
-const clerkSigningSecret = process.env.CLERK_SIGNING_SECRET;
+// const clerkSigningSecret = process.env.CLERK_SIGNING_SECRET;
 
 export const signUp = logging("signUp", false, async (req: Request, res: Response) => {
-  const signature = req.headers["clerk-signature"] as string;
-  const verified = verifyWebhookSignature(req.body, signature, clerkSigningSecret);
-
-  if (!verified) {
-    res.status(403).send("Invalid signature");
-  }
-
   const body = req.body;
 
   if (body.type === "user.created") {
