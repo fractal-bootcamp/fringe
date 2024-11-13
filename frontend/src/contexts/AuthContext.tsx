@@ -1,3 +1,4 @@
+'use client';
 import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { useAuth} from '@clerk/nextjs';
 
