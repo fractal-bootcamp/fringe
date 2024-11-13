@@ -17,14 +17,18 @@ interface ProfilePageProps {
 
 const ProfilePage = ({ name, profilePhoto }: ProfilePageProps) => {
   const { user } = useUser();
+  
   const handlePhotoClick = () => {
     const photoInput = document.getElementById('photoInput');
     if (photoInput) {
       photoInput.click();
-      const photo = photoInput.files[0];
-      if (photo) {
-        apiUpdateUserPhoto(user.id, photo);
-      }
+    }
+  };
+
+  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const photo = event.target.files?.[0];
+    if (photo) {
+      apiUpdateUserPhoto(user.id, photo);
     }
   };
 
@@ -41,7 +45,12 @@ const ProfilePage = ({ name, profilePhoto }: ProfilePageProps) => {
         <div className="absolute -top-1 -right-1">
           <FontAwesomeIcon icon={faPenToSquare} className="w-3 h-3 text-gray-600" />
         </div>
-        <input type="file" className="hidden" id="photoInput" />
+        <input 
+          type="file" 
+          className="hidden" 
+          id="photoInput" 
+          onChange={handlePhotoChange}
+        />
       </div>
       <p>{name}</p>
       <div className="flex flex-col justify-start w-full space-y-3">
