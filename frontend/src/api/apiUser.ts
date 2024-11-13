@@ -29,3 +29,9 @@ export const apiUpdateUserProfile = async (
   });
   return response.data;
 };
+
+export const apiUpdateUserPhoto = async (id: string, photo: File) => {
+  // const response = await axiosClient.post(`/user/update/${id}/photo`, { photo });
+  // return response.data;
+  console.log(photo);
+};
