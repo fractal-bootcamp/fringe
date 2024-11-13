@@ -100,25 +100,25 @@ const XProfilePage = ({
 
         {profileType === ProfileType.company && companyProps ? (
           <>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px]">
+            <div className="flex flex-col gap-2 p-4 border-[0.5px] rounded-lg shadow-sm">
               <Label>
                 <UsersIcon className="inline w-4 h-4 mr-1" /> Employee Count
               </Label>
               <p className="text-xs font-thin">{companyProps.employeeCount}</p>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px]">
+            <div className="flex flex-col gap-2 p-4 border-[0.5px] rounded-lg shadow-sm">
               <Label>
                 <CalendarIcon className="inline w-4 h-4 mr-1" /> Years of Operation
               </Label>
               <p className="text-xs font-thin">{companyProps.yearsOfOperation}</p>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px]">
+            <div className="flex flex-col gap-2 p-4 border-[0.5px] rounded-lg shadow-sm">
               <Label>
                 <BriefcaseIcon className="inline w-4 h-4 mr-1" /> Industry
               </Label>
               <p className="text-xs font-thin">{companyProps.industry}</p>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px]">
+            <div className="flex flex-col gap-2 p-4 border-[0.5px] rounded-lg shadow-sm">
               <Label>
                 <DollarSignIcon className="inline w-4 h-4 mr-1" /> Funding Round
               </Label>
