@@ -3,14 +3,16 @@ import { Match, User } from "@/types/types";
 import { apiGetUserById } from "@/api/apiUser";
 import storeMatch from "@/stores/storeMatch";
 import { apiAddMatch, apiDeleteMatch } from "@/api/apiMatch";
-
+import { useAuthContext } from "@/contexts/AuthContext";
 const useMatches = () => {
   const { matches, loadMatches, addMatch, deleteMatch } = storeMatch();
+  const { token } = useAuthContext();
 
   // Get matches
   const fetchMatches = async () => {
     const userId = "1"; // CHANGE THIS WHEN WE HAVE AUTH
-    const user: User = await apiGetUserById(userId);
+    if (!token) return;
+    const user: User = await apiGetUserById(userId, token);
     const matchesParsed: Match[] = user.matches.map((match) => {
       const matchUser = match.users.find((user) => user.id !== userId);
       return { ...match, users: matchUser ? [matchUser] : [] };
@@ -20,13 +22,15 @@ const useMatches = () => {
 
   // Add match
   const handleAddMatch = async (userId1: string, userId2: string) => {
-    const match: Match = await apiAddMatch(userId1, userId2);
+    if (!token) return;
+    const match: Match = await apiAddMatch(userId1, userId2, token);
     addMatch(match);
   };
 
   // Delete match
   const handleDeleteMatch = async (matchId: string) => {
-    await apiDeleteMatch(matchId);
+    if (!token) return;
+    await apiDeleteMatch(matchId, token);
     deleteMatch(matchId);
   };
 

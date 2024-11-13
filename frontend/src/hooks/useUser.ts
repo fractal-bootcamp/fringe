@@ -1,14 +1,13 @@
 import { apiGetUserById, apiUpdateUserPhoto, apiGetSignedUrl } from "@/api/apiUser";
 import { User } from "@/types/types";
 import { useEffect, useState } from "react";
-import { useAuth } from "@clerk/nextjs";
+import { useAuthContext } from "@/contexts/AuthContext";
 const useUser = () => {
   const userId = "1";
   const [user, setUser] = useState<User>();
   const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string>();
-  const { getToken } = useAuth();
+  const { token } = useAuthContext();
   const fetchUser = async () => {
-    const token = await getToken();
     if (!token) return;
     const user = await apiGetUserById(userId, token);
     setUser(user);
@@ -20,7 +19,6 @@ const useUser = () => {
 
   const updateUserPhoto = async (photo: File) => {
     if (user) {
-      const token = await getToken();
       if (!token) return;
       const response = await apiUpdateUserPhoto(user.id, photo, token);
       if (response.updatedUser) {

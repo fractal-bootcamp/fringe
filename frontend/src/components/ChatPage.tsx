@@ -2,18 +2,18 @@ import React, { useState} from "react";
 import { Message} from "@/types/types";
 import { sendMessage} from "../api/apiMessages";
 import useMessages from "@/hooks/useMessages";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 import { Match} from "@/types/types";
 
 interface ChatPageProps {
   match: Match;
-  getToken: () => Promise<string | null>;
 }
 
-const ChatPage = ({ match, getToken }: ChatPageProps) => {
+const ChatPage = ({ match }: ChatPageProps) => {
   const [message, setMessage] = useState("");
   const { messages, setMessages } = useMessages(match.id);
-
+  const { token } = useAuthContext();
 
   async function handleSend(): Promise<void> {
     if (!message.trim()) return;
@@ -30,7 +30,6 @@ const ChatPage = ({ match, getToken }: ChatPageProps) => {
 
     setMessages((prev: Message[]) => [...prev, newMessage]);    
     setMessage("");
-    const token = await getToken();
     if (!token) return;
     await sendMessage({
       content: message,

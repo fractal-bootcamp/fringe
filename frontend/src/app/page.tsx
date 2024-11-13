@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { UserCircleIcon, ComputerDesktopIcon } from "@heroicons/react/24/outline";
 import { userTypeStore } from "@/stores/userTypeStore";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth } from '@clerk/nextjs';
 
 export default function Home() {
   const { updateUserType } = userTypeStore();
