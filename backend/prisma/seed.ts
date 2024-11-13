@@ -1,6 +1,5 @@
-import { FundingRound, Industry, PrismaClient, ProfileType } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { FundingRound, Industry, ProfileType } from "@prisma/client";
+import prisma from "./client";
 
 async function main() {
   // Clear existing data
