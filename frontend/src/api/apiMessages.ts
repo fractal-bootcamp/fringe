@@ -10,6 +10,3 @@ export const getMessageHistory = async (matchId: string) => {
   const response = await axiosClient.get(`/chat/message-history/${matchId}`);
   return response.data;
 };
-
-
-

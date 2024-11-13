@@ -1,5 +1,4 @@
-// import { ProfileType } from "@/types/types";
-import { User } from "../../../shared/schema";
+import { User } from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const apiGetAllUsers = async () => {

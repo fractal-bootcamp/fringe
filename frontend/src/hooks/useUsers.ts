@@ -1,5 +1,5 @@
 import { apiGetAllUsers } from "@/api/apiUser";
-import { User } from "../../../shared/schema";
+import { User } from "@/types/types";
 import { useEffect, useState } from "react";
 
 const useUsers = () => {

@@ -11,7 +11,7 @@ const useMessages = (matchId: string) => {
       setMessages(messages);
     };
     fetchMessages();
-  }, []);
+  }, [matchId]);
 
   return { messages, setMessages };
 };
