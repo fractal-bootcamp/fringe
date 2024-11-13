@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { PenTool, Handshake, MessageCircle } from "lucide-react";
 
-interface XUserPageProps {
+interface XSettingsPageProps {
   name: string;
   image: string;
   onUpdatePhoto: () => void;
@@ -13,14 +13,14 @@ interface XUserPageProps {
   onMatches: () => void;
 }
 
-const XUserPage = ({
+const XSettingsPage = ({
   name,
   image,
   onUpdatePhoto,
   onUpdateProfile,
   onLikesYou,
   onMatches,
-}: XUserPageProps) => {
+}: XSettingsPageProps) => {
   return (
     <Card className="border-none shadow-none">
       <CardHeader className="flex flex-col items-center gap-2">
@@ -48,4 +48,4 @@ const XUserPage = ({
   );
 };
 
-export default XUserPage;
+export default XSettingsPage;
