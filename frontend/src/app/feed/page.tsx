@@ -1,15 +1,15 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import FeedCard from "@/components/FeedCard";
 import { useState } from "react";
 import useUsers from "@/hooks/useUsers";
 import { useAuth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 
 export default function Feed() {
-  const { isLoaded, userId, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
   const { applicants, companies } = useUsers();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Handle authentication
   if (!isLoaded) {
@@ -25,8 +25,6 @@ export default function Feed() {
   const items = (type === "client" ? companies : applicants).sort(
     (a, b) => Number(a.id) - Number(b.id)
   );
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleReject = () => {
     if (currentIndex < items.length - 1) {
@@ -53,4 +51,4 @@ export default function Feed() {
       </div>
     </div>
   );
-}
+};

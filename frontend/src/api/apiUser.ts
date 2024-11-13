@@ -1,5 +1,4 @@
-// import { ProfileType } from "@/types/types";
-import { User } from "../../../shared/schema";
+import { User } from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const apiGetAllUsers = async () => {
@@ -28,4 +27,10 @@ export const apiUpdateUserProfile = async (
     // profileType,
   });
   return response.data;
+};
+
+export const apiUpdateUserPhoto = async (id: string, photo: File) => {
+  // const response = await axiosClient.post(`/user/update/${id}/photo`, { photo });
+  // return response.data;
+  console.log(photo);
 };
