@@ -105,3 +105,19 @@ export const getSignedPhotoUrl = logging(
     res.status(200).json({ url: signedUrl });
   }
 );
+
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const userData = req.body;
+    // Add your user creation logic here
+    // For example, using Prisma:
+    const user = await prisma.user.create({
+      data: userData,
+    });
+    
+    res.status(201).json(user);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ error: 'Failed to create user' });
+  }
+};
