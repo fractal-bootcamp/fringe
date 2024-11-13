@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Generate Prisma client
+npx prisma generate
+
+# Migrate the database
+npx prisma migrate deploy
+
+# Start the server
+# bun run prisma/seed.ts
+
+# Seed matches and messages
+# bun run prisma/seedMatchesAndMessages.ts
+
+# Start the server
+bun run --watch index.ts

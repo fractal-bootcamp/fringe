@@ -3,19 +3,30 @@
 import FeedCard from "@/components/FeedCard";
 import { useState } from "react";
 import useUsers from "@/hooks/useUsers";
+import { useAuth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 import useUser from "@/hooks/useUser";
-import { User } from "@/types/types";
 
 const Page = () => {
+  const { isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
   const { applicants, companies } = useUsers();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  if (!user || !applicants || !companies) {
-    return <div>Loading...</div>;
+  // Handle authentication
+  if (!isLoaded) {
+    return null;
   }
 
-  const items: User[] = (user.profileType === "applicant" ? companies : applicants).sort(
+  if (!isSignedIn) {
+    redirect("/sign-in");
+  }
+
+  if (!user || !applicants || !companies) {
+    return null;
+  }
+
+  const items = (user.profileType === "applicant" ? companies : applicants).sort(
     (a, b) => Number(a.id) - Number(b.id)
   );
 
@@ -26,7 +37,6 @@ const Page = () => {
   };
 
   const handleLikeSection = (section: string, content: string) => {
-    // TODO: handle like action
     console.log(`Liked ${section}: ${content}`);
   };
 
