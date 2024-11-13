@@ -35,13 +35,7 @@ const UpdateProfile = () => {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [profileType, setProfileType] = useState<string>(ProfileType.applicant);
-  // const [profilePhoto, setProfilePhoto] = useState<string>("");
 
-  // const handleImageUpload = (file: File) => {
-  //   // TODO: Implement actual image upload logic
-  //   const imageUrl = URL.createObjectURL(file);
-  //   setProfilePhoto(imageUrl);
-  // };
 
   const fieldsGeneral: UpdateProfileFieldProps[] = [
     { title: "Name", value: name, callback: setName },
