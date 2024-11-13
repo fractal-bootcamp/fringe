@@ -4,20 +4,20 @@ import FeedCard from "@/components/FeedCard";
 import { useState } from "react";
 import useUsers from "@/hooks/useUsers";
 import useUser from "@/hooks/useUser";
+import { User } from "@/types/types";
 
 const Page = () => {
   const { user } = useUser();
   const { applicants, companies } = useUsers();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!user || !applicants || !companies) {
     return <div>Loading...</div>;
   }
 
-  const items = (user.profileType === "applicant" ? companies : applicants).sort(
+  const items: User[] = (user.profileType === "applicant" ? companies : applicants).sort(
     (a, b) => Number(a.id) - Number(b.id)
   );
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleReject = () => {
     if (currentIndex < items.length - 1) {
