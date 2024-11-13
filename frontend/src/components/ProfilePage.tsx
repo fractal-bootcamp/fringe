@@ -1,7 +1,5 @@
 import { faComment, faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import OptionTab, { OptionTabProps } from "./OptionTab";
-import { apiUpdateUserPhoto } from "@/api/apiUser";
-import useUser from "@/hooks/useUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const optionTabs: OptionTabProps[] = [
@@ -13,18 +11,21 @@ const optionTabs: OptionTabProps[] = [
 interface ProfilePageProps {
   name: string;
   profilePhoto: string;
+  onPhotoUpdate: (photo: File) => Promise<void>;
 }
 
-const ProfilePage = ({ name, profilePhoto }: ProfilePageProps) => {
-  const { user } = useUser();
+const ProfilePage = ({ name, profilePhoto, onPhotoUpdate }: ProfilePageProps) => {
   const handlePhotoClick = () => {
     const photoInput = document.getElementById('photoInput');
     if (photoInput) {
       photoInput.click();
-      const photo = photoInput.files[0];
-      if (photo) {
-        apiUpdateUserPhoto(user.id, photo);
-      }
+    }
+  };
+
+  const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const photo = event.target.files?.[0];
+    if (photo) {
+      await onPhotoUpdate(photo);
     }
   };
 
@@ -41,7 +42,12 @@ const ProfilePage = ({ name, profilePhoto }: ProfilePageProps) => {
         <div className="absolute -top-1 -right-1">
           <FontAwesomeIcon icon={faPenToSquare} className="w-3 h-3 text-gray-600" />
         </div>
-        <input type="file" className="hidden" id="photoInput" />
+        <input 
+          type="file" 
+          className="hidden" 
+          id="photoInput" 
+          onChange={handlePhotoChange}
+        />
       </div>
       <p>{name}</p>
       <div className="flex flex-col justify-start w-full space-y-3">
