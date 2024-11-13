@@ -1,20 +1,21 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import FeedCard from "@/components/FeedCard";
 import { useState } from "react";
 import useUsers from "@/hooks/useUsers";
+import useUser from "@/hooks/useUser";
 
-export default function Feed() {
+const Page = () => {
+  const { user } = useUser();
   const { applicants, companies } = useUsers();
 
-  const searchParams = useSearchParams();
-  const type = searchParams.get("type") as "client" | "company";
-  const items = (type === "client" ? companies : applicants).sort(
+  if (!user || !applicants || !companies) {
+    return <div>Loading...</div>;
+  }
+
+  const items = (user.profileType === "applicant" ? companies : applicants).sort(
     (a, b) => Number(a.id) - Number(b.id)
   );
-
-  console.log(items);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -25,10 +26,8 @@ export default function Feed() {
   };
 
   const handleLikeSection = (section: string, content: string) => {
-    // Here you would typically handle the like action
+    // TODO: handle like action
     console.log(`Liked ${section}: ${content}`);
-    // Optionally show some animation or feedback
-    // Could also store this information for matching purposes
   };
 
   if (items.length === 0) {
@@ -46,4 +45,6 @@ export default function Feed() {
       </div>
     </div>
   );
-}
+};
+
+export default Page;
