@@ -18,10 +18,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    // name: "John Doe",
-    // image: "https://github.com/shadcn.png",
-    // goToProfile: () => {},
-    // onMatch: () => {},
-    // onUnmatch: () => {},
+    name: "John Doe",
+    image: "https://github.com/shadcn.png",
+    onUpdatePhoto: () => {},
+    onUpdateProfile: () => {},
+    onLikesYou: () => {},
+    onMatches: () => {},
   },
 };
