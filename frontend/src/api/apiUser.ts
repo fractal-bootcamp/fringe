@@ -30,7 +30,18 @@ export const apiUpdateUserProfile = async (
 };
 
 export const apiUpdateUserPhoto = async (id: string, photo: File) => {
-  // const response = await axiosClient.post(`/user/update/${id}/photo`, { photo });
-  // return response.data;
-  console.log(photo);
+  const formData = new FormData();
+  formData.append('photo', photo);
+  
+  const response = await axiosClient.post(`/user/update/${id}/photo`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
+export const apiGetSignedUrl = async (id: string, photoId: string) => {
+  const response = await axiosClient.get(`/user/${id}/photo/${photoId}`);
+  return response.data.url;
 };

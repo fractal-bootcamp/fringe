@@ -1,7 +1,5 @@
 import { faComment, faHeart, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import OptionTab, { OptionTabProps } from "./OptionTab";
-import { apiUpdateUserPhoto } from "@/api/apiUser";
-import useUser from "@/hooks/useUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const optionTabs: OptionTabProps[] = [
@@ -13,11 +11,10 @@ const optionTabs: OptionTabProps[] = [
 interface ProfilePageProps {
   name: string;
   profilePhoto: string;
+  onPhotoUpdate: (photo: File) => Promise<void>;
 }
 
-const ProfilePage = ({ name, profilePhoto }: ProfilePageProps) => {
-  const { user } = useUser();
-  
+const ProfilePage = ({ name, profilePhoto, onPhotoUpdate }: ProfilePageProps) => {
   const handlePhotoClick = () => {
     const photoInput = document.getElementById('photoInput');
     if (photoInput) {
@@ -25,10 +22,10 @@ const ProfilePage = ({ name, profilePhoto }: ProfilePageProps) => {
     }
   };
 
-  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const photo = event.target.files?.[0];
     if (photo) {
-      apiUpdateUserPhoto(user.id, photo);
+      await onPhotoUpdate(photo);
     }
   };
 

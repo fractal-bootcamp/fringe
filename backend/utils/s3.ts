@@ -12,33 +12,32 @@ const s3Client = new S3Client({
  * Uploads a file to S3
  * @param fileBuffer - The file buffer to upload
  * @param fileName - The name to give the file in S3
- * @param contentType - The MIME type of the file
  * @returns Promise with the S3 upload result
  */
 export async function uploadToS3(
   fileBuffer: Buffer,
   fileName: string,
-  contentType: string
 ) {
   const command = new PutObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,
     Key: fileName,
     Body: fileBuffer,
-    ContentType: contentType,
+    ContentType:  "image/jpeg",
   });
 
-  return await s3Client.send(command);
+  await s3Client.send(command);
+  return fileName;
 }
 
 /**
  * Generates a signed URL for reading a file from S3
  * @param fileName - The name of the file in S3
- * @param expiresIn - Number of seconds until the URL expires
+ * @param expiresIn - Number of seconds until the URL expires (max 7 days)
  * @returns Promise with the signed URL
  */
 export async function getSignedReadUrl(
   fileName: string,
-  expiresIn: number = 3600
+  expiresIn: number = 604800  // 7 days in seconds
 ) {
   const command = new GetObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,
