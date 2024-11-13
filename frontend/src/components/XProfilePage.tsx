@@ -63,22 +63,22 @@ const XProfilePage = ({
 
         {profileType === ProfileType.applicant && applicantProps ? (
           <>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px]">
+            <div className="flex flex-col gap-2 p-4 border-[0.5px] shadow-sm rounded-lg">
               <Label>Experience</Label>
               <p className="text-xs font-thin">{applicantProps.experience}</p>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px]">
+            <div className="flex flex-col gap-2 p-4 border-[0.5px] shadow-sm rounded-lg">
               <Label>Education</Label>
               <p className="text-xs font-thin">{applicantProps.education}</p>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px]">
+            <div className="flex flex-col gap-2 p-4 border-[0.5px] shadow-sm rounded-lg">
               <Label>Portfolio</Label>
               <div className="flex flex-col gap-2">
                 {applicantProps.portfolio.map((item) => (
                   <Button
                     key={item.name}
                     variant="outline"
-                    className="w-full justify-between shadow-none rounded-none border-[0.5px]"
+                    className="w-full justify-between shadow-none border-[0.5px]"
                   >
                     <Link
                       href={item.url}
