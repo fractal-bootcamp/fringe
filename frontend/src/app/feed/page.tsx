@@ -3,19 +3,26 @@
 import FeedCard from "@/components/FeedCard";
 import { useState } from "react";
 import useUsers from "@/hooks/useUsers";
-import useUser from "@/hooks/useUser";
-import { User } from "@/types/types";
+import { useAuth } from "@clerk/nextjs";
+import { redirect, useSearchParams } from "next/navigation";
 
-const Page = () => {
-  const { user } = useUser();
+export default function Feed() {
+  const { isLoaded, isSignedIn } = useAuth();
   const { applicants, companies } = useUsers();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  if (!user || !applicants || !companies) {
-    return <div>Loading...</div>;
+  // Handle authentication
+  if (!isLoaded) {
+    return null;
+  }
+ 
+  if (!isSignedIn) {
+    redirect("/sign-in");
   }
 
-  const items: User[] = (user.profileType === "applicant" ? companies : applicants).sort(
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type") as "client" | "company";
+  const items = (type === "client" ? companies : applicants).sort(
     (a, b) => Number(a.id) - Number(b.id)
   );
 
@@ -26,7 +33,6 @@ const Page = () => {
   };
 
   const handleLikeSection = (section: string, content: string) => {
-    // TODO: handle like action
     console.log(`Liked ${section}: ${content}`);
   };
 
@@ -46,5 +52,3 @@ const Page = () => {
     </div>
   );
 };
-
-export default Page;
