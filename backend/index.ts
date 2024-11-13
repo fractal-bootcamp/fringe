@@ -11,7 +11,12 @@ import routesLike from "./routes/routesLike";
 const app = express();
 const PORT = process.env.PORT || 3005;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
