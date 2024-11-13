@@ -1,6 +1,5 @@
-import Navbar from "@/components/Navbar";
+import NavbarManager from "@/components/NavbarManager";
 import "./globals.css";
-import { dataNavigation } from "@/utils/dataNavigation";
 import { ClerkProvider } from '@clerk/nextjs'
 
 export default function RootLayout({
@@ -13,7 +12,7 @@ export default function RootLayout({
       <html lang="en">
         <body suppressHydrationWarning className={`antialiased`}>
           <div className="bg-gray-100 h-screen">{children}</div>
-          <Navbar navigationItems={dataNavigation} />
+          <NavbarManager />
         </body>
       </html>
     </ClerkProvider>
