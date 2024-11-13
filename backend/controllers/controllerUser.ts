@@ -106,18 +106,66 @@ export const getSignedPhotoUrl = logging(
   }
 );
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = logging("createUser", false, async (req: Request, res: Response) => {
   try {
-    const userData = req.body;
-    // Add your user creation logic here
-    // For example, using Prisma:
+    const { clerkId, name, location, profileType, role, experience } = req.body;
+
+    // Validate required fields
+    if (!clerkId || !name || !profileType) {
+      console.error("Missing required fields:", { clerkId, name, profileType });
+      return res.status(400).json({ 
+        error: "Missing required fields",
+        details: { clerkId, name, profileType }
+      });
+    }
+
+    const userData = {
+      clerkId,
+      name,
+      location: location || "",
+      profilePhotoIds: [],
+      profileType,
+      ...(profileType === "applicant" && {
+        applicantProfile: {
+          create: {
+            yearsOfExperience: parseInt(experience) || 0,
+            educationalExperiences: "",
+            professionalExperiences: role || "",
+            prompts: {
+              create: []
+            }
+          }
+        }
+      }),
+      ...(profileType === "company" && {
+        companyProfile: {
+          create: {
+            yearsOfOperation: parseInt(experience) || 0,
+            employeeCount: 0,
+            industry: (role || "TECHNOLOGY").toUpperCase(),
+            fundingRound: "SEED",
+            prompts: {
+              create: []
+            }
+          }
+        }
+      })
+    };
+
     const user = await prisma.user.create({
       data: userData,
+      include: {
+        applicantProfile: true,
+        companyProfile: true
+      }
     });
-    
+
     res.status(201).json(user);
   } catch (error) {
     console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Failed to create user' });
+    res.status(500).json({ 
+      error: 'Failed to create user',
+      details: error instanceof Error ? error.message : "Unknown error"
+    });
   }
-};
+});

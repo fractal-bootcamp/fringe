@@ -1,5 +1,8 @@
 import { User } from "@/types/types";
 import axiosClient from "./axiosClient";
+import axios from "axios";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3005";
 
 export const apiGetAllUsers = async () => {
   const response = await axiosClient.get("/user");
@@ -44,4 +47,9 @@ export const apiUpdateUserPhoto = async (id: string, photo: File) => {
 export const apiGetSignedUrl = async (id: string, photoId: string) => {
   const response = await axiosClient.get(`/user/${id}/photo/${photoId}`);
   return response.data.url;
+};
+
+export const createUser = async (userData: any) => {
+  const response = await axios.post(`${API_URL}/user`, userData);
+  return response.data;
 };
