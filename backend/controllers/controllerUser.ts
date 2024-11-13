@@ -85,7 +85,7 @@ export const updateUserPhoto = logging("updateUserPhoto", false, async (req: Req
 
   const updatedUser = await prisma.user.update({
     where: { id },
-    data: { profilePhotoIds: { push: uploadedPhotoKey } },
+    data: { profilePhotoIds: [uploadedPhotoKey] },
   });
 
   const signedUrl = await getSignedReadUrl(uploadedPhotoKey);
