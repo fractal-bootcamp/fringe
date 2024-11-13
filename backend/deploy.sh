@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Install OpenSSL
-apt-get update && apt-get install -y openssl
-
 # Generate Prisma client
 npx prisma generate
 
