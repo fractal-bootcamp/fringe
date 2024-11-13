@@ -4,10 +4,12 @@ import FeedCard from "@/components/FeedCard";
 import { useState } from "react";
 import useUsers from "@/hooks/useUsers";
 import { useAuth } from "@clerk/nextjs";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
+import useUser from "@/hooks/useUser";
 
-export default function Feed() {
+const Page = () => {
   const { isLoaded, isSignedIn } = useAuth();
+  const { user } = useUser();
   const { applicants, companies } = useUsers();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -15,14 +17,16 @@ export default function Feed() {
   if (!isLoaded) {
     return null;
   }
- 
+
   if (!isSignedIn) {
     redirect("/sign-in");
   }
 
-  const searchParams = useSearchParams();
-  const type = searchParams.get("type") as "client" | "company";
-  const items = (type === "client" ? companies : applicants).sort(
+  if (!user || !applicants || !companies) {
+    return null;
+  }
+
+  const items = (user.profileType === "applicant" ? companies : applicants).sort(
     (a, b) => Number(a.id) - Number(b.id)
   );
 
@@ -52,3 +56,5 @@ export default function Feed() {
     </div>
   );
 };
+
+export default Page;
