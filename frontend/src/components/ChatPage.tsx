@@ -7,9 +7,10 @@ import { Match} from "@/types/types";
 
 interface ChatPageProps {
   match: Match;
+  getToken: () => Promise<string | null>;
 }
 
-const ChatPage = ({ match }: ChatPageProps) => {
+const ChatPage = ({ match, getToken }: ChatPageProps) => {
   const [message, setMessage] = useState("");
   const { messages, setMessages } = useMessages(match.id);
 
@@ -29,11 +30,13 @@ const ChatPage = ({ match }: ChatPageProps) => {
 
     setMessages((prev: Message[]) => [...prev, newMessage]);    
     setMessage("");
+    const token = await getToken();
+    if (!token) return;
     await sendMessage({
       content: message,
       matchId: match.id, 
       senderId: "1",
-    });
+    },token);
   }
 
 

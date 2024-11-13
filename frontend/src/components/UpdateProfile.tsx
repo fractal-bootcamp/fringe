@@ -10,23 +10,29 @@ import { apiUpdateCompanyProfile } from "@/api/apiCompany";
 import { apiUpdateUserProfile } from "@/api/apiUser";
 import { useRouter } from "next/navigation";
 
-const UpdateProfile = () => {
+  interface UpdateProfileProps {
+  getToken: () => Promise<string | null>;
+}
+
+const UpdateProfile = async ({ getToken }: UpdateProfileProps) => {
   const { userType } = userTypeStore();
   const router = useRouter();
+  const token = await getToken();
 
   const { user } = useUser();
 
   const handleSubmit = async () => {
-    if (user && user.applicantProfile) {
-      await apiUpdateUserProfile(user.id, name, location);
+    if (user && user.applicantProfile && token) {
+      await apiUpdateUserProfile(user.id, name, location, token);
       await apiUpdateApplicantProfile(
         user.applicantProfile.id,
         educationalExperiences,
-        professionalExperiences
+        professionalExperiences,
+        token
       );
-    } else if (user && user.companyProfile) {
-      await apiUpdateUserProfile(user.id, name, location);
-      await apiUpdateCompanyProfile(user.companyProfile.id, industry, fundingRound);
+    } else if (user && user.companyProfile && token) {
+      await apiUpdateUserProfile(user.id, name, location, token);
+      await apiUpdateCompanyProfile(user.companyProfile.id, industry, fundingRound, token);
     }
     router.push("/profile");
   };

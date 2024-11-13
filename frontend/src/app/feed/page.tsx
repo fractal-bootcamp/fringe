@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import useUser from "@/hooks/useUser";
 
 const Page = () => {
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn} = useAuth();
   const { user } = useUser();
   const { applicants, companies } = useUsers();
   const [currentIndex, setCurrentIndex] = useState(0);

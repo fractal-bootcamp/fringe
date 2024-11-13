@@ -5,7 +5,8 @@ export const apiUpdateApplicantProfile = async (
   id: string,
   // yearsOfExperience: number,
   educationalExperiences: string,
-  professionalExperiences: string
+  professionalExperiences: string,
+  token: string
   // prompts: Prompt[]
 ) => {
   const response = await axiosClient.post(`/applicant/update/${id}`, {
@@ -13,6 +14,10 @@ export const apiUpdateApplicantProfile = async (
     educationalExperiences,
     professionalExperiences,
     // prompts,
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   return response.data;
 };

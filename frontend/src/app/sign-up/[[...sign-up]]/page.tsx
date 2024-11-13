@@ -14,7 +14,7 @@ export default function Page() {
             rootBox: "w-full"
           }
         }}
-        redirectUrl="/"
+        fallbackRedirectUrl="/"
       />
     </div>
   );

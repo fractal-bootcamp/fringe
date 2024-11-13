@@ -1,9 +1,12 @@
 import UpdateProfile from "@/components/UpdateProfile";
-
-const Page = () => {
+import { useAuth } from "@clerk/nextjs";
+const Page = async () => {
+  const { getToken } = useAuth();
+  if (!getToken) return <div>Loading...</div>;
+  
   return (
     <div className="p-2">
-      <UpdateProfile />
+      <UpdateProfile getToken={getToken} />
     </div>
   );
 };

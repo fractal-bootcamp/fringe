@@ -6,7 +6,8 @@ export const apiUpdateCompanyProfile = async (
   // yearsOfOperation: number,
   // employeeCount: number,
   industry: string,
-  fundingRound: string
+  fundingRound: string,
+  token: string
   // prompts: Prompt[]
 ) => {
   const response = await axiosClient.post(`/company/update/${id}`, {
@@ -15,6 +16,10 @@ export const apiUpdateCompanyProfile = async (
     industry,
     fundingRound,
     // prompts,
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   return response.data;
 };
