@@ -11,7 +11,7 @@ interface MatchCardProps {
   isYourTurn: boolean;
 }
 
-const MatchCard = ({ matchId, profile, isYourTurn }: MatchCardProps) => {
+const MatchCard = ({ matchId, profile }: MatchCardProps) => {
   const router = useRouter();
   const { handleDeleteMatch } = useMatches();
 
