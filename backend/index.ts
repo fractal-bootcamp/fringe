@@ -7,6 +7,7 @@ import routesApplicant from "./routes/routesApplicant";
 import routesMatches from "./routes/routesMatch";
 import routesChat from "./routes/routesChat";
 import routesLike from "./routes/routesLike";
+import routesClerk from "./routes/routesClerk";
 
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -28,9 +29,10 @@ app.listen(PORT, () => {
 });
 
 // Routes
-app.use("/user", routesUser);
-app.use("/company", routesCompany);
 app.use("/applicant", routesApplicant);
-app.use("/match", routesMatches);
 app.use("/chat", routesChat);
+app.use("/clerk", routesClerk);
+app.use("/company", routesCompany);
 app.use("/like", routesLike);
+app.use("/match", routesMatches);
+app.use("/user", routesUser);
