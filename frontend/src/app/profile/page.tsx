@@ -16,10 +16,14 @@ const Page = () => {
     profilePhoto: currentPhotoUrl,
   };
 
+  if (!userProfile.name || !userProfile.profilePhoto) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="p-2">
-      <ProfilePage 
-        name={userProfile.name} 
+      <ProfilePage
+        name={userProfile.name}
         profilePhoto={userProfile.profilePhoto}
         onPhotoUpdate={updateUserPhoto}
       />
