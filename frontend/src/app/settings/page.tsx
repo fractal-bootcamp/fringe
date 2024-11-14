@@ -7,6 +7,7 @@ import React from "react";
 
 const Page = () => {
   const { user, updateUserPhoto, currentPhotoUrl, isLoading } = useUser();
+
   const router = useRouter();
 
   if (isLoading) {

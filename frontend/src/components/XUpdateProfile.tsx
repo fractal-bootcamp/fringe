@@ -5,30 +5,14 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { ProfileType } from "@/types/types";
 import { Button } from "./ui/button";
+import { UpdateProfileData } from "@/hooks/useUpdate";
 
 interface XUpdateProfileProps {
   profileType: ProfileType;
-  onUpdateApplicant?: (
-    name: string,
-    location: string,
-    experience: string,
-    education: string
-  ) => void;
-  onUpdateCompany?: (
-    name: string,
-    location: string,
-    employeeCount: number,
-    yearsOfOperation: number,
-    industry: string,
-    fundingRound: string
-  ) => void;
+  onUpdateProfile?: (profileData: UpdateProfileData) => Promise<void>;
 }
 
-const XUpdateProfile = ({
-  profileType,
-  onUpdateApplicant,
-  onUpdateCompany,
-}: XUpdateProfileProps) => {
+const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) => {
   // General
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
@@ -44,13 +28,26 @@ const XUpdateProfile = ({
   const [industry, setIndustry] = useState("");
   const [fundingRound, setFundingRound] = useState("");
 
-  const handleUpdateProfile = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (profileType === "applicant" && onUpdateApplicant) {
-      onUpdateApplicant(name, location, experience, education);
-    } else if (profileType === "company" && onUpdateCompany) {
-      onUpdateCompany(name, location, employeeCount, yearsOfOperation, industry, fundingRound);
-    }
+    // if (profileType === "applicant" && onUpdateProfile) {
+    //   await onUpdateProfile({
+    //     name,
+    //     location,
+    //     professionalExperiences: experience,
+    //     educationalExperiences: education,
+    //     portfolioUrl,
+    //   });
+    // } else if (profileType === "company" && onUpdateProfile) {
+    //   await onUpdateProfile({
+    //     name,
+    //     location,
+    //     employeeCount,
+    //     yearsOfOperation,
+    //     industry,
+    //     fundingRound,
+    //   });
+    // }
   };
 
   return (

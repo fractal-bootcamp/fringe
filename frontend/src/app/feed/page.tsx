@@ -52,11 +52,6 @@ const Page = () => {
   return (
     <div className="container mx-auto px-4 py-8 mb-16 max-w-2xl">
       <div className="relative">
-        {/* <FeedCard
-          user={items[currentIndex]}
-          onReject={handleReject}
-          onLikeSection={handleLikeSection}
-        /> */}
         {items[currentIndex].profileType === ProfileType.applicant &&
         items[currentIndex].applicantProfile ? (
           <XProfilePage
