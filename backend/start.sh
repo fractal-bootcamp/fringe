@@ -1,9 +1,10 @@
 #!/bin/bash
 # Install dependencies
 docker-compose up -d
-# Seed the database
+# Migrate the database
 npx prisma migrate dev
-# Start the server
+
+# Seed the database
 bun run prisma/seed.ts
-# Seed matches and messages
 bun run prisma/seedMatchesAndMessages.ts
+

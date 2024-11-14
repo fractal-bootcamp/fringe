@@ -33,6 +33,7 @@ export interface Applicant {
   educationalExperiences: string;
   professionalExperiences: string;
   prompts: Prompt[];
+  portfolioUrl: string;
 }
 
 // Companies
