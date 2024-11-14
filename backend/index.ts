@@ -40,5 +40,4 @@ app.use("/chat", requireAuth(), identifyUserMiddleware, routesChat);
 app.use("/company", requireAuth(), identifyUserMiddleware, routesCompany);
 app.use("/like", requireAuth(), identifyUserMiddleware, routesLike);
 app.use("/match", requireAuth(), identifyUserMiddleware, routesMatches);
-app.use("/user/createUser", routesUser);
-app.use("/user", requireAuth(), identifyUserMiddleware, routesUser);
+app.use("/user",routesUser)

@@ -22,9 +22,10 @@ export const updateApplicantProfile = logging(
     const userId = req.user.id;
     const updatedData = req.body;
 
-    const updatedApplicant = await prisma.applicant.update({
+    const updatedApplicant = await prisma.applicant.upsert({
       where: { id: userId },
-      data: updatedData,
+      update: updatedData,
+      create: updatedData,
     });
     res.status(200).json(updatedApplicant);
   }

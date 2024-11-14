@@ -29,11 +29,14 @@ const useUser = () => {
 
 
   const createUser = async (type: ProfileType) => {
+    console.log('Creating user with type:', type);
+    console.log('Token:', token);
     if (!token) return;
     const response = await apiCreateUser(type, token);
     if (response.user) {
       setUser(response.user);
     }
+    return response;
   };  
 
   useEffect(() => {

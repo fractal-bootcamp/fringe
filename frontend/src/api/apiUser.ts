@@ -67,8 +67,11 @@ export const apiGetSignedUrl = async (photoId: string, token: string) => {
 
 export const apiCreateUser = async (type: ProfileType, token: string) => {
   const response = await axiosClient.post(`/user/createUser`, {
-    type,
-    token,
+    profileType: type,
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   return response.data;
 };

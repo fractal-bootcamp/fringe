@@ -3,12 +3,11 @@
 import FeedCard from "@/components/FeedCard";
 import { useState } from "react";
 import useUsers from "@/hooks/useUsers";
-import { useAuth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import useUser from "@/hooks/useUser";
-
+import { useAuthContext } from "@/contexts/AuthContext";
 const Page = () => {
-  const { isLoaded, isSignedIn} = useAuth();
+  const { isLoaded, isSignedIn} = useAuthContext();
   const { user } = useUser();
   const { applicants, companies } = useUsers();
   const [currentIndex, setCurrentIndex] = useState(0);

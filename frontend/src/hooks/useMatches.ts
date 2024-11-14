@@ -12,7 +12,7 @@ const useMatches = () => {
   const fetchMatches = async () => {
     if (!token) return;
     const user: User = await apiGetUserById(token);
-    if (user.matches.length === 0) {
+    if (!user || !user.matches || user.matches.length === 0) {
       return;
     }
     const matchesParsed: Match[] = user.matches.map((match) => {

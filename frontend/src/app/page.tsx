@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from '@clerk/nextjs';
+import { useAuthContext } from "@/contexts/AuthContext";
 
 export default function Home() {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn } = useAuthContext();
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-white">

@@ -4,12 +4,14 @@ import { useAuth} from '@clerk/nextjs';
 
 interface AuthContextType {
   token: string | null;
+  isSignedIn: boolean;
+  isLoaded: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const { getToken } = useAuth();
+  const { getToken, isLoaded, isSignedIn=false } = useAuth();
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -38,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ token }}>
+    <AuthContext.Provider value={{ token, isSignedIn, isLoaded }}>
       {children}
     </AuthContext.Provider>
   );

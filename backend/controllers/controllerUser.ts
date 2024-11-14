@@ -110,43 +110,57 @@ export const getSignedPhotoUrl = logging(
 );
 
 export const createUser = logging("createUser", false, async (req: Request, res: Response) => {
-  const auth = getAuth(req);
-  if (!auth.userId) {
-    return res.status(401).json({ error: "Unauthorized - No userId" });
-  }
-  const clerkUser = await clerkClient.users.getUser(auth.userId);
-  const user = await prisma.user.create({
-    data: {
-      clerkId: auth.userId,
-      name: clerkUser.username || "New User",
-      location: "",
-      profilePhotoIds: [],
-      profileType: req.body.profileType,
+  try {
+    const auth = getAuth(req);
+    console.log("auth", auth);
+    if (!auth.userId) {
+      return res.status(401).json({ error: "Unauthorized - No userId" });
     }
-  });
-  console.log(`Created new user with clerkId: ${auth.userId}`);
 
-  if (req.body.profileType === 'applicant') {
-    await prisma.applicant.create({
-      data: {
-        userId: user.id,
-        yearsOfExperience: 0,
-        educationalExperiences: "",
-        professionalExperiences: ""
+    const clerkUser = await clerkClient.users.getUser(auth.userId);
+    
+    const result = await prisma.$transaction(async (prisma) => {
+      const user = await prisma.user.create({
+        data: {
+          clerkId: auth.userId,
+          name: clerkUser.username || "New User",
+          location: "",
+          profilePhotoIds: [],
+          profileType: req.body.profileType,
+        }
+      });
+
+      if (req.body.profileType === 'applicant') {
+        await prisma.applicant.create({
+          data: {
+            userId: user.id,
+            yearsOfExperience: 0,
+            educationalExperiences: "",
+            professionalExperiences: ""
+          }
+        });
+      } else if (req.body.profileType === 'company') {
+        await prisma.company.create({
+          data: {
+            userId: user.id,
+            yearsOfOperation: 0,
+            employeeCount: 0,
+            industry: 'software',
+            fundingRound: 'seed'
+          }
+        });
       }
+
+      return user;
     });
-  } else if (req.body.profileType === 'company') {
-    await prisma.company.create({
-      data: {
-        userId: user.id,
-        yearsOfOperation: 0,
-        employeeCount: 0,
-        industry: 'software',
-        fundingRound: 'seed'
-      }
-    });
+
+    console.log(`Created new user with clerkId: ${auth.userId}`);
+    res.status(200).json({ message: "User created", user: result });
+
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ error: "Failed to create user" });
   }
-  res.status(200).json({ message: "User created" });
 });
 
 
