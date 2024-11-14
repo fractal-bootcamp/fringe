@@ -4,37 +4,18 @@ import { useState } from "react";
 import UpdateProfileField, { UpdateProfileFieldProps } from "./UpdateProfileField";
 import { userTypeStore } from "@/stores/userTypeStore";
 import { ProfileType } from "@/types/types";
-import { apiUpdateApplicantProfile } from "@/api/apiApplicant";
-import useUser from "@/hooks/useUser";
-import { apiUpdateCompanyProfile } from "@/api/apiCompany";
-import { apiUpdateUserProfile } from "@/api/apiUser";
-import { useRouter } from "next/navigation";
+import { useUpdate } from "@/hooks/useUpdate";
+
 
 const UpdateProfile = () => {
   const { userType } = userTypeStore();
-  const router = useRouter();
-
-  const { user } = useUser();
-
-  const handleSubmit = async () => {
-    if (user && user.applicantProfile) {
-      await apiUpdateUserProfile(user.id, name, location);
-      await apiUpdateApplicantProfile(
-        user.applicantProfile.id,
-        educationalExperiences,
-        professionalExperiences
-      );
-    } else if (user && user.companyProfile) {
-      await apiUpdateUserProfile(user.id, name, location);
-      await apiUpdateCompanyProfile(user.companyProfile.id, industry, fundingRound);
-    }
-    router.push("/profile");
-  };
 
   // General
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [profileType, setProfileType] = useState<string>(ProfileType.applicant);
+  const { updateProfile, isLoading, error } = useUpdate();
+
 
 
   const fieldsGeneral: UpdateProfileFieldProps[] = [
@@ -77,6 +58,17 @@ const UpdateProfile = () => {
     userType === "applicant"
       ? [...fieldsApplicant, ...fieldsGeneral]
       : [...fieldsCompany, ...fieldsGeneral];
+
+  const handleSubmit = async () => {
+    await updateProfile({
+      name,
+      location,
+      professionalExperiences,
+      educationalExperiences,
+      industry,
+      fundingRound,
+    });
+  };
 
   return (
     <div className="w-full flex flex-col space-y-4">
