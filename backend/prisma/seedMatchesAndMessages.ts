@@ -1,84 +1,84 @@
 import prisma from "./client";
 
+// Helper function to generate random messages
+function generateRandomMessage(): string {
+  const messages = [
+    "Hey, how are you?",
+    "What's up?",
+    "Nice to meet you!",
+    "How's your day going?",
+    "What do you like to do for fun?",
+    "Have any plans for the weekend?",
+    "I love your profile!",
+    "What's your favorite movie?",
+    "Do you like to travel?",
+    "What kind of music do you listen to?",
+    "Where are you from originally?",
+    "What do you do for work?",
+    "Have any pets?",
+    "Love your photos!",
+    "Want to grab coffee sometime?",
+  ];
+  return messages[Math.floor(Math.random() * messages.length)];
+}
+
 async function main() {
   // Clear existing data
   await prisma.message.deleteMany();
   await prisma.match.deleteMany();
 
-  // Create dummy matches and messages
-  const matchData = [
-    {
-      users: ["1", "11"], // Alice Smith & Tech Innovations
-      messages: [
-        { content: "Hi, I'm really interested in your software solutions!", senderId: "1" },
-        {
-          content: "Thanks for reaching out! We'd love to discuss your experience.",
-          senderId: "11",
-        },
-      ],
-    },
-    {
-      users: ["2", "12"], // Bob Johnson & Finance Solutions
-      messages: [
-        { content: "Your fintech platform looks innovative!", senderId: "2" },
-        { content: "Thank you! Would you like to schedule a call?", senderId: "12" },
-      ],
-    },
-    {
-      users: ["3", "13"], // Charlie Brown & Creative Designs
-      messages: [
-        { content: "I love your company's design philosophy!", senderId: "3" },
-        {
-          content: "We appreciate your interest! Your backend experience is impressive.",
-          senderId: "13",
-        },
-      ],
-    },
-    {
-      users: ["4", "14"], // Diana Prince & HealthTech Corp
-      messages: [
-        { content: "Your health management software aligns with my interests!", senderId: "4" },
-        { content: "Your data science background would be valuable here.", senderId: "14" },
-      ],
-    },
-    {
-      users: ["5", "15"], // Ethan Hunt & EcoFinance
-      messages: [
-        { content: "Your sustainable investment approach is fascinating!", senderId: "5" },
-        {
-          content: "Thanks! We'd love to hear more about your development experience.",
-          senderId: "15",
-        },
-      ],
-    },
-  ];
+  // Fetch all users from the database
+  const users = await prisma.user.findMany();
+
+  // Ensure we have enough users
+  if (users.length < 2) {
+    console.error("Not enough users in the database to create matches");
+    return;
+  }
 
   console.log("Creating matches and messages...");
 
-  for (const match of matchData) {
-    // Create match with both users
-    const newMatch = await prisma.match.create({
-      data: {
-        users: {
-          connect: match.users.map((userId) => ({ id: userId })),
-        },
-      },
-    });
+  // For each user, create at least 5 matches
+  for (const user of users) {
+    const numberOfMatches = Math.max(5, Math.floor(Math.random() * 8)); // 5-7 matches
 
-    // Create messages for the match
-    for (const msg of match.messages) {
-      await prisma.message.create({
+    // Create matches for current user
+    for (let i = 0; i < numberOfMatches; i++) {
+      // Select a random other user for the match
+      let otherUser;
+      do {
+        otherUser = users[Math.floor(Math.random() * users.length)];
+      } while (otherUser.id === user.id);
+
+      // Create match
+      const newMatch = await prisma.match.create({
         data: {
-          content: msg.content,
-          match: {
-            connect: { id: newMatch.id },
+          users: {
+            connect: [{ id: user.id }, { id: otherUser.id }],
           },
-          sender: {
-            connect: { id: msg.senderId },
-          },
-          createdAt: new Date(), // This is optional as it defaults to now()
         },
       });
+
+      // Create 10 messages for this match
+      const numberOfMessages = 10;
+      const messageUsers = [user.id, otherUser.id];
+
+      for (let j = 0; j < numberOfMessages; j++) {
+        const senderId = messageUsers[j % 2]; // Alternate between users
+
+        await prisma.message.create({
+          data: {
+            content: generateRandomMessage(),
+            match: {
+              connect: { id: newMatch.id },
+            },
+            sender: {
+              connect: { id: senderId },
+            },
+            createdAt: new Date(Date.now() - (numberOfMessages - j) * 1000 * 60 * 60),
+          },
+        });
+      }
     }
   }
 
