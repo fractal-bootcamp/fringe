@@ -7,10 +7,14 @@ import routesApplicant from "./routes/routesApplicant";
 import routesMatches from "./routes/routesMatch";
 import routesChat from "./routes/routesChat";
 import routesLike from "./routes/routesLike";
-import routesClerk from "./routes/routesClerk";
+import { requireAuth, clerkMiddleware } from "@clerk/express";
+import { identifyUserMiddleware } from "./middleware/identifyUserMiddleware";
+
 
 const app = express();
 const PORT = process.env.PORT || 3005;
+
+
 
 app.use(
   cors({
@@ -20,8 +24,10 @@ app.use(
 );
 app.use(express.json());
 
+app.use(clerkMiddleware());
+
 app.get("/", (req, res) => {
-  res.send("Hello, World!");
+  res.send("Hello World");
 });
 
 app.listen(PORT, () => {
@@ -29,10 +35,9 @@ app.listen(PORT, () => {
 });
 
 // Routes
-app.use("/applicant", routesApplicant);
-app.use("/chat", routesChat);
-app.use("/clerk", routesClerk);
-app.use("/company", routesCompany);
-app.use("/like", routesLike);
-app.use("/match", routesMatches);
-app.use("/user", routesUser);
+app.use("/applicant", requireAuth(), identifyUserMiddleware, routesApplicant);
+app.use("/chat", requireAuth(), identifyUserMiddleware, routesChat);
+app.use("/company", requireAuth(), identifyUserMiddleware, routesCompany);
+app.use("/like", requireAuth(), identifyUserMiddleware, routesLike);
+app.use("/match", requireAuth(), identifyUserMiddleware, routesMatches);
+app.use("/user",routesUser)

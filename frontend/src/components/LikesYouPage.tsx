@@ -6,6 +6,9 @@ interface LikesYouPageProps {
 }
 
 const LikesYouPage = ({ likes }: LikesYouPageProps) => {
+  if (!likes || likes.length === 0) {
+    return <div>No likes yet</div>;
+  }
   const likesYouUsers: { like: Like; likesYouUser: User }[] = likes.map((like: Like) => ({
     like,
     likesYouUser: like.fromUser,

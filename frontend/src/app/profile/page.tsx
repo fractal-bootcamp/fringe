@@ -5,10 +5,14 @@ import useUser from "@/hooks/useUser";
 import React from "react";
 
 const Page = () => {
-  const { user, updateUserPhoto, currentPhotoUrl } = useUser();
+  const { user, updateUserPhoto, currentPhotoUrl, isLoading } = useUser();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <div>User not found</div>;
   }
 
   const userProfile = {
@@ -16,15 +20,11 @@ const Page = () => {
     profilePhoto: currentPhotoUrl,
   };
 
-  if (!userProfile.name || !userProfile.profilePhoto) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="p-2">
       <ProfilePage
         name={userProfile.name}
-        profilePhoto={userProfile.profilePhoto}
+        profilePhoto={userProfile.profilePhoto ?? ""}
         onPhotoUpdate={updateUserPhoto}
       />
     </div>

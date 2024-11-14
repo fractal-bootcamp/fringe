@@ -38,7 +38,13 @@ const ProfilePage = ({ name, profilePhoto, onPhotoUpdate }: ProfilePageProps) =>
         className="rounded-full w-20 h-20 bg-sky-200 cursor-pointer relative" 
         onClick={handlePhotoClick}
       >
-        <img src={profilePhoto} className="w-full h-full object-cover rounded-full" />
+        {profilePhoto && (
+          <img 
+            src={profilePhoto} 
+            alt={`${name}'s profile photo`}
+            className="w-full h-full object-cover rounded-full" 
+          />
+        )}
         <div className="absolute -top-1 -right-1">
           <FontAwesomeIcon icon={faPenToSquare} className="w-3 h-3 text-gray-600" />
         </div>

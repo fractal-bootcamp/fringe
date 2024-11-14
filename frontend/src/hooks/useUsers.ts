@@ -1,14 +1,18 @@
 import { apiGetAllUsers } from "@/api/apiUser";
 import { User } from "@/types/types";
 import { useEffect, useState } from "react";
-
+import { useAuthContext } from "@/contexts/AuthContext";
+import useUser from "@/hooks/useUser";
 const useUsers = () => {
-  // const [users, setUsers] = useState([]);
   const [companies, setCompanies] = useState<User[]>([]);
   const [applicants, setApplicants] = useState<User[]>([]);
+  const { token } = useAuthContext();
+  const { user } = useUser();
 
   const fetchUsers = async () => {
-    const res = await apiGetAllUsers();
+    if (!token || !user) return;
+    const res = await apiGetAllUsers(token);
+    if (res.length === 0) return;
     const resCompanies = res.filter((user: User) => user.profileType === "company");
     const resApplicants = res.filter((user: User) => user.profileType === "applicant");
 
@@ -18,7 +22,7 @@ const useUsers = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [token, user]);
 
   return { companies, applicants };
 };

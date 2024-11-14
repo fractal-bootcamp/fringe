@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import type { Request, Response } from "express";
 import prisma from "../prisma/client";
 import { logging } from "../utils/logging";
@@ -20,12 +19,13 @@ export const updateApplicantProfile = logging(
   "updateApplicantProfile",
   false,
   async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const userId = req.user.id;
     const updatedData = req.body;
 
-    const updatedApplicant = await prisma.applicant.update({
-      where: { id },
-      data: updatedData,
+    const updatedApplicant = await prisma.applicant.upsert({
+      where: { id: userId },
+      update: updatedData,
+      create: updatedData,
     });
     res.status(200).json(updatedApplicant);
   }

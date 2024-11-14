@@ -1,39 +1,56 @@
-import { apiGetUserById, apiUpdateUserPhoto, apiGetSignedUrl } from "@/api/apiUser";
-import { User } from "@/types/types";
+import { apiGetUserById, apiUpdateUserPhoto, apiGetSignedUrl, apiUpdateUserProfile, apiCreateUser } from "@/api/apiUser";
+import { ProfileType, User } from "@/types/types";
 import { useEffect, useState } from "react";
-
+import { useAuthContext } from "@/contexts/AuthContext";
 const useUser = () => {
-  const userId = "1";
   const [user, setUser] = useState<User>();
   const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string>();
+  const { token } = useAuthContext();
 
   const fetchUser = async () => {
-    const user = await apiGetUserById(userId);
+    if (!token) return;
+    const user = await apiGetUserById(token);
+    console.log(user);
     setUser(user);
     if (user.profilePhotoIds?.[0]) {
-      const url = await apiGetSignedUrl(userId, user.profilePhotoIds[0]);
+      const url = await apiGetSignedUrl(user.profilePhotoIds[0], token);
       setCurrentPhotoUrl(url);
     }
   };
 
   const updateUserPhoto = async (photo: File) => {
-    if (user) {
-      const response = await apiUpdateUserPhoto(user.id, photo);
-      if (response.updatedUser) {
-        setUser(response.updatedUser);
-        setCurrentPhotoUrl(response.photoUrl);
-      }
+    if (!token || !user) return;
+    const response = await apiUpdateUserPhoto(photo, token);
+    if (response.updatedUser) {
+      setUser(response.updatedUser);
+      setCurrentPhotoUrl(response.photoUrl);
     }
   };
 
+
+  const createUser = async (type: ProfileType) => {
+    console.log('Creating user with type:', type);
+    console.log('Token:', token);
+    if (!token) return;
+    const response = await apiCreateUser(type, token);
+    if (response.user) {
+      setUser(response.user);
+    }
+    return response;
+  };  
+
   useEffect(() => {
-    fetchUser();
-  }, []);
+    if (token) {
+      fetchUser();
+    }
+  }, [token]);
 
   return { 
     user, 
     updateUserPhoto,
-    currentPhotoUrl: currentPhotoUrl
+    createUser,
+    currentPhotoUrl,
+    isLoading: !user && !!token
   };
 };
 
