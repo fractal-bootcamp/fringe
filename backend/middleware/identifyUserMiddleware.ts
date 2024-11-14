@@ -1,19 +1,50 @@
-import { type NextFunction, type Request, type Response } from "express";
-import { getAuth, clerkClient } from "@clerk/express";
+import { type NextFunction, type Request as ExpressRequest, type Response } from "express";
+import { getAuth} from "@clerk/express";
 import prisma from "../prisma/client";
 
-export async function identifyUserMiddleware(req: Request, res: Response, next: NextFunction) {
-  const auth = getAuth(req);
 
-  let clerkUser = await clerkClient.users.getUser(auth.userId);
-  console.log('Clerk user found:', clerkUser.id);
+export interface Request extends ExpressRequest {
+  user?: {
+    id: string;
+    clerkId: string;
+    name: string;
+    location: string;
+    profilePhotoIds: string[];
+    createdAt: Date;
+    updatedAt: Date;
+    profileType: "applicant" | "company";
+  };
+}
 
-  let user = await prisma.user.findUnique({
-    where: {
-      clerkId: auth.userId
+export const identifyUserMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const auth = getAuth(req);
+
+    if (auth.userId) {
+      try {
+        let user = await prisma.user.findUnique({
+          where: {
+            clerkId: auth.userId
+          }
+          });
+        if (!user) {
+            res.status(401).json({ error: "User not found in database" });
+            next();
+         }
+         else {
+          req.user = user;
+         }
+      } catch (error) {
+        res.status(401).json({ error: "Unauthorized - No userId" });
+        next();
+      }
     }
-  });
-  
-  req.user = user;
-  next();
-} 
+
+
+
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+}; 
