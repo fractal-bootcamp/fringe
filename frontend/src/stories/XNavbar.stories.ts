@@ -21,5 +21,6 @@ export const Primary: Story = {
     pathLikes: "/likes",
     pathMatches: "/matches",
     pathSettings: "/settings",
+    development: true,
   },
 };
