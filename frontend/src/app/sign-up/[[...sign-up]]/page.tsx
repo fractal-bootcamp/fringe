@@ -14,6 +14,7 @@ export default function Page() {
             rootBox: "w-full"
           }
         }}
+        redirectUrl="/onboarding"
       />
     </div>
   );

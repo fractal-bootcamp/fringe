@@ -4,42 +4,18 @@ import { useState } from "react";
 import UpdateProfileField, { UpdateProfileFieldProps } from "./UpdateProfileField";
 import { userTypeStore } from "@/stores/userTypeStore";
 import { ProfileType } from "@/types/types";
-import { apiUpdateApplicantProfile } from "@/api/apiApplicant";
-import useUser from "@/hooks/useUser";
-import { apiUpdateCompanyProfile } from "@/api/apiCompany";
-import { apiUpdateUserProfile } from "@/api/apiUser";
-import { useRouter } from "next/navigation";
+import { useUpdate } from "@/hooks/useUpdate";
 
-  interface UpdateProfileProps {
-  getToken: () => Promise<string | null>;
-}
 
-const UpdateProfile = async ({ getToken }: UpdateProfileProps) => {
+const UpdateProfile = () => {
   const { userType } = userTypeStore();
-  const router = useRouter();
-  const token = await getToken();
-
-  const { user } = useUser();
-
-  const handleSubmit = async () => {
-    if (user && user.applicantProfile && token) {
-      await apiUpdateUserProfile(name, location, token);
-      await apiUpdateApplicantProfile(
-        educationalExperiences,
-        professionalExperiences,
-        token
-      );
-    } else if (user && user.companyProfile && token) {
-      await apiUpdateUserProfile(name, location, token);
-      await apiUpdateCompanyProfile(industry, fundingRound, token);
-    }
-    router.push("/profile");
-  };
 
   // General
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [profileType, setProfileType] = useState<string>(ProfileType.applicant);
+  const { updateProfile, isLoading, error } = useUpdate();
+
 
 
   const fieldsGeneral: UpdateProfileFieldProps[] = [
@@ -82,6 +58,17 @@ const UpdateProfile = async ({ getToken }: UpdateProfileProps) => {
     userType === "applicant"
       ? [...fieldsApplicant, ...fieldsGeneral]
       : [...fieldsCompany, ...fieldsGeneral];
+
+  const handleSubmit = async () => {
+    await updateProfile({
+      name,
+      location,
+      professionalExperiences,
+      educationalExperiences,
+      industry,
+      fundingRound,
+    });
+  };
 
   return (
     <div className="w-full flex flex-col space-y-4">

@@ -1,5 +1,5 @@
-import { apiGetUserById, apiUpdateUserPhoto, apiGetSignedUrl } from "@/api/apiUser";
-import { User } from "@/types/types";
+import { apiGetUserById, apiUpdateUserPhoto, apiGetSignedUrl, apiUpdateUserProfile, apiCreateUser } from "@/api/apiUser";
+import { ProfileType, User } from "@/types/types";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/contexts/AuthContext";
 const useUser = () => {
@@ -27,6 +27,15 @@ const useUser = () => {
     }
   };
 
+
+  const createUser = async (type: ProfileType) => {
+    if (!token) return;
+    const response = await apiCreateUser(type, token);
+    if (response.user) {
+      setUser(response.user);
+    }
+  };  
+
   useEffect(() => {
     if (token) {
       fetchUser();
@@ -36,6 +45,7 @@ const useUser = () => {
   return { 
     user, 
     updateUserPhoto,
+    createUser,
     currentPhotoUrl,
     isLoading: !user && !!token
   };

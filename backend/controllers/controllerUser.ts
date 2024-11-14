@@ -3,6 +3,8 @@ import prisma from "../prisma/client";
 import { logging } from "../utils/logging";
 import { uploadToS3 } from "../utils/s3";
 import { getSignedReadUrl } from "../utils/s3";
+import { clerkClient } from "@clerk/express";
+import { getAuth } from "@clerk/express";
 
 export const getUserById = logging("getUserById", false, async (req: Request, res: Response) => {
   const userId = req.user.id;
@@ -106,5 +108,45 @@ export const getSignedPhotoUrl = logging(
     res.status(200).json({ url: signedUrl });
   }
 );
+
+export const createUser = logging("createUser", false, async (req: Request, res: Response) => {
+  const auth = getAuth(req);
+  if (!auth.userId) {
+    return res.status(401).json({ error: "Unauthorized - No userId" });
+  }
+  const clerkUser = await clerkClient.users.getUser(auth.userId);
+  const user = await prisma.user.create({
+    data: {
+      clerkId: auth.userId,
+      name: clerkUser.username || "New User",
+      location: "",
+      profilePhotoIds: [],
+      profileType: req.body.profileType,
+    }
+  });
+  console.log(`Created new user with clerkId: ${auth.userId}`);
+
+  if (req.body.profileType === 'applicant') {
+    await prisma.applicant.create({
+      data: {
+        userId: user.id,
+        yearsOfExperience: 0,
+        educationalExperiences: "",
+        professionalExperiences: ""
+      }
+    });
+  } else if (req.body.profileType === 'company') {
+    await prisma.company.create({
+      data: {
+        userId: user.id,
+        yearsOfOperation: 0,
+        employeeCount: 0,
+        industry: 'software',
+        fundingRound: 'seed'
+      }
+    });
+  }
+  res.status(200).json({ message: "User created" });
+});
 
 

@@ -1,8 +1,8 @@
-import { User } from "@/types/types";
+import { ProfileType, User } from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const apiGetAllUsers = async (token: string) => {
-  const response = await axiosClient.get("/user", {
+  const response = await axiosClient.get("/user/getAllUsers", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -12,7 +12,7 @@ export const apiGetAllUsers = async (token: string) => {
 };
 
 export const apiGetUserById = async (token: string) => {
-  const response = await axiosClient.get(`/user/me`, {
+  const response = await axiosClient.get(`/user/getCurrentUser`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -29,7 +29,7 @@ export const apiUpdateUserProfile = async (
   // profilePhotoIds: string[],
   // profileType: ProfileType
 ) => {
-  const response = await axiosClient.put(`/user/me`, {
+  const response = await axiosClient.post(`/user/updateProfile`, {
     name,
     location,
 
@@ -47,7 +47,7 @@ export const apiUpdateUserPhoto = async (photo: File, token: string) => {
   const formData = new FormData();
   formData.append('photo', photo);
   
-  const response = await axiosClient.put(`/user/me/photo`, formData, {
+  const response = await axiosClient.post(`/user/updatePhoto`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`,
@@ -63,4 +63,12 @@ export const apiGetSignedUrl = async (photoId: string, token: string) => {
     },
   }); 
   return response.data.url;
+};
+
+export const apiCreateUser = async (type: ProfileType, token: string) => {
+  const response = await axiosClient.post(`/user/createUser`, {
+    type,
+    token,
+  });
+  return response.data;
 };
