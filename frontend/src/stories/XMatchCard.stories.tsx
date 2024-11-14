@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import XmatchCard from './XMatchCard';
+import XmatchCard from "../components/XMatchCard";
 
 const meta = {
   component: XmatchCard,
@@ -15,6 +15,6 @@ export const Default: Story = {
     name: "name",
     initials: "NM",
     message: "message",
-    onChatClick: () => {}
-  }
+    onChatClick: () => {},
+  },
 };

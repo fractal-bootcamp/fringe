@@ -1,7 +1,6 @@
 import { type NextFunction, type Request as ExpressRequest, type Response } from "express";
-import { getAuth} from "@clerk/express";
+import { getAuth } from "@clerk/express";
 import prisma from "../prisma/client";
-
 
 export interface Request extends ExpressRequest {
   user?: {
@@ -24,27 +23,21 @@ export const identifyUserMiddleware = async (req: Request, res: Response, next: 
       try {
         let user = await prisma.user.findUnique({
           where: {
-            clerkId: auth.userId
-          }
-          });
+            clerkId: auth.userId,
+          },
+        });
         if (!user) {
-            res.status(401).json({ error: "User not found in database" });
-            next();
-         }
-         else {
+          res.status(401).json({ error: "User not found in database" });
+        } else {
           req.user = user;
-         }
+        }
       } catch (error) {
         res.status(401).json({ error: "Unauthorized - No userId" });
-        next();
       }
     }
-
-
-
 
     next();
   } catch (error) {
     next(error);
   }
-}; 
+};

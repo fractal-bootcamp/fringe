@@ -11,10 +11,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body suppressHydrationWarning className={`antialiased`}>
         <ClerkProvider dynamic={true}>
           <AuthProvider>
-            <div suppressHydrationWarning className="h-screen">
+            <div className="h-screen">
               <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
             </div>
             <Suspense fallback={null}>

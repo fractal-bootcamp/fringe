@@ -11,11 +11,11 @@ export default function Page() {
             formButtonPrimary: "w-full",
             footerActionLink: "w-full",
             card: "rounded-lg shadow-md",
-            rootBox: "w-full"
-          }
+            rootBox: "w-full",
+          },
         }}
-        redirectUrl="/onboarding"
+        redirectUrl="/feed"
       />
     </div>
   );
-} 
+}
