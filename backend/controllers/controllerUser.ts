@@ -188,14 +188,16 @@ export const createUser = logging("createUser", false, async (req: Request, res:
             },
           });
         }
+        res.status(200).json({ message: "User created", user: user });
 
         return user;
       });
-      res.status(200).json({ message: "User created", user: result });
     } catch (error) {
       res.status(500).json({ error: "Failed to create user in database" });
     }
+    
   } catch (error) {
     res.status(500).json({ error: "Failed to create user" });
   }
+  
 });
