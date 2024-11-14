@@ -1,4 +1,4 @@
-import { FundingRound, Industry, ProfileType } from "@prisma/client";
+import { ProfileType } from "@prisma/client";
 import prisma from "./client";
 
 async function main() {
@@ -273,8 +273,8 @@ async function main() {
         create: {
           yearsOfOperation: 5,
           employeeCount: 50,
-          industry: Industry.software,
-          fundingRound: FundingRound.seriesA,
+          industry: "software",
+          fundingRound: "seriesA",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To innovate technology." },
@@ -295,8 +295,8 @@ async function main() {
         create: {
           yearsOfOperation: 10,
           employeeCount: 200,
-          industry: Industry.finance,
-          fundingRound: FundingRound.seriesB,
+          industry: "finance",
+          fundingRound: "seriesB",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To provide financial clarity." },
@@ -317,8 +317,8 @@ async function main() {
         create: {
           yearsOfOperation: 3,
           employeeCount: 30,
-          industry: Industry.design,
-          fundingRound: FundingRound.seed,
+          industry: "design",
+          fundingRound: "seed",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To create stunning visuals." },
@@ -339,8 +339,8 @@ async function main() {
         create: {
           yearsOfOperation: 7,
           employeeCount: 150,
-          industry: Industry.software,
-          fundingRound: FundingRound.seriesC,
+          industry: "software",
+          fundingRound: "seriesC",
           prompts: {
             create: [
               {
@@ -364,8 +364,8 @@ async function main() {
         create: {
           yearsOfOperation: 4,
           employeeCount: 80,
-          industry: Industry.finance,
-          fundingRound: FundingRound.seriesA,
+          industry: "finance",
+          fundingRound: "seriesA",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To promote sustainable investments." },
@@ -389,8 +389,8 @@ async function main() {
         create: {
           yearsOfOperation: 2,
           employeeCount: 20,
-          industry: Industry.design,
-          fundingRound: FundingRound.seed,
+          industry: "design",
+          fundingRound: "seed",
           prompts: {
             create: [
               {
@@ -414,8 +414,8 @@ async function main() {
         create: {
           yearsOfOperation: 6,
           employeeCount: 120,
-          industry: Industry.finance,
-          fundingRound: FundingRound.seriesB,
+          industry: "finance",
+          fundingRound: "seriesB",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To revolutionize financial services." },
@@ -436,8 +436,8 @@ async function main() {
         create: {
           yearsOfOperation: 8,
           employeeCount: 300,
-          industry: Industry.software,
-          fundingRound: FundingRound.seriesC,
+          industry: "software",
+          fundingRound: "seriesC",
           prompts: {
             create: [
               {
@@ -461,8 +461,8 @@ async function main() {
         create: {
           yearsOfOperation: 1,
           employeeCount: 10,
-          industry: Industry.design,
-          fundingRound: FundingRound.seed,
+          industry: "design",
+          fundingRound: "seed",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To inspire through creativity." },
@@ -483,8 +483,8 @@ async function main() {
         create: {
           yearsOfOperation: 9,
           employeeCount: 250,
-          industry: Industry.finance,
-          fundingRound: FundingRound.seriesB,
+          industry: "finance",
+          fundingRound: "seriesB",
           prompts: {
             create: [
               {

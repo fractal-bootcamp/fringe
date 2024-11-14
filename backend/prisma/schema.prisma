@@ -34,7 +34,7 @@ model Applicant {
   educationalExperiences  String
   professionalExperiences String
   prompts                 Prompt[]
-  portfolioUrl            String?
+  portfolioUrl            String
 }
 
 model Company {
