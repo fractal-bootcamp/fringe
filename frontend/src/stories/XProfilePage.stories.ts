@@ -28,11 +28,7 @@ export const Primary: Story = {
         "Software engineer with 5 years of experience in full-stack development, specializing in React and Node.js",
       education:
         "Bachelor of Science in Computer Science from Harvard University. Graduated with honors and specialized in Artificial Intelligence and Machine Learning",
-      portfolio: [
-        { name: "AI Chat Assistant", url: "https://github.com/john-doe/ai-chat" },
-        { name: "E-commerce Platform", url: "https://github.com/john-doe/shop-smart" },
-        { name: "Weather Dashboard", url: "https://github.com/john-doe/weather-app" },
-      ],
+      portfolioUrl: "https://john-doe-portfolio.com",
     },
   },
 };

@@ -36,11 +36,7 @@ const XUpdateProfile = ({
   // Applicant
   const [experience, setExperience] = useState("");
   const [education, setEducation] = useState("");
-  const [portfolios, setPortfolios] = useState([
-    { title: "", link: "" },
-    { title: "", link: "" },
-    { title: "", link: "" },
-  ]);
+  const [portfolioUrl, setPortfolioUrl] = useState("");
 
   // Company
   const [employeeCount, setEmployeeCount] = useState(0);
@@ -88,37 +84,9 @@ const XUpdateProfile = ({
               </div>
 
               {/* Portfolio */}
-              <div className="space-y-2">
-                <Label>Portfolio</Label>
-                {portfolios.map((portfolio, index) => (
-                  <div key={index} className="space-y-2">
-                    <Label className="font-thin">Portfolio Piece #{index + 1}</Label>
-                    <div className="flex flex-col gap-2">
-                      <div className="flex gap-2 items-center">
-                        <Label className="font-thin text-xs">Title</Label>
-                        <Input
-                          value={portfolio.title}
-                          onChange={(e) => {
-                            const newPortfolios = [...portfolios];
-                            newPortfolios[index].title = e.target.value;
-                            setPortfolios(newPortfolios);
-                          }}
-                        />
-                      </div>
-                      <div className="flex gap-2 items-center">
-                        <Label className="font-thin text-xs">Link</Label>
-                        <Input
-                          value={portfolio.link}
-                          onChange={(e) => {
-                            const newPortfolios = [...portfolios];
-                            newPortfolios[index].link = e.target.value;
-                            setPortfolios(newPortfolios);
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div>
+                <Label>Portfolio Link</Label>
+                <Input value={portfolioUrl} onChange={(e) => setPortfolioUrl(e.target.value)} />
               </div>
             </>
           )}
