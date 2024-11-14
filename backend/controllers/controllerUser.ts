@@ -152,52 +152,46 @@ export const createUser = logging("createUser", false, async (req: Request, res:
     res.status(401).json({ error: "Unauthorized - No userId" });
     return;
   }
+  
   try {
     const clerkUser = await clerkClient.users.getUser(auth.userId);
+    const result = await prisma.$transaction(async (prisma) => {
+      const user = await prisma.user.create({
+        data: {
+          clerkId: auth.userId,
+          name: clerkUser.username || "New User",
+          location: "",
+          profilePhotoIds: [],
+          profileType: req.body.profileType,
+        },
+      });
 
-    try {
-      const result = await prisma.$transaction(async (prisma) => {
-        const user = await prisma.user.create({
+      if (req.body.profileType === "applicant") {
+        await prisma.applicant.create({
           data: {
-            clerkId: auth.userId,
-            name: clerkUser.username || "New User",
-            location: "",
-            profilePhotoIds: [],
-            profileType: req.body.profileType,
+            userId: user.id,
+            yearsOfExperience: 0,
+            educationalExperiences: "",
+            professionalExperiences: "",
+            portfolioUrl: "",
           },
         });
+      } else if (req.body.profileType === "company") {
+        await prisma.company.create({
+          data: {
+            userId: user.id,
+            yearsOfOperation: 0,
+            employeeCount: 0,
+            industry: "software",
+            fundingRound: "seed",
+          },
+        });
+      }
 
-        if (req.body.profileType === "applicant") {
-          await prisma.applicant.create({
-            data: {
-              userId: user.id,
-              yearsOfExperience: 0,
-              educationalExperiences: "",
-              professionalExperiences: "",
-              portfolioUrl: "",
-            },
-          });
-        } else if (req.body.profileType === "company") {
-          await prisma.company.create({
-            data: {
-              userId: user.id,
-              yearsOfOperation: 0,
-              employeeCount: 0,
-              industry: "software",
-              fundingRound: "seed",
-            },
-          });
-        }
-        res.status(200).json({ message: "User created", user: user });
-
-        return user;
-      });
-    } catch (error) {
-      res.status(500).json({ error: "Failed to create user in database" });
-    }
-    
+      return user;
+    });
+    res.status(200).json({ message: "User created", user: result });
   } catch (error) {
     res.status(500).json({ error: "Failed to create user" });
   }
-  
 });
