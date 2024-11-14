@@ -5,13 +5,9 @@ import { uploadToS3 } from "../utils/s3";
 import { getSignedReadUrl } from "../utils/s3";
 
 export const getUserById = logging("getUserById", false, async (req: Request, res: Response) => {
-  if (!req.user) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
+
   const { userId } = req.user.id;
-  if (!userId) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
+
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {

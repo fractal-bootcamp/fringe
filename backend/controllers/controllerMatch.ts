@@ -29,8 +29,9 @@ export const addMatch = logging("addMatch", false, async (req: Request, res: Res
 });
 
 export const getMatchById = logging("getMatchById", false, async (req: Request, res: Response) => {
+  const { id } = req.params;
   const match = await prisma.match.findUnique({
-    where: { id: req.user.id },
+    where: { id: id },
     include: {
       users: true,
       messages: true,
@@ -40,7 +41,7 @@ export const getMatchById = logging("getMatchById", false, async (req: Request, 
 });
 
 export const deleteMatch = logging("deleteMatch", false, async (req: Request, res: Response) => {
-  const { id } = req.user.id;
+  const { id } = req.params;
 
   // Delete all related messages first
   await prisma.message.deleteMany({

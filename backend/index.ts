@@ -31,11 +31,6 @@ app.use(clerkMiddleware());
 async function identifyUserMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
     const auth = getAuth(req);
-    console.log('Auth details:', {
-      userId: auth.userId,
-      sessionId: auth.sessionId,
-      session: auth.session,
-    });
 
     if (!auth.userId) {
       console.log('No userId found in auth');
@@ -48,7 +43,10 @@ async function identifyUserMiddleware(req: Request, res: Response, next: NextFun
       console.log('Clerk user found:', clerkUser.id);
     } catch (error) {
       console.error("Error fetching Clerk user:", error);
-      return res.status(401).json({ error: "Invalid or expired session" });
+      return res.status(401).json({ 
+        error: "Invalid or expired session",
+        details: error.message 
+      });
     }
 
     try {

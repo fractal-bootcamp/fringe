@@ -2,6 +2,7 @@ import NavbarManager from "@/components/NavbarManager";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { Suspense } from 'react';
 
 export default function RootLayout({
   children,
@@ -9,15 +10,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider dynamic={true}>
-      <AuthProvider>
-        <html lang="en">
-          <body suppressHydrationWarning className={`antialiased`}>
-            <div className="bg-gray-100 h-screen">{children}</div>
-            <NavbarManager />
-          </body>
-        </html>
-      </AuthProvider>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={`antialiased`}>
+        <ClerkProvider dynamic={true}>
+          <AuthProvider>
+            <div suppressHydrationWarning className="bg-gray-100 h-screen">
+              <Suspense fallback={<div>Loading...</div>}>
+                {children}
+              </Suspense>
+            </div>
+            <Suspense fallback={null}>
+              <NavbarManager />
+            </Suspense>
+          </AuthProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
