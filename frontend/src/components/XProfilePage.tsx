@@ -45,7 +45,7 @@ const XProfilePage = ({
   companyProps,
 }: XProfilePageProps) => {
   return (
-    <Card className="shadow-none rounded-none">
+    <Card className="shadow-none border-none rounded-none bg-white text-black">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>{location}</CardDescription>
@@ -63,7 +63,7 @@ const XProfilePage = ({
 
         {profileType === ProfileType.applicant && applicantProps ? (
           <>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px] shadow-sm rounded-lg">
+            <div className="flex flex-col gap-2 p-4 shadow-sm rounded-lg border-[0.5px]">
               <Label>Experience</Label>
               <p className="text-xs font-thin">{applicantProps.experience}</p>
             </div>
@@ -100,25 +100,25 @@ const XProfilePage = ({
 
         {profileType === ProfileType.company && companyProps ? (
           <>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px] rounded-lg shadow-sm">
+            <div className="flex flex-col gap-2 p-4 rounded-lg shadow-sm bg-white text-black border-[0.5px]">
               <Label>
                 <UsersIcon className="inline w-4 h-4 mr-1" /> Employee Count
               </Label>
               <p className="text-xs font-thin">{companyProps.employeeCount}</p>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px] rounded-lg shadow-sm">
+            <div className="flex flex-col gap-2 p-4 rounded-lg shadow-sm bg-white text-black border-[0.5px]">
               <Label>
                 <CalendarIcon className="inline w-4 h-4 mr-1" /> Years of Operation
               </Label>
               <p className="text-xs font-thin">{companyProps.yearsOfOperation}</p>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px] rounded-lg shadow-sm">
+            <div className="flex flex-col gap-2 p-4 rounded-lg shadow-sm bg-white text-black border-[0.5px]">
               <Label>
                 <BriefcaseIcon className="inline w-4 h-4 mr-1" /> Industry
               </Label>
               <p className="text-xs font-thin">{companyProps.industry}</p>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-[0.5px] rounded-lg shadow-sm">
+            <div className="flex flex-col gap-2 p-4 rounded-lg shadow-sm bg-white text-black border-[0.5px]">
               <Label>
                 <DollarSignIcon className="inline w-4 h-4 mr-1" /> Funding Round
               </Label>
