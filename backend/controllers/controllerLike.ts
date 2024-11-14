@@ -3,7 +3,7 @@ import prisma from "../prisma/client";
 import { logging } from "../utils/logging";
 
 export const getLikes = logging("getLikes", false, async (req: Request, res: Response) => {
-  const { userId } = req.params;
+  const { userId } = req.user.id;
   const likes = await prisma.like.findMany({
     where: { toUserId: userId },
   });
@@ -22,7 +22,7 @@ export const addLike = logging("addLike", false, async (req: Request, res: Respo
 });
 
 export const deleteLike = logging("deleteLike", false, async (req: Request, res: Response) => {
-  const { id } = req.body;
+  const { id } = req.body.id;
   console.log("deleteLike", id);
   await prisma.like.delete({
     where: { id },

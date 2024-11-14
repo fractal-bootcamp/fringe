@@ -4,6 +4,6 @@ import { getAllApplicants, updateApplicantProfile } from "../controllers/control
 const router = express.Router();
 
 router.get("/applicants", getAllApplicants);
-router.post("/update/:id", updateApplicantProfile);
+router.post("/update", updateApplicantProfile);
 
 export default router;

@@ -5,9 +5,10 @@ import { uploadToS3 } from "../utils/s3";
 import { getSignedReadUrl } from "../utils/s3";
 
 export const getUserById = logging("getUserById", false, async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const userId = req.user.id;
+
   const user = await prisma.user.findUnique({
-    where: { id },
+    where: { id: userId },
     include: {
       applicantProfile: {
         include: {
@@ -59,11 +60,11 @@ export const updateUserProfile = logging(
   "updateUserProfile",
   false,
   async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const userId = req.user.id;
     const updatedData = req.body;
 
     const updatedUser = await prisma.user.update({
-      where: { id },
+      where: { id: userId },
       data: updatedData,
     });
     res.status(200).json(updatedUser);
@@ -71,7 +72,7 @@ export const updateUserProfile = logging(
 );
 
 export const updateUserPhoto = logging("updateUserPhoto", false, async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const userId = req.user.id;
   
   if (!req.file) {
     return res.status(400).json({ error: 'No photo uploaded' });
@@ -80,11 +81,11 @@ export const updateUserPhoto = logging("updateUserPhoto", false, async (req: Req
   const fileBuffer = req.file.buffer;
   const fileName = req.file.originalname;
   
-  const key = `${id}-${Date.now()}-${fileName}`;
+  const key = `${userId}-${Date.now()}-${fileName}`;
   const uploadedPhotoKey = await uploadToS3(fileBuffer, key);
 
   const updatedUser = await prisma.user.update({
-    where: { id },
+    where: { id: userId },
     data: { profilePhotoIds: [uploadedPhotoKey] },
   });
 
@@ -100,24 +101,10 @@ export const getSignedPhotoUrl = logging(
   "getSignedPhotoUrl",
   false,
   async (req: Request, res: Response) => {
-    const { id, photoId } = req.params;
+    const { photoId } = req.params;
     const signedUrl = await getSignedReadUrl(photoId);
     res.status(200).json({ url: signedUrl });
   }
 );
 
-export const createUser = async (req: Request, res: Response) => {
-  try {
-    const userData = req.body;
-    // Add your user creation logic here
-    // For example, using Prisma:
-    const user = await prisma.user.create({
-      data: userData,
-    });
-    
-    res.status(201).json(user);
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Failed to create user' });
-  }
-};
+

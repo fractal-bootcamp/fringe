@@ -11,25 +11,25 @@ export const apiGetAllUsers = async (token: string) => {
   return users;
 };
 
-export const apiGetUserById = async (id: string, token: string) => {
-  const response = await axiosClient.get(`/user/${id}`, {
+export const apiGetUserById = async (token: string) => {
+  const response = await axiosClient.get(`/user/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
   const user: User = response.data;
+  console.log('User data:', user);
   return user;
 };
 
 export const apiUpdateUserProfile = async (
-  id: string,
   name: string,
   location: string,
   token: string,
   // profilePhotoIds: string[],
   // profileType: ProfileType
 ) => {
-  const response = await axiosClient.post(`/user/update/${id}`, {
+  const response = await axiosClient.put(`/user/me`, {
     name,
     location,
 
@@ -43,11 +43,11 @@ export const apiUpdateUserProfile = async (
   return response.data;
 };
 
-export const apiUpdateUserPhoto = async (id: string, photo: File, token: string) => {
+export const apiUpdateUserPhoto = async (photo: File, token: string) => {
   const formData = new FormData();
   formData.append('photo', photo);
   
-  const response = await axiosClient.post(`/user/update/${id}/photo`, formData, {
+  const response = await axiosClient.put(`/user/me/photo`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`,
@@ -56,8 +56,8 @@ export const apiUpdateUserPhoto = async (id: string, photo: File, token: string)
   return response.data;
 };
 
-export const apiGetSignedUrl = async (id: string, photoId: string, token: string) => {
-  const response = await axiosClient.get(`/user/${id}/photo/${photoId}`, {
+export const apiGetSignedUrl = async (photoId: string, token: string) => {
+  const response = await axiosClient.get(`/user/photos/${photoId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -5,6 +5,7 @@ import useMessages from "@/hooks/useMessages";
 import { useAuthContext } from "@/contexts/AuthContext";
 
 import { Match} from "@/types/types";
+import useUser from "@/hooks/useUser";
 
 interface ChatPageProps {
   match: Match;
@@ -14,6 +15,7 @@ const ChatPage = ({ match }: ChatPageProps) => {
   const [message, setMessage] = useState("");
   const { messages, setMessages } = useMessages(match.id);
   const { token } = useAuthContext();
+  const { user } = useUser();
 
   async function handleSend(): Promise<void> {
     if (!message.trim()) return;
@@ -22,7 +24,7 @@ const ChatPage = ({ match }: ChatPageProps) => {
       id: "",
       content: message.trim(),
       matchId: match.id,
-      senderId: "1",
+      senderId: user?.id || "",
       createdAt: new Date(),
       match: match,
       sender: match.users[0],
@@ -34,7 +36,7 @@ const ChatPage = ({ match }: ChatPageProps) => {
     await sendMessage({
       content: message,
       matchId: match.id, 
-      senderId: "1",
+      senderId: user?.id || "",
     },token);
   }
 

@@ -10,13 +10,16 @@ const useMatches = () => {
 
   // Get matches
   const fetchMatches = async () => {
-    const userId = "1"; // CHANGE THIS WHEN WE HAVE AUTH
     if (!token) return;
-    const user: User = await apiGetUserById(userId, token);
+    const user: User = await apiGetUserById(token);
+    if (user.matches.length === 0) {
+      return;
+    }
     const matchesParsed: Match[] = user.matches.map((match) => {
-      const matchUser = match.users.find((user) => user.id !== userId);
+      const matchUser = match.users.find((user) => user.id !== user.id);
       return { ...match, users: matchUser ? [matchUser] : [] };
     });
+  
     loadMatches(matchesParsed);
   };
 

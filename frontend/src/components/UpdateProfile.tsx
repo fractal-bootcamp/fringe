@@ -23,16 +23,15 @@ const UpdateProfile = async ({ getToken }: UpdateProfileProps) => {
 
   const handleSubmit = async () => {
     if (user && user.applicantProfile && token) {
-      await apiUpdateUserProfile(user.id, name, location, token);
+      await apiUpdateUserProfile(name, location, token);
       await apiUpdateApplicantProfile(
-        user.applicantProfile.id,
         educationalExperiences,
         professionalExperiences,
         token
       );
     } else if (user && user.companyProfile && token) {
-      await apiUpdateUserProfile(user.id, name, location, token);
-      await apiUpdateCompanyProfile(user.companyProfile.id, industry, fundingRound, token);
+      await apiUpdateUserProfile(name, location, token);
+      await apiUpdateCompanyProfile(industry, fundingRound, token);
     }
     router.push("/profile");
   };
