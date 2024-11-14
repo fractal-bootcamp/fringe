@@ -20,13 +20,13 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     profileType: ProfileType.applicant,
-    onUpdateProfile: () => {},
+    onUpdateApplicant: () => {},
   },
 };
 
 export const Secondary: Story = {
   args: {
     profileType: ProfileType.company,
-    onUpdateProfile: () => {},
+    onUpdateCompany: () => {},
   },
 };
