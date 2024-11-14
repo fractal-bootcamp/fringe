@@ -1,4 +1,4 @@
-import { FundingRound, Industry, ProfileType } from "@prisma/client";
+import { ProfileType } from "@prisma/client";
 import prisma from "./client";
 
 async function main() {
@@ -26,6 +26,7 @@ async function main() {
           educationalExperiences: "BSc Computer Science, MSc Software Engineering",
           professionalExperiences:
             "Software Engineer at TechCorp, Frontend Developer at WebSolutions",
+          portfolioUrl: "https://alice-portfolio.com",
           prompts: {
             create: [
               { question: "What is your greatest strength?", answer: "Problem-solving skills." },
@@ -50,6 +51,7 @@ async function main() {
           yearsOfExperience: 3,
           educationalExperiences: "BSc Information Technology",
           professionalExperiences: "Junior Developer at CodeFactory",
+          portfolioUrl: "https://bob-johnson-portfolio.com",
           prompts: {
             create: [
               { question: "What motivates you?", answer: "Learning new technologies." },
@@ -71,6 +73,7 @@ async function main() {
           yearsOfExperience: 4,
           educationalExperiences: "BSc Software Engineering",
           professionalExperiences: "Backend Developer at DataSolutions",
+          portfolioUrl: "https://charlie-brown-portfolio.com",
           prompts: {
             create: [
               {
@@ -95,6 +98,7 @@ async function main() {
           yearsOfExperience: 6,
           educationalExperiences: "BSc Computer Science, MSc Data Science",
           professionalExperiences: "Data Analyst at InfoTech",
+          portfolioUrl: "https://diana-prince-portfolio.com",
           prompts: {
             create: [
               { question: "What are your career goals?", answer: "To become a data scientist." },
@@ -119,6 +123,7 @@ async function main() {
           yearsOfExperience: 2,
           educationalExperiences: "BSc Web Development",
           professionalExperiences: "Intern at WebCreators",
+          portfolioUrl: "https://ethan-hunt-portfolio.com",
           prompts: {
             create: [
               { question: "What do you enjoy about coding?", answer: "The creativity it allows." },
@@ -140,6 +145,7 @@ async function main() {
           yearsOfExperience: 7,
           educationalExperiences: "BSc Information Systems",
           professionalExperiences: "Project Manager at TechSolutions",
+          portfolioUrl: "https://fiona-gallagher-portfolio.com",
           prompts: {
             create: [
               { question: "How do you manage projects?", answer: "I use Agile methodologies." },
@@ -161,6 +167,7 @@ async function main() {
           yearsOfExperience: 1,
           educationalExperiences: "BSc Computer Science",
           professionalExperiences: "Junior Developer at CodeBase",
+          portfolioUrl: "https://george-smith-portfolio.com",
           prompts: {
             create: [
               { question: "What are your strengths?", answer: "Quick learner and adaptable." },
@@ -182,6 +189,7 @@ async function main() {
           yearsOfExperience: 5,
           educationalExperiences: "BSc Graphic Design",
           professionalExperiences: "UI/UX Designer at CreativeWorks",
+          portfolioUrl: "https://hannah-baker-portfolio.com",
           prompts: {
             create: [
               { question: "What inspires your designs?", answer: "User experience and feedback." },
@@ -206,6 +214,7 @@ async function main() {
           yearsOfExperience: 8,
           educationalExperiences: "BSc Computer Science, MSc Cybersecurity",
           professionalExperiences: "Security Analyst at SecureTech",
+          portfolioUrl: "https://ian-malcolm-portfolio.com",
           prompts: {
             create: [
               {
@@ -233,6 +242,7 @@ async function main() {
           yearsOfExperience: 5,
           educationalExperiences: "BSc Nautical Science",
           professionalExperiences: "Captain at The Black Pearl",
+          portfolioUrl: "https://jack-sparrow-portfolio.com",
           prompts: {
             create: [
               {
@@ -263,8 +273,8 @@ async function main() {
         create: {
           yearsOfOperation: 5,
           employeeCount: 50,
-          industry: Industry.software,
-          fundingRound: FundingRound.seriesA,
+          industry: "software",
+          fundingRound: "seriesA",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To innovate technology." },
@@ -285,8 +295,8 @@ async function main() {
         create: {
           yearsOfOperation: 10,
           employeeCount: 200,
-          industry: Industry.finance,
-          fundingRound: FundingRound.seriesB,
+          industry: "finance",
+          fundingRound: "seriesB",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To provide financial clarity." },
@@ -307,8 +317,8 @@ async function main() {
         create: {
           yearsOfOperation: 3,
           employeeCount: 30,
-          industry: Industry.design,
-          fundingRound: FundingRound.seed,
+          industry: "design",
+          fundingRound: "seed",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To create stunning visuals." },
@@ -329,8 +339,8 @@ async function main() {
         create: {
           yearsOfOperation: 7,
           employeeCount: 150,
-          industry: Industry.software,
-          fundingRound: FundingRound.seriesC,
+          industry: "software",
+          fundingRound: "seriesC",
           prompts: {
             create: [
               {
@@ -354,8 +364,8 @@ async function main() {
         create: {
           yearsOfOperation: 4,
           employeeCount: 80,
-          industry: Industry.finance,
-          fundingRound: FundingRound.seriesA,
+          industry: "finance",
+          fundingRound: "seriesA",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To promote sustainable investments." },
@@ -379,8 +389,8 @@ async function main() {
         create: {
           yearsOfOperation: 2,
           employeeCount: 20,
-          industry: Industry.design,
-          fundingRound: FundingRound.seed,
+          industry: "design",
+          fundingRound: "seed",
           prompts: {
             create: [
               {
@@ -404,8 +414,8 @@ async function main() {
         create: {
           yearsOfOperation: 6,
           employeeCount: 120,
-          industry: Industry.finance,
-          fundingRound: FundingRound.seriesB,
+          industry: "finance",
+          fundingRound: "seriesB",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To revolutionize financial services." },
@@ -426,8 +436,8 @@ async function main() {
         create: {
           yearsOfOperation: 8,
           employeeCount: 300,
-          industry: Industry.software,
-          fundingRound: FundingRound.seriesC,
+          industry: "software",
+          fundingRound: "seriesC",
           prompts: {
             create: [
               {
@@ -451,8 +461,8 @@ async function main() {
         create: {
           yearsOfOperation: 1,
           employeeCount: 10,
-          industry: Industry.design,
-          fundingRound: FundingRound.seed,
+          industry: "design",
+          fundingRound: "seed",
           prompts: {
             create: [
               { question: "What is your mission?", answer: "To inspire through creativity." },
@@ -473,8 +483,8 @@ async function main() {
         create: {
           yearsOfOperation: 9,
           employeeCount: 250,
-          industry: Industry.finance,
-          fundingRound: FundingRound.seriesB,
+          industry: "finance",
+          fundingRound: "seriesB",
           prompts: {
             create: [
               {

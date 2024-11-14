@@ -5,30 +5,14 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { ProfileType } from "@/types/types";
 import { Button } from "./ui/button";
+import { UpdateProfileData } from "@/hooks/useUpdate";
 
 interface XUpdateProfileProps {
   profileType: ProfileType;
-  onUpdateApplicant?: (
-    name: string,
-    location: string,
-    experience: string,
-    education: string
-  ) => void;
-  onUpdateCompany?: (
-    name: string,
-    location: string,
-    employeeCount: number,
-    yearsOfOperation: number,
-    industry: string,
-    fundingRound: string
-  ) => void;
+  onUpdateProfile?: (profileData: UpdateProfileData) => Promise<void>;
 }
 
-const XUpdateProfile = ({
-  profileType,
-  onUpdateApplicant,
-  onUpdateCompany,
-}: XUpdateProfileProps) => {
+const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) => {
   // General
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
@@ -36,11 +20,7 @@ const XUpdateProfile = ({
   // Applicant
   const [experience, setExperience] = useState("");
   const [education, setEducation] = useState("");
-  const [portfolios, setPortfolios] = useState([
-    { title: "", link: "" },
-    { title: "", link: "" },
-    { title: "", link: "" },
-  ]);
+  const [portfolioUrl, setPortfolioUrl] = useState("");
 
   // Company
   const [employeeCount, setEmployeeCount] = useState(0);
@@ -48,13 +28,26 @@ const XUpdateProfile = ({
   const [industry, setIndustry] = useState("");
   const [fundingRound, setFundingRound] = useState("");
 
-  const handleUpdateProfile = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (profileType === "applicant" && onUpdateApplicant) {
-      onUpdateApplicant(name, location, experience, education);
-    } else if (profileType === "company" && onUpdateCompany) {
-      onUpdateCompany(name, location, employeeCount, yearsOfOperation, industry, fundingRound);
-    }
+    // if (profileType === "applicant" && onUpdateProfile) {
+    //   await onUpdateProfile({
+    //     name,
+    //     location,
+    //     professionalExperiences: experience,
+    //     educationalExperiences: education,
+    //     portfolioUrl,
+    //   });
+    // } else if (profileType === "company" && onUpdateProfile) {
+    //   await onUpdateProfile({
+    //     name,
+    //     location,
+    //     employeeCount,
+    //     yearsOfOperation,
+    //     industry,
+    //     fundingRound,
+    //   });
+    // }
   };
 
   return (
@@ -88,37 +81,9 @@ const XUpdateProfile = ({
               </div>
 
               {/* Portfolio */}
-              <div className="space-y-2">
-                <Label>Portfolio</Label>
-                {portfolios.map((portfolio, index) => (
-                  <div key={index} className="space-y-2">
-                    <Label className="font-thin">Portfolio Piece #{index + 1}</Label>
-                    <div className="flex flex-col gap-2">
-                      <div className="flex gap-2 items-center">
-                        <Label className="font-thin text-xs">Title</Label>
-                        <Input
-                          value={portfolio.title}
-                          onChange={(e) => {
-                            const newPortfolios = [...portfolios];
-                            newPortfolios[index].title = e.target.value;
-                            setPortfolios(newPortfolios);
-                          }}
-                        />
-                      </div>
-                      <div className="flex gap-2 items-center">
-                        <Label className="font-thin text-xs">Link</Label>
-                        <Input
-                          value={portfolio.link}
-                          onChange={(e) => {
-                            const newPortfolios = [...portfolios];
-                            newPortfolios[index].link = e.target.value;
-                            setPortfolios(newPortfolios);
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div>
+                <Label>Portfolio Link</Label>
+                <Input value={portfolioUrl} onChange={(e) => setPortfolioUrl(e.target.value)} />
               </div>
             </>
           )}

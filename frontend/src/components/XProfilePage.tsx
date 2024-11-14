@@ -23,10 +23,7 @@ interface XProfilePageProps {
   applicantProps?: {
     experience: string;
     education: string;
-    portfolio: {
-      name: string;
-      url: string;
-    }[];
+    portfolioUrl: string;
   };
   companyProps?: {
     yearsOfOperation: number;
@@ -71,26 +68,24 @@ const XProfilePage = ({
               <Label>Education</Label>
               <p className="text-xs font-thin">{applicantProps.education}</p>
             </div>
+
             <div className="flex flex-col gap-2 p-4 border-[0.5px] shadow-sm rounded-lg">
-              <Label>Portfolio</Label>
+              <Label>Links</Label>
               <div className="flex flex-col gap-2">
-                {applicantProps.portfolio.map((item) => (
-                  <Button
-                    key={item.name}
-                    variant="outline"
-                    className="w-full justify-between shadow-none border-[0.5px]"
+                <Button
+                  variant="outline"
+                  className="w-full justify-between shadow-none border-[0.5px]"
+                >
+                  <Link
+                    href={applicantProps.portfolioUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex justify-between w-full"
                   >
-                    <Link
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex justify-between w-full"
-                    >
-                      <span className="text-sm font-thin">{item.name}</span>
-                      <ExternalLinkIcon className="w-4 h-4 ml-2" />
-                    </Link>
-                  </Button>
-                ))}
+                    <span className="text-sm font-thin">Portfolio</span>
+                    <ExternalLinkIcon className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
               </div>
             </div>
           </>
