@@ -1,7 +1,7 @@
 import express from "express";
 import { getAllUsers, getUserById, updateUserProfile, getSignedPhotoUrl, updateUserPhoto, createUser } from "../controllers/controllerUser";
 import upload from "../middleware/upload";
-import { requireAuth, clerkMiddleware } from "@clerk/express";
+import { requireAuth } from "@clerk/express";
 import { identifyUserMiddleware } from "../middleware/identifyUserMiddleware";
 
 const router = express.Router();
