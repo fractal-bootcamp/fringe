@@ -147,7 +147,6 @@ export const getSignedPhotoUrl = logging(
 
 export const createUser = logging("createUser", false, async (req: Request, res: Response) => {
   const auth = getAuth(req);
-  console.log("auth", auth);
   if (!auth.userId) {
     res.status(401).json({ error: "Unauthorized - No userId" });
     return;
