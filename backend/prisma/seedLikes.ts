@@ -1,9 +1,10 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "./client";
 
 export async function seedLikes() {
   // Get all users
   const users = await prisma.user.findMany();
+
+  console.log(users.length);
 
   for (const user of users) {
     // For each user, create 5 likes
@@ -25,3 +26,5 @@ export async function seedLikes() {
 
   console.log("Seed completed: Likes created");
 }
+
+await seedLikes();

@@ -2,15 +2,6 @@ import { ProfileType } from "@prisma/client";
 import prisma from "./client";
 
 async function main() {
-  // Clear existing data
-  await prisma.message.deleteMany();
-  await prisma.match.deleteMany();
-  await prisma.like.deleteMany();
-  await prisma.prompt.deleteMany();
-  await prisma.applicant.deleteMany();
-  await prisma.company.deleteMany();
-  await prisma.user.deleteMany();
-
   // Seed Applicants
   const applicantUsers = [
     {

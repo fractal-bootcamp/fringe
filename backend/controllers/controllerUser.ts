@@ -30,6 +30,7 @@ export const getUserById = logging("getUserById", false, async (req: Request, re
         matches: {
           include: {
             users: true,
+            messages: true,
           },
         },
         receivedLikes: {

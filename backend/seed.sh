@@ -1,5 +1,4 @@
-#!/bin/bash
-
+# Run after auth is setup
 # Seed the database
 bun run prisma/seed.ts
 

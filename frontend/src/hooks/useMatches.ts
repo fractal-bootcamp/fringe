@@ -16,10 +16,10 @@ const useMatches = () => {
       return;
     }
     const matchesParsed: Match[] = user.matches.map((match) => {
-      const matchUser = match.users.find((user) => user.id !== user.id);
+      const matchUser = match.users.find((u) => u.id !== user.id);
       return { ...match, users: matchUser ? [matchUser] : [] };
     });
-  
+
     loadMatches(matchesParsed);
   };
 

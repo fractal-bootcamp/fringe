@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import ChatCard from './XChatCard';
+import ChatCard from "../components/XChatCard";
 
 const meta = {
   component: ChatCard,
@@ -11,5 +11,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {}
+  args: {},
 };
