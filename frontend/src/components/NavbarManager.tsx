@@ -6,11 +6,10 @@ import { UserButton } from "@clerk/nextjs";
 
 export default function NavbarManager() {
   const { isSignedIn } = useAuthContext();
-  // return isSignedIn ? <Navbar navigationItems={dataNavigation} /> : null;
   return isSignedIn ? (
     <div>
       <XNavbar
-        pathHome="/"
+        pathHome="/feed"
         pathLikes="/likes"
         pathMatches="/matches"
         pathSettings="/settings"
