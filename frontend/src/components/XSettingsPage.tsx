@@ -7,7 +7,7 @@ import { PenTool, Handshake, MessageCircle } from "lucide-react";
 interface XSettingsPageProps {
   name: string;
   image: string;
-  onUpdatePhoto: () => void;
+  onUpdatePhoto: (photo: File) => void;
   onUpdateProfile: () => void;
   onLikesYou: () => void;
   onMatches: () => void;
@@ -21,11 +21,26 @@ const XSettingsPage = ({
   onLikesYou,
   onMatches,
 }: XSettingsPageProps) => {
+  const handlePhotoClick = () => {
+    const photoInput = document.getElementById("photoInput");
+    if (photoInput) {
+      photoInput.click();
+    }
+  };
+
+  const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const photo = event.target.files?.[0];
+    if (photo) {
+      onUpdatePhoto(photo);
+    }
+  };
+
   return (
     <Card className="border-none shadow-none">
       <CardHeader className="flex flex-col items-center gap-2">
-        <Avatar className="h-24 w-24" onClick={onUpdatePhoto}>
+        <Avatar className="h-24 w-24" onClick={handlePhotoClick}>
           <AvatarImage src={image} />
+          <input type="file" className="hidden" id="photoInput" onChange={handlePhotoChange} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <CardTitle>{name}</CardTitle>
