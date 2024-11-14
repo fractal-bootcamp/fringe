@@ -23,7 +23,7 @@ const XLikesYouCard = ({ name, image, goToProfile, onMatch, onUnmatch }: XLikesY
         className="flex flex-row items-center justify-center cursor-pointer"
         onClick={goToProfile}
       >
-        <Avatar className="w-40 h-40 rounded-lg">
+        <Avatar className="w-20 h-20 rounded-lg">
           <AvatarImage src={image} alt={name} className="rounded-lg" />
           <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
         </Avatar>
