@@ -3,7 +3,7 @@ import prisma from "../prisma/client";
 import { logging } from "../utils/logging";
 
 export const getLikes = logging("getLikes", false, async (req: Request, res: Response) => {
-  const { userId } = req.user.id;
+  const userId = req.user.id;
   const likes = await prisma.like.findMany({
     where: { toUserId: userId },
   });
