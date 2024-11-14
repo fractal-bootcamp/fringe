@@ -11,18 +11,17 @@ const useLikes = () => {
 
   // Get likes
   const fetchLikes = async () => {
-    const userId = "1"; // TODO: get user id from store
     if (!token) return;
-    const user: User = await apiGetUserById(userId, token);
+    const user: User = await apiGetUserById(token);
     const receivedLikes: Like[] = user.receivedLikes;
     loadLikes(receivedLikes);
   };
 
   // Delete like
-  const handleDeleteLike = async (id: string) => {
+  const handleDeleteLike = async (likeId: string) => {
     if (!token) return;
-    await apiDeleteLike(id, token);
-    deleteLike(id);
+    await apiDeleteLike(likeId, token);
+    deleteLike(likeId);
   };
 
   // Add like

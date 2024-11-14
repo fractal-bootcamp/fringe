@@ -31,8 +31,8 @@ export const apiAddMatch = async (userId1: string, userId2: string, token: strin
   return match;
 };
 
-export const apiDeleteMatch = async (id: string, token: string) => {
-  const response = await axiosClient.post("/match/delete", { id }, {
+export const apiDeleteMatch = async (matchId: string, token: string) => {
+  const response = await axiosClient.post("/match/delete", { matchId }, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

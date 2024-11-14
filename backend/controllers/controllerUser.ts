@@ -5,9 +5,15 @@ import { uploadToS3 } from "../utils/s3";
 import { getSignedReadUrl } from "../utils/s3";
 
 export const getUserById = logging("getUserById", false, async (req: Request, res: Response) => {
-  const { id } = req.params;
+  if (!req.user) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  const { userId } = req.user.id;
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
   const user = await prisma.user.findUnique({
-    where: { id },
+    where: { id: userId },
     include: {
       applicantProfile: {
         include: {
@@ -59,7 +65,7 @@ export const updateUserProfile = logging(
   "updateUserProfile",
   false,
   async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { id } = req.user.id;
     const updatedData = req.body;
 
     const updatedUser = await prisma.user.update({
@@ -71,7 +77,7 @@ export const updateUserProfile = logging(
 );
 
 export const updateUserPhoto = logging("updateUserPhoto", false, async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { id } = req.user.id;
   
   if (!req.file) {
     return res.status(400).json({ error: 'No photo uploaded' });
@@ -100,7 +106,7 @@ export const getSignedPhotoUrl = logging(
   "getSignedPhotoUrl",
   false,
   async (req: Request, res: Response) => {
-    const { id, photoId } = req.params;
+    const { photoId } = req.params;
     const signedUrl = await getSignedReadUrl(photoId);
     res.status(200).json({ url: signedUrl });
   }

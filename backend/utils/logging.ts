@@ -1,5 +1,18 @@
 const separator = "-------------------------------";
 
+const getCircularReplacer = () => {
+  const seen = new WeakSet();
+  return (key: string, value: any) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return "[Circular Reference]";
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
 export const logging = <TReturn, TArgs extends any[]>(
   operationName: string,
   logRes: boolean,
@@ -24,7 +37,7 @@ export const logging = <TReturn, TArgs extends any[]>(
       const success = [
         separator,
         `FN | ${new Date().toISOString()} | ${operationName} | ${requestId} | SUCCESS ===>`,
-        JSON.stringify(result, null, 2),
+        JSON.stringify(result, getCircularReplacer(), 2),
         separator,
       ];
 

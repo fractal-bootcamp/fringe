@@ -16,8 +16,8 @@ export const apiAddLike = (fromUserId: string, toUserId: string, token: string) 
     });
 };
 
-export const apiDeleteLike = (id: string, token: string) => {
-  axiosClient.post("/like/delete", { id }, {
+export const apiDeleteLike = (likeId: string, token: string) => {
+  axiosClient.post("/like/delete", { likeId }, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

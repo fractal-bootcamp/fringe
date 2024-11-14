@@ -11,16 +11,31 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchToken = async () => {
-        const token = await getToken();
-        setToken(token);
-      
+      try {
+        setIsLoading(true);
+        const newToken = await getToken();
+        setToken(newToken);
+      } catch (error) {
+        console.error('Failed to fetch token:', error);
+        setToken(null);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchToken();
+    const interval = setInterval(fetchToken, 5 * 60 * 1000);
+    
+    return () => clearInterval(interval);
   }, [getToken]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <AuthContext.Provider value={{ token }}>
