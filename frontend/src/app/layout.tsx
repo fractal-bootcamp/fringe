@@ -2,7 +2,7 @@ import NavbarManager from "@/components/NavbarManager";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -14,10 +14,8 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <ClerkProvider dynamic={true}>
           <AuthProvider>
-            <div suppressHydrationWarning className="bg-gray-100 h-screen">
-              <Suspense fallback={<div>Loading...</div>}>
-                {children}
-              </Suspense>
+            <div suppressHydrationWarning className="h-screen">
+              <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
             </div>
             <Suspense fallback={null}>
               <NavbarManager />
