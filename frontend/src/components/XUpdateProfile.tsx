@@ -13,7 +13,7 @@ interface XUpdateProfileProps {
 
 const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) => {
   return (
-    <Card>
+    <Card className="border-none shadow-none">
       <CardHeader>
         <CardTitle>Update Profile</CardTitle>
       </CardHeader>
@@ -29,13 +29,60 @@ const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) =
         {/* Applicant */}
         {profileType === "applicant" && (
           <>
+            {/* Experience */}
             <div>
               <Label>Experience</Label>
               <Textarea />
             </div>
+
+            {/* Education */}
             <div>
               <Label>Education</Label>
               <Textarea />
+            </div>
+
+            {/* Portfolio */}
+            <div className="space-y-2">
+              <Label>Portfolio</Label>
+              <div className="space-y-2">
+                <Label className="font-thin">Portfolio Piece #1</Label>
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2 items-center">
+                    <Label className="font-thin text-xs">Title</Label>
+                    <Input />
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <Label className="font-thin text-xs">Link</Label>
+                    <Input />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label className="font-thin">Portfolio Piece #2</Label>
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2 items-center">
+                    <Label className="font-thin text-xs">Title</Label>
+                    <Input />
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <Label className="font-thin text-xs">Link</Label>
+                    <Input />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label className="font-thin">Portfolio Piece #3</Label>
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2 items-center">
+                    <Label className="font-thin text-xs">Title</Label>
+                    <Input />
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <Label className="font-thin text-xs">Link</Label>
+                    <Input />
+                  </div>
+                </div>
+              </div>
             </div>
           </>
         )}
@@ -44,11 +91,11 @@ const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) =
           <>
             <div>
               <Label>Employee Count</Label>
-              <Input />
+              <Input type="number" />
             </div>
             <div>
               <Label>Years of Operation</Label>
-              <Input />
+              <Input type="number" />
             </div>
             <div>
               <Label>Industry</Label>
@@ -60,7 +107,9 @@ const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) =
             </div>
           </>
         )}
-        <Button onClick={onUpdateProfile}>Update Profile</Button>
+        <Button onClick={onUpdateProfile} className="w-full">
+          Update Profile
+        </Button>
       </CardContent>
     </Card>
   );
