@@ -29,19 +29,16 @@ export const identifyUserMiddleware = async (req: Request, res: Response, next: 
           });
         if (!user) {
             res.status(401).json({ error: "User not found in database" });
-            next();
+            return;
          }
          else {
           req.user = user;
          }
       } catch (error) {
         res.status(401).json({ error: "Unauthorized - No userId" });
-        next();
+        return;
       }
     }
-
-
-
 
     next();
   } catch (error) {
