@@ -22,10 +22,10 @@ export const addLike = logging("addLike", false, async (req: Request, res: Respo
 });
 
 export const deleteLike = logging("deleteLike", false, async (req: Request, res: Response) => {
-  const { id } = req.body.id;
-  console.log("deleteLike", id);
+  const likeId = req.body.id;
+  console.log("deleteLike", likeId);
   await prisma.like.delete({
-    where: { id },
+    where: { id: likeId },
   });
   res.status(200);
 });
