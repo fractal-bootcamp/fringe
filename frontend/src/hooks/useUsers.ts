@@ -10,9 +10,9 @@ const useUsers = () => {
   const { user } = useUser();
 
   const fetchUsers = async () => {
-    if (!token || !user) return;
+    if (!token || !user ) return;
     const res = await apiGetAllUsers(token);
-    if (res.length === 0) return;
+    if (!res || res.length === 0) return;
     const resCompanies = res.filter((user: User) => user.profileType === "company");
     const resApplicants = res.filter((user: User) => user.profileType === "applicant");
 
