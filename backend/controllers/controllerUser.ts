@@ -5,12 +5,50 @@ import { logging } from "../utils/logging";
 import { uploadToS3 } from "../utils/s3";
 import { getSignedReadUrl } from "../utils/s3";
 
+// TODO: rename to getCurrentUser
 export const getUserById = logging("getUserById", false, async (req: Request, res: Response) => {
   if (!req.user) {
     res.status(401).json({ error: "Unauthorized - No user" });
     return;
   }
   const userId = req.user.id;
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      applicantProfile: {
+        include: {
+          prompts: true,
+        },
+      },
+      companyProfile: {
+        include: {
+          prompts: true,
+        },
+      },
+      matches: {
+        include: {
+          users: true,
+          messages: true,
+        },
+      },
+      receivedLikes: {
+        include: {
+          fromUser: true,
+        },
+      },
+      messages: true,
+    },
+  });
+  res.status(200).json(user);
+});
+
+export const getUser = logging("getUser", false, async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({ error: "Unauthorized - No user" });
+    return;
+  }
+  const { userId } = req.body;
 
   const user = await prisma.user.findUnique({
     where: { id: userId },

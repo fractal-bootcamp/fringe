@@ -21,6 +21,22 @@ export const apiGetUserById = async (token: string) => {
   return user;
 };
 
+export const apiGetUser = async (userId: string, token: string) => {
+  const response = await axiosClient.post(
+    `/user/getUser`,
+    {
+      userId: userId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const user: User = response.data;
+  return user;
+};
+
 export const apiUpdateUserProfile = async (name: string, location: string, token: string) => {
   const response = await axiosClient.post(
     `/user/updateProfile`,

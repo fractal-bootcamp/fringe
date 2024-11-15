@@ -3,15 +3,17 @@ import { User } from "@/types/types";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import useUser from "@/hooks/useUser";
+
 const useUsers = () => {
   const [companies, setCompanies] = useState<User[]>([]);
   const [applicants, setApplicants] = useState<User[]>([]);
   const { token } = useAuthContext();
-  const { user } = useUser();
+  const { currentUser } = useUser();
 
   const fetchUsers = async () => {
-    if (!token || !user ) return;
+    if (!token || !currentUser) return;
     const res = await apiGetAllUsers(token);
+    console.log(res);
     if (!res || res.length === 0) return;
     const resCompanies = res.filter((user: User) => user.profileType === "company");
     const resApplicants = res.filter((user: User) => user.profileType === "applicant");
@@ -22,7 +24,7 @@ const useUsers = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [token, user]);
+  }, [token, currentUser]);
 
   return { companies, applicants };
 };
