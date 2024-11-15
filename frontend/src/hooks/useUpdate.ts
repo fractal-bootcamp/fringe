@@ -9,6 +9,8 @@ import { useAuthContext } from "@/contexts/AuthContext";
 export interface UpdateProfileData {
   name: string;
   location: string;
+  applicantId?: string;
+  companyId?: string;
   professionalExperiences?: string;
   educationalExperiences?: string;
   portfolioUrl?: string;
@@ -30,33 +32,33 @@ export const useUpdate = () => {
       setError("Authentication required");
       return;
     }
-
     setIsLoading(true);
     setError(null);
 
     try {
-      // Update common user profile data
-      await apiUpdateUserProfile(data.name, data.location, token);
-
       // Update specific profile data based on user type
       if (user.applicantProfile) {
+        await apiUpdateUserProfile(data.name, data.location, token);
         await apiUpdateApplicantProfile(
+          user.applicantProfile.id,
           data.educationalExperiences || "",
           data.professionalExperiences || "",
           data.portfolioUrl || "",
           token
         );
+        router.push(`/profile/${user.id}`);
       } else if (user.companyProfile) {
+        await apiUpdateUserProfile(data.name, data.location, token);
         await apiUpdateCompanyProfile(
+          user.companyProfile.id,
           data.yearsOfOperation || 0,
           data.employeeCount || 0,
           data.industry || "",
           data.fundingRound || "",
           token
         );
+        router.push(`/profile/${user.id}`);
       }
-
-      router.push("/profile");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update profile");
     } finally {

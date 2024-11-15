@@ -10,9 +10,9 @@ export const getAllCompanies = logging(
     try {
       const companies = await prisma.company.findMany({
         include: {
-        prompts: true,
-      },
-    });
+          prompts: true,
+        },
+      });
       res.status(200).json(companies);
     } catch (error) {
       res.status(500).json({ error: "Failed to get companies" });
@@ -28,15 +28,12 @@ export const updateCompanyProfile = logging(
       res.status(401).json({ error: "Unauthorized - No user" });
       return;
     }
-    const updatedData = req.body;
-    try {
-      const updatedCompany = await prisma.company.update({
-      where: { id: req.user.id },
-      data: updatedData,
+    const { companyId, ...data } = req.body;
+
+    const updatedCompany = await prisma.company.update({
+      where: { id: companyId },
+      data: data,
     });
-      res.status(200).json(updatedCompany);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to update company profile" });
-    }
+    res.status(200).json(updatedCompany);
   }
 );

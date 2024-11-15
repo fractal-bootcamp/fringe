@@ -10,9 +10,9 @@ export const getAllApplicants = logging(
     try {
       const applicants = await prisma.applicant.findMany({
         include: {
-        prompts: true,
-      },
-    });
+          prompts: true,
+        },
+      });
       res.status(200).json(applicants);
     } catch (error) {
       res.status(500).json({ error: "Failed to get applicants" });
@@ -28,17 +28,13 @@ export const updateApplicantProfile = logging(
       res.status(401).json({ error: "Unauthorized - No user" });
       return;
     }
-    const userId = req.user.id;
-    const updatedData = req.body;
-    try {
-      const updatedApplicant = await prisma.applicant.upsert({
-        where: { id: userId },
-      update: updatedData,
-      create: updatedData,
+    const { applicantId, ...data } = req.body;
+
+    const updatedApplicant = await prisma.applicant.update({
+      where: { id: applicantId },
+      data: data,
     });
-      res.status(200).json(updatedApplicant);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to update applicant profile" });
-    }
+
+    res.status(200).json(updatedApplicant);
   }
 );
