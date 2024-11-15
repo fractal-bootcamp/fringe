@@ -21,23 +21,24 @@ export const identifyUserMiddleware = async (req: Request, res: Response, next: 
     const auth = getAuth(req);
 
     if (auth.userId) {
-      try {
-        let user = await prisma.user.findUnique({
-          where: {
-            clerkId: auth.userId
-          }
-          });
-        if (!user) {
-            res.status(401).json({ error: "User not found in database" });
-            return;
-         }
-         else {
-          req.user = user;
-         }
-      } catch (error) {
-        res.status(401).json({ error: "Unauthorized - No userId" });
-        return;
+      let user = await prisma.user.findUnique({
+        where: {
+          clerkId: auth.userId
+        }
+      });
+      
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            clerkId: auth.userId,
+            name: "New User",
+            location: "",
+            profileType: req.body.profileType,
+          },
+        });
       }
+      
+      req.user = user;
     }
 
     next();
