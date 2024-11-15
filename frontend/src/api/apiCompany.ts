@@ -8,6 +8,8 @@ export const apiUpdateCompanyProfile = async (
   fundingRound: string,
   token: string
 ) => {
+  console.log("companyId");
+  console.log(companyId);
   const response = await axiosClient.post(
     `/company/update`,
     {
@@ -23,5 +25,6 @@ export const apiUpdateCompanyProfile = async (
       },
     }
   );
+  console.log(response);
   return response.data;
 };

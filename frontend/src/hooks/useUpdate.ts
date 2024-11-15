@@ -23,12 +23,12 @@ export interface UpdateProfileData {
 export const useUpdate = () => {
   const { token } = useAuthContext();
   const router = useRouter();
-  const { user } = useUser();
+  const { currentUser } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const updateProfile = async (data: UpdateProfileData) => {
-    if (!token || !user) {
+    if (!token || !currentUser) {
       setError("Authentication required");
       return;
     }
@@ -37,27 +37,27 @@ export const useUpdate = () => {
 
     try {
       // Update specific profile data based on user type
-      if (user.applicantProfile) {
+      if (currentUser.applicantProfile) {
         await apiUpdateUserProfile(data.name, data.location, token);
         await apiUpdateApplicantProfile(
-          user.applicantProfile.id,
+          currentUser.applicantProfile.id,
           data.educationalExperiences || "",
           data.professionalExperiences || "",
           data.portfolioUrl || "",
           token
         );
-        router.push(`/profile/${user.id}`);
-      } else if (user.companyProfile) {
+        router.push(`/profile/${currentUser.id}`);
+      } else if (currentUser.companyProfile) {
         await apiUpdateUserProfile(data.name, data.location, token);
         await apiUpdateCompanyProfile(
-          user.companyProfile.id,
+          currentUser.companyProfile.id,
           data.yearsOfOperation || 0,
           data.employeeCount || 0,
           data.industry || "",
           data.fundingRound || "",
           token
         );
-        router.push(`/profile/${user.id}`);
+        router.push(`/profile/${currentUser.id}`);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update profile");
