@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 
@@ -18,15 +17,20 @@ const ChatInput = ({ onSendMessage }: ChatInputProps) => {
   };
 
   return (
-    <div className="flex items-center gap-2 p-4 border-t w-full rounded-lg border-none text-white">
-      <textarea
+    <div className="flex gap-2">
+      <input
+        type="text"
         placeholder="Type your message..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="flex-grow min-h-[50px] max-h-[70px] outline-none rounded-lg bg-white border-none p-2 text-black"
+        onKeyPress={(e) => e.key === "Enter" && handleSend()}
+        className="flex-1 p-3 rounded-full border border-gray-200 focus:outline-none focus:border-gray-400"
       />
-      <Button onClick={handleSend} className="p-3 bg-black text-white shrink-0">
-        <Send className="w-5 h-5" />
+      <Button 
+        onClick={handleSend}
+        className="rounded-full aspect-square p-3 bg-black hover:bg-gray-800"
+      >
+        <Send className="h-5 w-5" />
       </Button>
     </div>
   );

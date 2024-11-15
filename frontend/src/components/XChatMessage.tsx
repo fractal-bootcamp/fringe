@@ -1,5 +1,4 @@
 import React from "react";
-import { CardContent } from "./ui/card";
 
 interface ChatMessageProps {
   message: string;
@@ -10,14 +9,16 @@ const ChatMessage = ({ message, sender }: ChatMessageProps) => {
   const isUser = sender === "user";
 
   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"} my-3`}>
-      <CardContent
-        className={`max-w-xs p-2 rounded-lg ${
-          isUser ? "bg-black text-white" : "bg-gray-100 text-gray-800"
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"} mb-4`}>
+      <div
+        className={`rounded-3xl px-6 py-3 max-w-[80%] ${
+          isUser 
+            ? "bg-black text-white rounded-tr-sm" 
+            : "bg-gray-100 text-black rounded-tl-sm"
         }`}
       >
         {message}
-      </CardContent>
+      </div>
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 import ChatMessage from "./XChatMessage";
 import ChatInput from "./XChatInput";
 import { MessageRequest } from "@/types/types";
+import XNavbar from "./XNavbar";
 
 export interface MessageObject {
   id: string;
@@ -46,29 +46,50 @@ const XChatCard = ({
   };
 
   return (
-    <Card className="w-full max-w-sm mx-auto border-none shadow-none flex flex-col items-center">
-      <CardHeader className="flex items-center justify-center border-y-[0.5px] border-black fixed top-10 z-30 w-full bg-white">
-        <Avatar className="h-12 w-12">
-          <AvatarImage src={avatarUrl} />
-          <AvatarFallback>{avatarFallback}</AvatarFallback>
-        </Avatar>
-        <CardTitle>{title}</CardTitle>
-      </CardHeader>
+    <div className="flex flex-col h-screen max-w-2xl mx-auto relative overflow-hidden">
+      {/* Fixed Header */}
+      <div className="fixed top-0 left-0 right-0 bg-white z-40">
+        <div className="flex flex-col items-center py-4 border-b max-w-2xl mx-auto">
+          <Avatar className="h-12 w-12 mb-2">
+            <AvatarImage src={avatarUrl} />
+            <AvatarFallback className="text-lg">{avatarFallback}</AvatarFallback>
+          </Avatar>
+          <h1 className="text-lg font-medium">{title}</h1>
+        </div>
+      </div>
 
-      <CardContent className="flex flex-col py-32 space-y-4 overflow-y-scroll">
-        {messages && (
-          <>
-            {messages.map((msg) => (
-              <ChatMessage key={msg.id} message={msg.content} sender={msg.sender} />
-            ))}
-          </>
-        )}
-      </CardContent>
+      {/* Scrollable Message Area */}
+      <div 
+        className="flex-1 overflow-y-scroll px-4 pt-24 pb-32 no-scrollbar"
+        style={{
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
+          WebkitOverflowScrolling: 'touch'
+        }}
+      >
+        {messages && messages.map((msg) => (
+          <ChatMessage key={msg.id} message={msg.content} sender={msg.sender} />
+        ))}
+      </div>
 
-      <CardFooter className="p-0 fixed bottom-20 z-40 w-[90%] bg-slate-200 border-none rounded-lg border-black">
-        <ChatInput onSendMessage={handleSendMessage} />
-      </CardFooter>
-    </Card>
+      {/* Fixed Input Area */}
+      <div className="fixed bottom-[50px] left-0 right-0 bg-white border-t z-40">
+        <div className="max-w-2xl mx-auto p-4">
+          <ChatInput onSendMessage={handleSendMessage} />
+        </div>
+      </div>
+
+      {/* Fixed Navbar */}
+      <div className="fixed bottom-0 left-0 right-0 z-40">
+        <XNavbar
+          pathHome="/feed"
+          pathLikes="/likes"
+          pathMatches="/matches"
+          pathSettings="/settings"
+          updateHeader={() => {}}
+        />
+      </div>
+    </div>
   );
 };
 
