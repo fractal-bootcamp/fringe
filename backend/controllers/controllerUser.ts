@@ -5,69 +5,61 @@ import { logging } from "../utils/logging";
 import { uploadToS3 } from "../utils/s3";
 import { getSignedReadUrl } from "../utils/s3";
 
-
 export const getUserById = logging("getUserById", false, async (req: Request, res: Response) => {
   if (!req.user) {
     res.status(401).json({ error: "Unauthorized - No user" });
     return;
   }
   const userId = req.user.id;
-  try {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        applicantProfile: {
-          include: {
-            prompts: true,
-          },
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      applicantProfile: {
+        include: {
+          prompts: true,
         },
-        companyProfile: {
-          include: {
-            prompts: true,
-          },
-        },
-        matches: {
-          include: {
-            users: true,
-            messages: true,
-          },
-        },
-        receivedLikes: {
-          include: {
-            fromUser: true,
-          },
-        },
-        messages: true,
       },
-    });
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to get user" });
-  }
+      companyProfile: {
+        include: {
+          prompts: true,
+        },
+      },
+      matches: {
+        include: {
+          users: true,
+          messages: true,
+        },
+      },
+      receivedLikes: {
+        include: {
+          fromUser: true,
+        },
+      },
+      messages: true,
+    },
+  });
+  res.status(200).json(user);
 });
 
 export const getAllUsers = logging("getAllUsers", false, async (req: Request, res: Response) => {
-  try {
-    const users = await prisma.user.findMany({
-      include: {
-        applicantProfile: {
-          include: {
-            prompts: true,
-          },
+  const users = await prisma.user.findMany({
+    include: {
+      applicantProfile: {
+        include: {
+          prompts: true,
         },
-        companyProfile: {
-          include: {
-            prompts: true,
-          },
-        },
-        matches: true,
-        messages: true,
       },
-    });
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to get all users" });
-  }
+      companyProfile: {
+        include: {
+          prompts: true,
+        },
+      },
+      matches: true,
+      messages: true,
+    },
+  });
+  res.status(200).json(users);
 });
 
 export const updateUserProfile = logging(
@@ -78,18 +70,15 @@ export const updateUserProfile = logging(
       res.status(401).json({ error: "Unauthorized - No user" });
       return;
     }
-    try {
-      const userId = req.user.id;
-      const updatedData = req.body;
 
-      const updatedUser = await prisma.user.update({
-        where: { id: userId },
-        data: updatedData,
-      });
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to update user profile" });
-    }
+    const userId = req.user.id;
+    const updatedData = req.body;
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updatedData,
+    });
+    res.status(200).json(updatedUser);
   }
 );
 
@@ -107,6 +96,7 @@ export const updateUserPhoto = logging(
       res.status(400).json({ error: "No photo uploaded" });
       return;
     }
+
     try {
       const fileBuffer = req.file.buffer;
       const fileName = req.file.originalname;
@@ -150,66 +140,58 @@ export const createUser = logging("createUser", false, async (req: Request, res:
     res.status(401).json({ error: "Unauthorized - No user" });
     return;
   }
-  
-  try {
-    const result = await prisma.$transaction(async (prisma) => {
-      // Update existing user with provided data
-      const user = await prisma.user.update({
-        where: { id: req.user!.id },
-        data: {
-          name: req.body.name,
-          profileType: req.body.profileType,
+
+  const result = await prisma.$transaction(async (prisma) => {
+    // Update existing user with provided data
+    const user = await prisma.user.update({
+      where: { id: req.user!.id },
+      data: {
+        name: req.body.name,
+        profileType: req.body.profileType,
+      },
+    });
+
+    // Create corresponding profile based on type
+    if (req.body.profileType === "applicant") {
+      await prisma.applicant.upsert({
+        where: { userId: user.id },
+        update: {},
+        create: {
+          userId: user.id,
+          yearsOfExperience: 0,
+          educationalExperiences: "",
+          professionalExperiences: "",
+          portfolioUrl: "",
         },
       });
-
-      // Create corresponding profile based on type
-      if (req.body.profileType === "applicant") {
-        await prisma.applicant.upsert({
-          where: { userId: user.id },
-          update: {},
-          create: {
-            userId: user.id,
-            yearsOfExperience: 0,
-            educationalExperiences: "",
-            professionalExperiences: "",
-            portfolioUrl: "",
-          },
-        });
-      } else if (req.body.profileType === "company") {
-        await prisma.company.upsert({
-          where: { userId: user.id },
-          update: {},
-          create: {
-            userId: user.id,
-            yearsOfOperation: 0,
-            employeeCount: 0,
-            industry: "software",
-            fundingRound: "seed",
-          },
-        });
-      }
-
-      const finalUser = await prisma.user.findUnique({
-        where: { id: user.id },
-        include: {
-          applicantProfile: true,
-          companyProfile: true,
-        }
+    } else if (req.body.profileType === "company") {
+      await prisma.company.upsert({
+        where: { userId: user.id },
+        update: {},
+        create: {
+          userId: user.id,
+          yearsOfOperation: 0,
+          employeeCount: 0,
+          industry: "software",
+          fundingRound: "seed",
+        },
       });
+    }
 
-      if (!finalUser) {
-        throw new Error('User not found after creation');
-      }
+    const finalUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      include: {
+        applicantProfile: true,
+        companyProfile: true,
+      },
+    });
 
-      return finalUser;
-    });
-    
-    res.status(200).json({ user: result });
-  } catch (error) {
-    console.error('Create user error:', error);
-    res.status(500).json({ 
-      error: "Failed to create/update user",
-      details: error instanceof Error ? error.message : 'Unknown error'
-    });
-  }
+    if (!finalUser) {
+      throw new Error("User not found after creation");
+    }
+
+    return finalUser;
+  });
+
+  res.status(200).json({ user: result });
 });

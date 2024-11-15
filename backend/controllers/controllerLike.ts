@@ -9,14 +9,10 @@ export const getLikes = logging("getLikes", false, async (req: Request, res: Res
     return;
   }
   const userId = req.user.id;
-  try {
-    const likes = await prisma.like.findMany({
-      where: { toUserId: userId },
-    });
-    res.status(200).json({ likes });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to get likes" });
-  }
+  const likes = await prisma.like.findMany({
+    where: { toUserId: userId },
+  });
+  res.status(200).json({ likes });
 });
 
 export const addLike = logging("addLike", false, async (req: Request, res: Response) => {
@@ -25,17 +21,14 @@ export const addLike = logging("addLike", false, async (req: Request, res: Respo
     return;
   }
   const { fromUserId, toUserId } = req.body;
-  try {
-    await prisma.like.create({
-      data: {
-        fromUserId,
-        toUserId,
-      },
-    });
-    res.status(200);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to add like" });
-  }
+
+  await prisma.like.create({
+    data: {
+      fromUserId,
+      toUserId,
+    },
+  });
+  res.status(200);
 });
 
 export const deleteLike = logging("deleteLike", false, async (req: Request, res: Response) => {
@@ -44,8 +37,6 @@ export const deleteLike = logging("deleteLike", false, async (req: Request, res:
     return;
   }
   const { likeId } = req.body;
-
-  console.log(likeId);
 
   const response = await prisma.like.delete({
     where: { id: likeId },

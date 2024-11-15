@@ -7,16 +7,12 @@ export const getAllCompanies = logging(
   "getAllCompanies",
   false,
   async (req: Request, res: Response) => {
-    try {
-      const companies = await prisma.company.findMany({
-        include: {
-          prompts: true,
-        },
-      });
-      res.status(200).json(companies);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get companies" });
-    }
+    const companies = await prisma.company.findMany({
+      include: {
+        prompts: true,
+      },
+    });
+    res.status(200).json(companies);
   }
 );
 
