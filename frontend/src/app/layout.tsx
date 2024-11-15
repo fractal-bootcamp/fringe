@@ -20,7 +20,7 @@ export default function RootLayout({
                 <HeaderManager />
               </Suspense>
             </div>
-            <div className="h-screen">
+            <div className="px-4 py-16 pb-20">
               <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
             </div>
             <Suspense fallback={null}>

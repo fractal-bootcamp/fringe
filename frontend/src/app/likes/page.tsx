@@ -32,7 +32,6 @@ const Page = () => {
 
   return (
     <div>
-      <div className="w-full text-center font-semibold">Likes You</div>
       <div className="grid grid-cols-2 gap-4">
         {likesParsed.map((like, key) => (
           <XLikesYouCard
