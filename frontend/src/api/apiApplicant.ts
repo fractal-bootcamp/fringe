@@ -1,6 +1,7 @@
 import axiosClient from "./axiosClient";
 
 export const apiUpdateApplicantProfile = async (
+  applicantId: string,
   educationalExperiences: string,
   professionalExperiences: string,
   portfolioUrl: string,
@@ -9,6 +10,7 @@ export const apiUpdateApplicantProfile = async (
   const res = await axiosClient.post(
     `/applicant/update`,
     {
+      applicantId,
       educationalExperiences,
       professionalExperiences,
       portfolioUrl,

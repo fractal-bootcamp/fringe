@@ -40,6 +40,7 @@ export const useUpdate = () => {
       if (user.applicantProfile) {
         await apiUpdateUserProfile(data.name, data.location, token);
         await apiUpdateApplicantProfile(
+          user.applicantProfile.id,
           data.educationalExperiences || "",
           data.professionalExperiences || "",
           data.portfolioUrl || "",
@@ -49,6 +50,7 @@ export const useUpdate = () => {
       } else if (user.companyProfile) {
         await apiUpdateUserProfile(data.name, data.location, token);
         await apiUpdateCompanyProfile(
+          user.companyProfile.id,
           data.yearsOfOperation || 0,
           data.employeeCount || 0,
           data.industry || "",

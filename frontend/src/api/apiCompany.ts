@@ -1,6 +1,7 @@
 import axiosClient from "./axiosClient";
 
 export const apiUpdateCompanyProfile = async (
+  companyId: string,
   yearsOfOperation: number,
   employeeCount: number,
   industry: string,
@@ -10,6 +11,7 @@ export const apiUpdateCompanyProfile = async (
   const response = await axiosClient.post(
     `/company/update`,
     {
+      companyId,
       yearsOfOperation,
       employeeCount,
       industry,

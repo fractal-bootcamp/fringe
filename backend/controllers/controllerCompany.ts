@@ -28,29 +28,11 @@ export const updateCompanyProfile = logging(
       res.status(401).json({ error: "Unauthorized - No user" });
       return;
     }
+    const { companyId, ...data } = req.body;
 
-    const userId = req.user.id;
-    const updatedData = req.body;
-
-    const updatedCompany = await prisma.company.upsert({
-      where: { id: userId },
-      update: {
-        yearsOfOperation: updatedData.yearsOfOperation,
-        employeeCount: updatedData.employeeCount,
-        industry: updatedData.industry,
-        fundingRound: updatedData.fundingRound,
-      },
-      create: {
-        yearsOfOperation: updatedData.yearsOfOperation,
-        employeeCount: updatedData.employeeCount,
-        industry: updatedData.industry,
-        fundingRound: updatedData.fundingRound,
-        user: {
-          connect: {
-            id: userId,
-          },
-        },
-      },
+    const updatedCompany = await prisma.company.update({
+      where: { id: companyId },
+      data: data,
     });
     res.status(200).json(updatedCompany);
   }

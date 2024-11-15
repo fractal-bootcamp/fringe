@@ -28,28 +28,11 @@ export const updateApplicantProfile = logging(
       res.status(401).json({ error: "Unauthorized - No user" });
       return;
     }
-    const userId = req.user.id;
-    const updatedData = req.body;
+    const { applicantId, ...data } = req.body;
 
-    const updatedApplicant = await prisma.applicant.upsert({
-      where: { id: userId },
-      update: {
-        educationalExperiences: updatedData.educationalExperiences,
-        professionalExperiences: updatedData.professionalExperiences,
-        portfolioUrl: updatedData.portfolioUrl,
-        yearsOfExperience: updatedData.yearsOfExperience,
-      },
-      create: {
-        educationalExperiences: updatedData.educationalExperiences,
-        professionalExperiences: updatedData.professionalExperiences,
-        portfolioUrl: updatedData.portfolioUrl,
-        yearsOfExperience: updatedData.yearsOfExperience,
-        user: {
-          connect: {
-            id: userId,
-          },
-        },
-      },
+    const updatedApplicant = await prisma.applicant.update({
+      where: { id: applicantId },
+      data: data,
     });
 
     res.status(200).json(updatedApplicant);
