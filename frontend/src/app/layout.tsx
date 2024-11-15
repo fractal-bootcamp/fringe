@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Suspense } from "react";
+import HeaderManager from "@/components/HeaderManager";
 
 export default function RootLayout({
   children,
@@ -14,6 +15,11 @@ export default function RootLayout({
       <body suppressHydrationWarning className={`antialiased`}>
         <ClerkProvider dynamic={true}>
           <AuthProvider>
+            <div>
+              <Suspense fallback={null}>
+                <HeaderManager />
+              </Suspense>
+            </div>
             <div className="h-screen">
               <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
             </div>

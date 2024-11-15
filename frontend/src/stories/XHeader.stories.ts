@@ -6,7 +6,7 @@ const meta = {
   title: "XHeader",
   component: XHeader,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
 } satisfies Meta<typeof XHeader>;
 
