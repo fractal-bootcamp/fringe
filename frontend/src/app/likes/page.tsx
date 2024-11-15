@@ -3,14 +3,11 @@
 import XLikesYouCard from "@/components/XLikesYouCard";
 import useLikes from "@/hooks/useLikes";
 import useMatches from "@/hooks/useMatches";
-import { Like, User } from "@/types/types";
-import { useUser } from "@clerk/nextjs";
+import { Like, Match, User } from "@/types/types";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { likes } = useLikes();
-  const { user } = useUser();
-  console.log(user);
 
   const router = useRouter();
   const { handleDeleteLike } = useLikes();
@@ -25,9 +22,12 @@ const Page = () => {
   }));
 
   // Handler for adding matches + deleting likes when matching
-  const handleOnMatch = (userId1: string, userId2: string, likeId: string) => {
-    handleAddMatch(userId1, userId2);
+  const handleOnMatch = async (userId1: string, userId2: string, likeId: string) => {
+    const newMatch: Match | undefined = await handleAddMatch(userId1, userId2);
     handleDeleteLike(likeId);
+    if (newMatch) {
+      router.push(`/chat/${newMatch.id}`);
+    }
   };
 
   return (

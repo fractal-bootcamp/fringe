@@ -19,7 +19,7 @@ const Page = () => {
 
   if (!match || !user) return <div>Loading...</div>;
 
-  const messageObjects: MessageObject[] = match.messages.map((msg) => ({
+  const messageObjects: MessageObject[] | null = match.messages.map((msg) => ({
     id: msg.id,
     sender: msg.senderId === user.id ? "user" : "recipient",
     content: msg.content,

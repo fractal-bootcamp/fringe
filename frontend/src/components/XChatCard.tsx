@@ -18,7 +18,7 @@ interface XChatCardProps {
   description?: string;
   avatarUrl?: string;
   avatarFallback?: string;
-  messageObjects: MessageObject[];
+  messageObjects: MessageObject[] | null;
   onSendMessage: (message: MessageRequest) => void;
 }
 
@@ -32,7 +32,7 @@ const XChatCard = ({
   messageObjects,
   onSendMessage,
 }: XChatCardProps) => {
-  const [messages, setMessages] = useState<MessageObject[]>(messageObjects);
+  const [messages, setMessages] = useState<MessageObject[] | null>(messageObjects);
 
   const handleSendMessage = (content: string) => {
     const newMessage: MessageObject = { id: new Date().toISOString(), sender: "user", content };
@@ -42,7 +42,9 @@ const XChatCard = ({
       content: content,
     };
     onSendMessage(newMessageRequest);
-    setMessages([...messages, newMessage]);
+    if (messages) {
+      setMessages([...messages, newMessage]);
+    }
   };
 
   return (
@@ -59,9 +61,13 @@ const XChatCard = ({
       </CardHeader>
 
       <CardContent className="flex flex-col p-4 space-y-4 overflow-y-auto">
-        {messages.map((msg) => (
-          <ChatMessage key={msg.id} message={msg.content} sender={msg.sender} />
-        ))}
+        {messages && (
+          <>
+            {messages.map((msg) => (
+              <ChatMessage key={msg.id} message={msg.content} sender={msg.sender} />
+            ))}
+          </>
+        )}
       </CardContent>
 
       <CardFooter className="p-0">
