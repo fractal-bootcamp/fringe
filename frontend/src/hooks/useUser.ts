@@ -2,16 +2,17 @@ import { apiGetUserById, apiUpdateUserPhoto, apiGetSignedUrl, apiCreateUser } fr
 import { ProfileType, User } from "@/types/types";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/contexts/AuthContext";
+import storeUser from "@/stores/storeUser";
 
 const useUser = () => {
-  const [user, setUser] = useState<User>();
+  const { currentUser, updateCurrentUser } = storeUser();
   const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string>();
   const { token } = useAuthContext();
 
   const fetchUser = async () => {
     if (!token) return;
-    const user = await apiGetUserById(token);
-    setUser(user);
+    const user: User = await apiGetUserById(token);
+    updateCurrentUser(user);
     if (user.profilePhotoIds?.[0]) {
       const url = await apiGetSignedUrl(user.profilePhotoIds[0], token);
       setCurrentPhotoUrl(url);
@@ -19,10 +20,10 @@ const useUser = () => {
   };
 
   const updateUserPhoto = async (photo: File) => {
-    if (!token || !user) return;
+    if (!token || !currentUser) return;
     const response = await apiUpdateUserPhoto(photo, token);
     if (response.updatedUser) {
-      setUser(response.updatedUser);
+      updateCurrentUser(response.updatedUser);
       setCurrentPhotoUrl(response.photoUrl);
     }
   };
@@ -32,7 +33,7 @@ const useUser = () => {
     if (!token) return;
     const response = await apiCreateUser(type, token);
     if (response.user) {
-      setUser(response.user);
+      updateCurrentUser(response.user);
     }
     return response;
   };
@@ -44,11 +45,11 @@ const useUser = () => {
   }, [token]);
 
   return {
-    user,
+    currentUser,
     updateUserPhoto,
     createUser,
     currentPhotoUrl,
-    isLoading: !user && !!token,
+    isLoading: !currentUser && !!token,
   };
 };
 
