@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import XUpdateProfile from "@/components/XUpdateProfile";
 import { ProfileType } from "@/types/types";
-import { UpdateProfileData } from "@/hooks/useUpdate";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -26,7 +25,7 @@ export const Primary: Story = {
     experienceInput: "5 years of full-stack development experience at tech startups",
     educationInput: "BS Computer Science, Stanford University",
     portfolioUrlInput: "https://sarahjohnson.dev",
-    onUpdateProfile: async (profileData: UpdateProfileData) => Promise.resolve(),
+    onUpdateProfile: async () => Promise.resolve(),
   },
 };
 
@@ -39,6 +38,6 @@ export const Secondary: Story = {
     yearsOfOperationInput: 4,
     industryInput: "Enterprise Software",
     fundingRoundInput: "Series B",
-    onUpdateProfile: async (profileData: UpdateProfileData) => Promise.resolve(),
+    onUpdateProfile: async () => Promise.resolve(),
   },
 };
