@@ -1,4 +1,3 @@
-// import { Prompt } from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const apiUpdateCompanyProfile = async (
@@ -7,7 +6,6 @@ export const apiUpdateCompanyProfile = async (
   industry: string,
   fundingRound: string,
   token: string
-  // prompts: Prompt[]
 ) => {
   const response = await axiosClient.post(
     `/company/update`,
@@ -16,7 +14,6 @@ export const apiUpdateCompanyProfile = async (
       employeeCount,
       industry,
       fundingRound,
-      // prompts,
     },
     {
       headers: {

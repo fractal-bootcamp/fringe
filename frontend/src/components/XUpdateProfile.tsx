@@ -30,24 +30,52 @@ const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) =
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // if (profileType === "applicant" && onUpdateProfile) {
-    //   await onUpdateProfile({
-    //     name,
-    //     location,
-    //     professionalExperiences: experience,
-    //     educationalExperiences: education,
-    //     portfolioUrl,
-    //   });
-    // } else if (profileType === "company" && onUpdateProfile) {
-    //   await onUpdateProfile({
-    //     name,
-    //     location,
-    //     employeeCount,
-    //     yearsOfOperation,
-    //     industry,
-    //     fundingRound,
-    //   });
-    // }
+    if (
+      profileType === "applicant" &&
+      onUpdateProfile &&
+      name !== "" &&
+      location !== "" &&
+      experience !== "" &&
+      education !== "" &&
+      portfolioUrl !== ""
+    ) {
+      await onUpdateProfile({
+        name,
+        location,
+        professionalExperiences: experience,
+        educationalExperiences: education,
+        portfolioUrl,
+      });
+      setName("");
+      setLocation("");
+      setExperience("");
+      setEducation("");
+      setPortfolioUrl("");
+    } else if (
+      profileType === "company" &&
+      onUpdateProfile &&
+      name !== "" &&
+      location !== "" &&
+      employeeCount !== 0 &&
+      yearsOfOperation !== 0 &&
+      industry !== "" &&
+      fundingRound !== ""
+    ) {
+      await onUpdateProfile({
+        name,
+        location,
+        employeeCount,
+        yearsOfOperation,
+        industry,
+        fundingRound,
+      });
+      setName("");
+      setLocation("");
+      setEmployeeCount(0);
+      setYearsOfOperation(0);
+      setIndustry("");
+      setFundingRound("");
+    }
   };
 
   return (

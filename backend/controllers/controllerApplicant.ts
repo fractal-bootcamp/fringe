@@ -10,9 +10,9 @@ export const getAllApplicants = logging(
     try {
       const applicants = await prisma.applicant.findMany({
         include: {
-        prompts: true,
-      },
-    });
+          prompts: true,
+        },
+      });
       res.status(200).json(applicants);
     } catch (error) {
       res.status(500).json({ error: "Failed to get applicants" });
@@ -30,15 +30,28 @@ export const updateApplicantProfile = logging(
     }
     const userId = req.user.id;
     const updatedData = req.body;
-    try {
-      const updatedApplicant = await prisma.applicant.upsert({
-        where: { id: userId },
-      update: updatedData,
-      create: updatedData,
+
+    const updatedApplicant = await prisma.applicant.upsert({
+      where: { id: userId },
+      update: {
+        educationalExperiences: updatedData.educationalExperiences,
+        professionalExperiences: updatedData.professionalExperiences,
+        portfolioUrl: updatedData.portfolioUrl,
+        yearsOfExperience: updatedData.yearsOfExperience,
+      },
+      create: {
+        educationalExperiences: updatedData.educationalExperiences,
+        professionalExperiences: updatedData.professionalExperiences,
+        portfolioUrl: updatedData.portfolioUrl,
+        yearsOfExperience: updatedData.yearsOfExperience,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
     });
-      res.status(200).json(updatedApplicant);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to update applicant profile" });
-    }
+
+    res.status(200).json(updatedApplicant);
   }
 );

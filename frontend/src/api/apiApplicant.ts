@@ -1,4 +1,3 @@
-// import { Prompt } from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const apiUpdateApplicantProfile = async (
@@ -6,16 +5,14 @@ export const apiUpdateApplicantProfile = async (
   professionalExperiences: string,
   portfolioUrl: string,
   token: string
-  // prompts: Prompt[]
 ) => {
-  const response = await axiosClient.post(
+  const res = await axiosClient.post(
     `/applicant/update`,
     {
-      // yearsOfExperience,
       educationalExperiences,
       professionalExperiences,
       portfolioUrl,
-      // prompts,
+      yearsOfExperience: 0,
     },
     {
       headers: {
@@ -23,5 +20,6 @@ export const apiUpdateApplicantProfile = async (
       },
     }
   );
-  return response.data;
+  console.log(res.data);
+  return;
 };
