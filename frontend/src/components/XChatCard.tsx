@@ -3,30 +3,45 @@ import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./ui/card";
 import ChatMessage from "./XChatMessage";
 import ChatInput from "./XChatInput";
+import { MessageRequest } from "@/types/types";
 
-interface Message {
-  id: number;
-  sender: "user" | "recipient";
+export interface MessageObject {
+  id: string;
+  sender: string;
   content: string;
 }
 
-interface ChatCardProps {
+interface XChatCardProps {
+  senderId: string;
+  matchId: string;
   title?: string;
   description?: string;
   avatarUrl?: string;
   avatarFallback?: string;
+  messageObjects: MessageObject[];
+  onSendMessage: (message: MessageRequest) => void;
 }
 
-const ChatCard = ({ 
+const XChatCard = ({
+  senderId,
+  matchId,
   title = "Chat",
   description = "Online",
   avatarUrl = "",
-  avatarFallback = "AI"
-}: ChatCardProps) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  avatarFallback = "AI",
+  messageObjects,
+  onSendMessage,
+}: XChatCardProps) => {
+  const [messages, setMessages] = useState<MessageObject[]>(messageObjects);
 
   const handleSendMessage = (content: string) => {
-    const newMessage: Message = { id: messages.length + 1, sender: "user", content };
+    const newMessage: MessageObject = { id: new Date().toISOString(), sender: "user", content };
+    const newMessageRequest: MessageRequest = {
+      matchId: matchId,
+      senderId: senderId,
+      content: content,
+    };
+    onSendMessage(newMessageRequest);
     setMessages([...messages, newMessage]);
   };
 
@@ -56,4 +71,4 @@ const ChatCard = ({
   );
 };
 
-export default ChatCard;
+export default XChatCard;
