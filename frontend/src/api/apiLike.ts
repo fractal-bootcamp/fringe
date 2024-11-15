@@ -9,17 +9,27 @@ export const apiGetLikes = (userId: string, token: string) => {
 };
 
 export const apiAddLike = (fromUserId: string, toUserId: string, token: string) => {
-  axiosClient.post(`/like/add`, { fromUserId, toUserId }, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    });
+  axiosClient.post(
+    `/like/add`,
+    { fromUserId, toUserId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };
 
 export const apiDeleteLike = (likeId: string, token: string) => {
-  axiosClient.post("/like/delete", { likeId }, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  console.log("likeId");
+  console.log(likeId);
+  axiosClient.post(
+    "/like/delete",
+    { likeId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };

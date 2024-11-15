@@ -7,16 +7,12 @@ export const getAllApplicants = logging(
   "getAllApplicants",
   false,
   async (req: Request, res: Response) => {
-    try {
-      const applicants = await prisma.applicant.findMany({
-        include: {
-          prompts: true,
-        },
-      });
-      res.status(200).json(applicants);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get applicants" });
-    }
+    const applicants = await prisma.applicant.findMany({
+      include: {
+        prompts: true,
+      },
+    });
+    res.status(200).json(applicants);
   }
 );
 

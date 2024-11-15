@@ -16,23 +16,29 @@ const LikesYouPage = ({ likes }: LikesYouPageProps) => {
   if (!likes || likes.length === 0) {
     return <div>No likes yet</div>;
   }
-  const likesYouUsers: { like: Like; likesYouUser: User }[] = likes.map((like: Like) => ({
+  const likesParsed: { like: Like; likesYouUser: User }[] = likes.map((like: Like) => ({
     like,
     likesYouUser: like.fromUser,
   }));
+
+  // Handler for adding matches + deleting likes when matching
+  const handleOnMatch = (userId1: string, userId2: string, likeId: string) => {
+    handleAddMatch(userId1, userId2);
+    handleDeleteLike(likeId);
+  };
 
   return (
     <div>
       <div className="w-full text-center font-semibold">Likes You</div>
       <div className="grid grid-cols-2 gap-4">
-        {likesYouUsers.map((user, key) => (
+        {likesParsed.map((like, key) => (
           <XLikesYouCard
             key={key}
-            name={user.likesYouUser.name}
-            image={user.likesYouUser.profilePhotoIds[0]}
-            goToProfile={() => router.push(`/profile/${user.likesYouUser.id}`)}
-            onMatch={() => handleAddMatch(user.likesYouUser.id, user.like.toUserId)}
-            onUnmatch={() => handleDeleteLike(user.like.id)}
+            name={like.likesYouUser.name}
+            image={like.likesYouUser.profilePhotoIds[0]}
+            goToProfile={() => router.push(`/profile/${like.likesYouUser.id}`)}
+            onMatch={() => handleOnMatch(like.likesYouUser.id, like.like.toUserId, like.like.id)}
+            onUnmatch={() => handleDeleteLike(like.like.id)}
           />
         ))}
       </div>
