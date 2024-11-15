@@ -40,7 +40,7 @@ async function main() {
 
   // For each user, create at least 5 matches
   for (const user of users) {
-    const numberOfMatches = Math.max(5, Math.floor(Math.random() * 8)); // 5-7 matches
+    const numberOfMatches = Math.max(2, Math.floor(Math.random() * 4)); // 5-7 matches
 
     // Create matches for current user
     for (let i = 0; i < numberOfMatches; i++) {
@@ -60,7 +60,7 @@ async function main() {
       });
 
       // Create 10 messages for this match
-      const numberOfMessages = 10;
+      const numberOfMessages = 2;
       const messageUsers = [user.id, otherUser.id];
 
       for (let j = 0; j < numberOfMessages; j++) {
