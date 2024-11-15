@@ -12,7 +12,7 @@ export default function Page() {
             rootBox: "w-full"
           }
         }}
-        redirectUrl="/feed"
+        redirectUrl="/"
       />
     </div>
   );
