@@ -24,7 +24,7 @@ const Page = () => {
               .split(" ")
               .map((n) => n[0])
               .join("")}
-            message={match.messages[0].content}
+            message={match.messages[match.messages.length - 1].content}
             onChatClick={() => router.push(`/chat/${match.id}`)}
           />
         );

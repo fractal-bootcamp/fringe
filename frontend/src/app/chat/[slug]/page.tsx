@@ -10,6 +10,7 @@ const Page = () => {
   const { slug } = useParams();
   const { user } = useUser();
   const { match } = useMatch(slug as string);
+  const { handleSendMessage } = useMessages(match?.id || "");
 
   console.log("user");
   console.log(user);
@@ -17,8 +18,6 @@ const Page = () => {
   console.log(match);
 
   if (!match || !user) return <div>Loading...</div>;
-
-  const { handleSendMessage } = useMessages(match.id);
 
   const messageObjects: MessageObject[] = match.messages.map((msg) => ({
     id: msg.id,
