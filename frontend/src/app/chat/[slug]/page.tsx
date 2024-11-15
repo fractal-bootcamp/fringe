@@ -8,20 +8,20 @@ import useMessages from "@/hooks/useMessages";
 
 const Page = () => {
   const { slug } = useParams();
-  const { user } = useUser();
+  const { currentUser } = useUser();
   const { match } = useMatch(slug as string);
   const { handleSendMessage } = useMessages(match?.id || "");
 
   console.log("user");
-  console.log(user);
+  console.log(currentUser);
   console.log("match");
   console.log(match);
 
-  if (!match || !user) return <div>Loading...</div>;
+  if (!match || !currentUser) return <div>Loading...</div>;
 
   const messageObjects: MessageObject[] | null = match.messages.map((msg) => ({
     id: msg.id,
-    sender: msg.senderId === user.id ? "user" : "recipient",
+    sender: msg.senderId === currentUser.id ? "user" : "recipient",
     content: msg.content,
   }));
 
@@ -30,7 +30,7 @@ const Page = () => {
 
   return (
     <XChatCard
-      senderId={user.id}
+      senderId={currentUser.id}
       matchId={match.id}
       title={match.users[1].name}
       messageObjects={messageObjects}

@@ -4,7 +4,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import XNavbar from "./XNavbar";
 import storeHeader from "@/stores/storeHeader";
 
-export default function NavbarManager() {
+const AuthNavar = () => {
   const { isSignedIn } = useAuthContext();
   const { updateHeader } = storeHeader();
 
@@ -18,4 +18,6 @@ export default function NavbarManager() {
       updateHeader={updateHeader}
     />
   ) : null;
-}
+};
+
+export default AuthNavar;

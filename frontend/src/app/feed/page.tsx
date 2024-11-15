@@ -11,7 +11,7 @@ import useLikes from "@/hooks/useLikes";
 const Page = () => {
   const { isLoaded, isSignedIn } = useAuthContext();
   const { handleAddLike } = useLikes();
-  const { user } = useUser();
+  const { currentUser } = useUser();
   const { applicants, companies } = useUsers();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -24,11 +24,11 @@ const Page = () => {
     redirect("/sign-in");
   }
 
-  if (!user || !applicants || !companies) {
+  if (!currentUser || !applicants || !companies) {
     return null;
   }
 
-  const items = (user.profileType === "applicant" ? companies : applicants).sort(
+  const items = (currentUser.profileType === "applicant" ? companies : applicants).sort(
     (a, b) => Number(a.id) - Number(b.id)
   );
 
@@ -39,7 +39,7 @@ const Page = () => {
   };
 
   const handleLikeSection = () => {
-    handleAddLike(user.id, items[currentIndex].id);
+    handleAddLike(currentUser.id, items[currentIndex].id);
     if (currentIndex < items.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     }

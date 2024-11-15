@@ -26,9 +26,13 @@ export const updateCompanyProfile = logging(
     }
     const { companyId, ...data } = req.body;
 
-    const updatedCompany = await prisma.company.update({
-      where: { id: companyId },
-      data: data,
+    const updatedCompany = await prisma.company.upsert({
+      where: { userId: req.user.id },
+      update: data,
+      create: {
+        userId: req.user.id,
+        ...data,
+      },
     });
     res.status(200).json(updatedCompany);
   }

@@ -8,25 +8,49 @@ import { Button } from "./ui/button";
 import { UpdateProfileData } from "@/hooks/useUpdate";
 
 interface XUpdateProfileProps {
+  nameInput: string;
+  locationInput: string;
+  experienceInput?: string;
+  educationInput?: string;
+  portfolioUrlInput?: string;
+  employeeCountInput?: number;
+  yearsOfOperationInput?: number;
+  industryInput?: string;
+  fundingRoundInput?: string;
   profileType: ProfileType;
   onUpdateProfile?: (profileData: UpdateProfileData) => Promise<void>;
 }
 
-const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) => {
+const XUpdateProfile = ({
+  nameInput,
+  locationInput,
+  experienceInput,
+  educationInput,
+  portfolioUrlInput,
+  employeeCountInput,
+  yearsOfOperationInput,
+  industryInput,
+  fundingRoundInput,
+  profileType,
+  onUpdateProfile,
+}: XUpdateProfileProps) => {
   // General
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
+  const [name, setName] = useState(nameInput);
+  const [location, setLocation] = useState(locationInput);
 
   // Applicant
-  const [experience, setExperience] = useState("");
-  const [education, setEducation] = useState("");
-  const [portfolioUrl, setPortfolioUrl] = useState("");
+  const [experience, setExperience] = useState(experienceInput);
+  const [education, setEducation] = useState(educationInput);
+  const [portfolioUrl, setPortfolioUrl] = useState(portfolioUrlInput);
 
   // Company
-  const [employeeCount, setEmployeeCount] = useState(0);
-  const [yearsOfOperation, setYearsOfOperation] = useState(0);
-  const [industry, setIndustry] = useState("");
-  const [fundingRound, setFundingRound] = useState("");
+  const [employeeCount, setEmployeeCount] = useState(employeeCountInput);
+  const [yearsOfOperation, setYearsOfOperation] = useState(yearsOfOperationInput);
+  const [industry, setIndustry] = useState(industryInput);
+  const [fundingRound, setFundingRound] = useState(fundingRoundInput);
+
+  console.log(employeeCount);
+  console.log(yearsOfOperation);
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -94,7 +118,7 @@ const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) =
             <Input value={location} onChange={(e) => setLocation(e.target.value)} />
           </div>
           {/* Applicant */}
-          {profileType === "applicant" && (
+          {profileType === "applicant" ? (
             <>
               {/* Experience */}
               <div>
@@ -114,16 +138,21 @@ const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) =
                 <Input value={portfolioUrl} onChange={(e) => setPortfolioUrl(e.target.value)} />
               </div>
             </>
+          ) : (
+            <></>
           )}
           {/* Company */}
-          {profileType === "company" && (
+          {profileType === "company" ? (
             <>
               <div>
                 <Label>Employee Count</Label>
                 <Input
                   type="number"
                   value={employeeCount}
-                  onChange={(e) => setEmployeeCount(parseInt(e.target.value))}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setEmployeeCount(value === "" ? 0 : parseInt(value, 10));
+                  }}
                 />
               </div>
               <div>
@@ -131,7 +160,10 @@ const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) =
                 <Input
                   type="number"
                   value={yearsOfOperation}
-                  onChange={(e) => setYearsOfOperation(parseInt(e.target.value))}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setYearsOfOperation(value === "" ? 0 : parseInt(value, 10));
+                  }}
                 />
               </div>
               <div>
@@ -143,6 +175,8 @@ const XUpdateProfile = ({ profileType, onUpdateProfile }: XUpdateProfileProps) =
                 <Input value={fundingRound} onChange={(e) => setFundingRound(e.target.value)} />
               </div>
             </>
+          ) : (
+            <></>
           )}
           <Button type="submit" className="w-full">
             Update Profile

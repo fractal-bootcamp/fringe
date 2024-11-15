@@ -4,6 +4,6 @@ import { getAllCompanies, updateCompanyProfile } from "../controllers/controller
 const router = express.Router();
 
 router.get("/companies", getAllCompanies);
-router.post("/update/:id", updateCompanyProfile);
+router.post("/update", updateCompanyProfile);
 
 export default router;

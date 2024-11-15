@@ -26,9 +26,13 @@ export const updateApplicantProfile = logging(
     }
     const { applicantId, ...data } = req.body;
 
-    const updatedApplicant = await prisma.applicant.update({
-      where: { id: applicantId },
-      data: data,
+    const updatedApplicant = await prisma.applicant.upsert({
+      where: { userId: req.user.id },
+      update: data,
+      create: {
+        userId: req.user.id,
+        ...data,
+      },
     });
 
     res.status(200).json(updatedApplicant);

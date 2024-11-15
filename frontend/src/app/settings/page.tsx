@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
-  const { user, updateUserPhoto, currentPhotoUrl, isLoading } = useUser();
+  const { currentUser, updateUserPhoto, currentPhotoUrl, isLoading } = useUser();
 
   const router = useRouter();
 
@@ -14,12 +14,12 @@ const Page = () => {
     return <div>Loading...</div>;
   }
 
-  if (!user) {
+  if (!currentUser) {
     return <div>User not found</div>;
   }
 
   const userProfile = {
-    name: user.name,
+    name: currentUser.name,
     profilePhoto: currentPhotoUrl,
   };
 
