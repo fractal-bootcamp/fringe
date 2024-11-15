@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import ChatMessage from "./XChatMessage";
 import ChatInput from "./XChatInput";
@@ -21,6 +21,7 @@ interface XChatCardProps {
   avatarFallback?: string;
   messageObjects: MessageObject[] | null;
   onSendMessage: (message: MessageRequest) => void;
+  updateHeader: (newHeader: string) => void;
 }
 
 const XChatCard = ({
@@ -32,9 +33,19 @@ const XChatCard = ({
   avatarFallback = "AI",
   messageObjects,
   onSendMessage,
+  updateHeader,
 }: XChatCardProps) => {
   const router = useRouter();
   const [messages, setMessages] = useState<MessageObject[] | null>(messageObjects);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSendMessage = (content: string) => {
     const newMessage: MessageObject = { id: new Date().toISOString(), sender: "user", content };
@@ -50,6 +61,7 @@ const XChatCard = ({
   };
 
   const handleNameClick = () => {
+    updateHeader("Profile");
     router.push(`/profile/${userId}`);
   };
 
@@ -83,6 +95,7 @@ const XChatCard = ({
         {messages && messages.map((msg) => (
           <ChatMessage key={msg.id} message={msg.content} sender={msg.sender} />
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Fixed Input Area */}
@@ -99,7 +112,7 @@ const XChatCard = ({
           pathLikes="/likes"
           pathMatches="/matches"
           pathSettings="/settings"
-          updateHeader={() => {}}
+          updateHeader={updateHeader}
         />
       </div>
     </div>
