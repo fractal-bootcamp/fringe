@@ -32,6 +32,7 @@ const Page = () => {
     <XChatCard
       senderId={user.id}
       matchId={match.id}
+      title={match.users[1].name}
       messageObjects={messageObjects}
       onSendMessage={handleSendMessage}
     />
