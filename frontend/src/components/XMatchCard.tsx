@@ -24,10 +24,18 @@ const XMatchCard = ({
   onChatClick,
   onUnmatch
 }: XMatchCardProps) => {
+  const handleButtonClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onChatClick?.();
+  };
+
   return (
-    <Card>
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between">
+    <Card 
+      className="cursor-pointer hover:bg-gray-50 transition-colors"
+      onClick={onChatClick}
+    >
+      <CardContent className="p-4 flex">
+        <div className="flex-grow">
           <div className="flex items-center space-x-4">
             <Avatar className="h-10 w-10">
               {avatarUrl ? (
@@ -41,26 +49,34 @@ const XMatchCard = ({
               {subject && <p className="text-sm text-gray-500">{subject}</p>}
             </div>
           </div>
-          <Button size="icon" variant="ghost" onClick={onChatClick}>
-            <MessageCircle className="h-5 w-5" />
+          <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+            {message}
+          </p>
+          {tags.length > 0 && (
+            <div className="mt-2 space-x-2">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+        
+        <div className="flex items-center ml-4">
+          <Button 
+            size="icon" 
+            variant="ghost" 
+            onClick={handleButtonClick}
+            className="hover:bg-gray-100 h-16 w-16"
+          >
+            <MessageCircle className="h-10 w-10" />
             <span className="sr-only">Chat</span>
           </Button>
         </div>
-        <p className="mt-2 text-sm text-gray-600 line-clamp-2">
-          {message}
-        </p>
-        {tags.length > 0 && (
-          <div className="mt-2 space-x-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
       </CardContent>
     </Card>
   );
