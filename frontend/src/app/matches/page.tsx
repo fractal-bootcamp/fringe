@@ -16,6 +16,8 @@ const Page = () => {
     <div className="flex flex-col gap-4 p-2">
       {matches.map((match, key) => {
         const matchUser = match.users[0];
+        const message =
+          match.messages.length > 1 ? match.messages[match.messages.length - 1].content : "";
         return (
           <XMatchCard
             key={key}
@@ -24,7 +26,7 @@ const Page = () => {
               .split(" ")
               .map((n) => n[0])
               .join("")}
-            message={match.messages[match.messages.length - 1].content}
+            message={message}
             onChatClick={() => router.push(`/chat/${match.id}`)}
           />
         );
