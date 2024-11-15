@@ -1,4 +1,4 @@
-import NavbarManager from "@/components/AuthNavbar";
+import AuthNavbar from "@/components/AuthNavbar";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -24,7 +24,7 @@ export default function RootLayout({
               <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
             </div>
             <Suspense fallback={null}>
-              <NavbarManager />
+              <AuthNavbar />
             </Suspense>
           </AuthProvider>
         </ClerkProvider>
