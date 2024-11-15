@@ -3,7 +3,7 @@ import { CardContent } from "./ui/card";
 
 interface ChatMessageProps {
   message: string;
-  sender: "user" | "recipient";
+  sender: string;
 }
 
 const ChatMessage = ({ message, sender }: ChatMessageProps) => {

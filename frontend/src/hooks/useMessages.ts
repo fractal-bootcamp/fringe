@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { getMessageHistory } from "@/api/apiMessages";
-import { Message } from "@/types/types";
+import { Message, MessageRequest } from "@/types/types";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { sendMessage } from "@/api/apiMessages";
 
 const useMessages = (matchId: string) => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -16,7 +17,13 @@ const useMessages = (matchId: string) => {
     fetchMessages();
   }, [matchId]);
 
-  return { messages, setMessages };
+  const handleSendMessage = async (message: MessageRequest) => {
+    if (token) {
+      await sendMessage(message, token);
+    }
+  };
+
+  return { messages, setMessages, handleSendMessage };
 };
 
 export default useMessages;

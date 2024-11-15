@@ -11,7 +11,6 @@ const useUser = () => {
   const fetchUser = async () => {
     if (!token) return;
     const user = await apiGetUserById(token);
-    console.log(user);
     setUser(user);
     if (user.profilePhotoIds?.[0]) {
       const url = await apiGetSignedUrl(user.profilePhotoIds[0], token);

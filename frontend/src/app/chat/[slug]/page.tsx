@@ -1,24 +1,41 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import ChatPage from "@/components/ChatPage";
 import useMatch from "@/hooks/useMatch";
-// interface ChatMessage {
-//   content: string;
-//   sender: "user" | "match" | "system";
-//   timestamp: Date;
-// }
+import XChatCard, { MessageObject } from "@/components/XChatCard";
+import useUser from "@/hooks/useUser";
+import useMessages from "@/hooks/useMessages";
 
-const Page =  () => {
+const Page = () => {
   const { slug } = useParams();
+  const { user } = useUser();
   const { match } = useMatch(slug as string);
 
+  console.log("user");
+  console.log(user);
+  console.log("match");
+  console.log(match);
 
-  if (!match ) return <div>Loading...</div>;
+  if (!match || !user) return <div>Loading...</div>;
+
+  const { handleSendMessage } = useMessages(match.id);
+
+  const messageObjects: MessageObject[] = match.messages.map((msg) => ({
+    id: msg.id,
+    sender: msg.senderId === user.id ? "user" : "recipient",
+    content: msg.content,
+  }));
+
+  console.log("messageObjects");
+  console.log(messageObjects);
+
   return (
-    <div>
-      <ChatPage match={match} />
-    </div>
+    <XChatCard
+      senderId={user.id}
+      matchId={match.id}
+      messageObjects={messageObjects}
+      onSendMessage={handleSendMessage}
+    />
   );
 };
 
