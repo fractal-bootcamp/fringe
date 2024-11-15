@@ -4,8 +4,7 @@ import prisma from "../prisma/client";
 import { logging } from "../utils/logging";
 import { uploadToS3 } from "../utils/s3";
 import { getSignedReadUrl } from "../utils/s3";
-import { clerkClient } from "@clerk/express";
-import { getAuth } from "@clerk/express";
+
 
 export const getUserById = logging("getUserById", false, async (req: Request, res: Response) => {
   if (!req.user) {
@@ -147,28 +146,28 @@ export const getSignedPhotoUrl = logging(
 );
 
 export const createUser = logging("createUser", false, async (req: Request, res: Response) => {
-  const auth = getAuth(req);
-  if (!auth.userId) {
-    res.status(401).json({ error: "Unauthorized - No userId" });
+  if (!req.user) {
+    res.status(401).json({ error: "Unauthorized - No user" });
     return;
   }
   
   try {
-    const clerkUser = await clerkClient.users.getUser(auth.userId);
     const result = await prisma.$transaction(async (prisma) => {
-      const user = await prisma.user.create({
+      // Update existing user with provided data
+      const user = await prisma.user.upsert({
+        where: { id: req.user!.id },
         data: {
-          clerkId: auth.userId,
-          name: clerkUser.username || "New User",
-          location: "",
-          profilePhotoIds: [],
+          name: req.body.name,
           profileType: req.body.profileType,
         },
       });
 
+      // Create corresponding profile based on type
       if (req.body.profileType === "applicant") {
-        await prisma.applicant.create({
-          data: {
+        await prisma.applicant.upsert({
+          where: { userId: user.id },
+          update: {},
+          create: {
             userId: user.id,
             yearsOfExperience: 0,
             educationalExperiences: "",
@@ -177,8 +176,10 @@ export const createUser = logging("createUser", false, async (req: Request, res:
           },
         });
       } else if (req.body.profileType === "company") {
-        await prisma.company.create({
-          data: {
+        await prisma.company.upsert({
+          where: { userId: user.id },
+          update: {},
+          create: {
             userId: user.id,
             yearsOfOperation: 0,
             employeeCount: 0,
@@ -188,10 +189,27 @@ export const createUser = logging("createUser", false, async (req: Request, res:
         });
       }
 
-      return user;
+      const finalUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        include: {
+          applicantProfile: true,
+          companyProfile: true,
+        }
+      });
+
+      if (!finalUser) {
+        throw new Error('User not found after creation');
+      }
+
+      return finalUser;
     });
-    res.status(200).json({ message: "User created", user: result });
+    
+    res.status(200).json({ user: result });
   } catch (error) {
-    res.status(500).json({ error: "Failed to create user" });
+    console.error('Create user error:', error);
+    res.status(500).json({ 
+      error: "Failed to create/update user",
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });

@@ -20,27 +20,28 @@ export const identifyUserMiddleware = async (req: Request, res: Response, next: 
   try {
     const auth = getAuth(req);
 
-    if (auth.userId) {
-      let user = await prisma.user.findUnique({
-        where: {
-          clerkId: auth.userId
-        }
-      });
-      
-      if (!user) {
-        user = await prisma.user.create({
-          data: {
-            clerkId: auth.userId,
-            name: "New User",
-            location: "",
-            profileType: req.body.profileType,
-          },
-        });
-      }
-      
-      req.user = user;
+    if (!auth.userId) {
+      res.status(401).json({ error: "Unauthorized - No auth token" });
+      return;
     }
 
+    let user = await prisma.user.findUnique({
+      where: { clerkId: auth.userId }
+    });
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          clerkId: auth.userId,
+          name: "New User",
+          location: "",
+          profilePhotoIds: [],
+          profileType: "applicant", // Default type, wil be updated later
+        },
+      });
+    }
+
+    req.user = user;
     next();
   } catch (error) {
     next(error);
