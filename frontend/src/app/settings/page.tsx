@@ -24,7 +24,7 @@ const Page = () => {
   };
 
   return (
-    <div className="p-2">
+    <div>
       <XSettingsPage
         name={userProfile.name}
         image={userProfile.profilePhoto ?? ""}

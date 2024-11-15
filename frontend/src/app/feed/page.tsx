@@ -50,7 +50,7 @@ const Page = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 mb-16 max-w-2xl">
+    <div className="container mx-auto max-w-2xl">
       <div className="relative">
         {items[currentIndex].profileType === ProfileType.applicant &&
         items[currentIndex].applicantProfile ? (
