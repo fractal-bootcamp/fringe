@@ -5,8 +5,8 @@ import { logging } from "../utils/logging";
 
 export const getLikes = logging("getLikes", false, async (req: Request, res: Response) => {
   if (!req.user) {
-     res.status(401).json({ error: "Unauthorized - No user" });
-     return;
+    res.status(401).json({ error: "Unauthorized - No user" });
+    return;
   }
   const userId = req.user.id;
   try {
@@ -28,10 +28,10 @@ export const addLike = logging("addLike", false, async (req: Request, res: Respo
   try {
     await prisma.like.create({
       data: {
-      fromUserId,
-      toUserId,
-    },
-  });
+        fromUserId,
+        toUserId,
+      },
+    });
     res.status(200);
   } catch (error) {
     res.status(500).json({ error: "Failed to add like" });
@@ -43,13 +43,13 @@ export const deleteLike = logging("deleteLike", false, async (req: Request, res:
     res.status(401).json({ error: "Unauthorized - No user" });
     return;
   }
-  const likeId = req.body.id;
-  try {
-    await prisma.like.delete({
+  const { likeId } = req.body;
+
+  console.log(likeId);
+
+  const response = await prisma.like.delete({
     where: { id: likeId },
-    });
-    res.status(200);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to delete like" });
-  }
+  });
+
+  res.status(200).json(response);
 });
