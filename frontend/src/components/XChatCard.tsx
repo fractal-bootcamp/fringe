@@ -55,7 +55,7 @@ const XChatCard = ({
         <CardTitle>{title}</CardTitle>
       </CardHeader>
 
-      <CardContent className="flex flex-col py-32 space-y-4 overflow-y-auto">
+      <CardContent className="flex flex-col py-32 space-y-4 overflow-y-scroll">
         {messages && (
           <>
             {messages.map((msg) => (
@@ -65,7 +65,7 @@ const XChatCard = ({
         )}
       </CardContent>
 
-      <CardFooter className="p-0 fixed bottom-20 z-40 w-[90%] bg-zinc-900 border-none rounded-lg border-black">
+      <CardFooter className="p-0 fixed bottom-20 z-40 w-[90%] bg-slate-200 border-none rounded-lg border-black">
         <ChatInput onSendMessage={handleSendMessage} />
       </CardFooter>
     </Card>
