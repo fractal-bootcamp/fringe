@@ -154,7 +154,7 @@ export const createUser = logging("createUser", false, async (req: Request, res:
   try {
     const result = await prisma.$transaction(async (prisma) => {
       // Update existing user with provided data
-      const user = await prisma.user.update({
+      const user = await prisma.user.upsert({
         where: { id: req.user!.id },
         data: {
           name: req.body.name,
