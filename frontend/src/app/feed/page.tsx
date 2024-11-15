@@ -8,6 +8,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import XProfilePage from "@/components/XProfilePage";
 import { ProfileType } from "@/types/types";
 import useLikes from "@/hooks/useLikes";
+import { Heart, X } from "lucide-react";
 const Page = () => {
   const { isLoaded, isSignedIn } = useAuthContext();
   const { handleAddLike } = useLikes();
@@ -51,8 +52,8 @@ const Page = () => {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl">
-      <div className="relative">
+    <div className="container mx-auto max-w-2xl flex flex-col justify-between h-full">
+      <div className="relative flex-grow">
         {items[currentIndex].profileType === ProfileType.applicant &&
         items[currentIndex].applicantProfile ? (
           <XProfilePage
@@ -77,15 +78,18 @@ const Page = () => {
         )}
 
         {/* New buttons for reject and like actions */}
-        <div className="flex justify-between mt-4">
-          <button onClick={handleReject} className="bg-red-500 text-white px-4 py-2 rounded">
-            Reject
+        <div className="flex justify-between m-10 rounded-full">
+          <button
+            onClick={handleReject}
+            className="bg-white text-black border-2 border-black h-20 w-20 rounded-full p-4"
+          >
+            <X className="rounded-full w-full h-full" />
           </button>
           <button
             onClick={() => handleLikeSection()}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-white text-black border-2 border-black h-20 w-20 rounded-full p-4"
           >
-            Like
+            <Heart className="rounded-full w-full h-full" />
           </button>
         </div>
       </div>
