@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,7 +11,6 @@ export interface XMatchCardProps {
   message: string;
   tags?: string[];
   onChatClick?: () => void;
-  onUnmatch?: () => void;
 }
 
 const XMatchCard = ({
@@ -22,7 +21,6 @@ const XMatchCard = ({
   message,
   tags = [],
   onChatClick,
-  onUnmatch
 }: XMatchCardProps) => {
   const handleButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -30,10 +28,7 @@ const XMatchCard = ({
   };
 
   return (
-    <Card 
-      className="cursor-pointer hover:bg-gray-50 transition-colors"
-      onClick={onChatClick}
-    >
+    <Card className="cursor-pointer hover:bg-gray-50 transition-colors" onClick={onChatClick}>
       <CardContent className="p-4 flex">
         <div className="flex-grow">
           <div className="flex items-center space-x-4">
@@ -49,9 +44,7 @@ const XMatchCard = ({
               {subject && <p className="text-sm text-gray-500">{subject}</p>}
             </div>
           </div>
-          <p className="mt-2 text-sm text-gray-600 line-clamp-2">
-            {message}
-          </p>
+          <p className="mt-2 text-sm text-gray-600 line-clamp-2">{message}</p>
           {tags.length > 0 && (
             <div className="mt-2 space-x-2">
               {tags.map((tag) => (
@@ -65,11 +58,11 @@ const XMatchCard = ({
             </div>
           )}
         </div>
-        
+
         <div className="flex items-center ml-4">
-          <Button 
-            size="icon" 
-            variant="ghost" 
+          <Button
+            size="icon"
+            variant="ghost"
             onClick={handleButtonClick}
             className="hover:bg-gray-100 h-16 w-16"
           >
