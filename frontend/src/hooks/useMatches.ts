@@ -25,10 +25,12 @@ const useMatches = () => {
   };
 
   // Add match
-  const handleAddMatch = async (userId1: string, userId2: string) => {
+  const handleAddMatch = async (userId1: string, userId2: string): Promise<Match | undefined> => {
     if (!token) return;
+
     const match: Match = await apiAddMatch(userId1, userId2, token);
     addMatch(match);
+    return match;
   };
 
   // Delete match

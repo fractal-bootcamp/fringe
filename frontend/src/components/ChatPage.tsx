@@ -1,10 +1,10 @@
-import React, { useState} from "react";
-import { Message} from "@/types/types";
-import { sendMessage} from "../api/apiMessages";
+import React, { useState } from "react";
+import { Message } from "@/types/types";
+import { sendMessage } from "../api/apiMessages";
 import useMessages from "@/hooks/useMessages";
 import { useAuthContext } from "@/contexts/AuthContext";
 
-import { Match} from "@/types/types";
+import { Match } from "@/types/types";
 import useUser from "@/hooks/useUser";
 
 interface ChatPageProps {
@@ -30,16 +30,18 @@ const ChatPage = ({ match }: ChatPageProps) => {
       sender: match.users[0],
     };
 
-    setMessages((prev: Message[]) => [...prev, newMessage]);    
+    setMessages((prev: Message[]) => [...prev, newMessage]);
     setMessage("");
     if (!token) return;
-    await sendMessage({
-      content: message,
-      matchId: match.id, 
-      senderId: user?.id || "",
-    },token);
+    await sendMessage(
+      {
+        content: message,
+        matchId: match.id,
+        senderId: user?.id || "",
+      },
+      token
+    );
   }
-
 
   return (
     <div className="h-screen flex flex-col">
@@ -71,7 +73,7 @@ const ChatPage = ({ match }: ChatPageProps) => {
                 className={`rounded-lg p-3 max-w-[80%] ${
                   msg.senderId === "1" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
                 }`}
-              > 
+              >
                 {msg.content}
               </div>
             </div>

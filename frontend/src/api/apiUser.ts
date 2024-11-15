@@ -22,10 +22,6 @@ export const apiGetUserById = async (token: string) => {
 };
 
 export const apiUpdateUserProfile = async (name: string, location: string, token: string) => {
-  console.log("apiUpdateUserProfile");
-  console.log(name);
-  console.log(location);
-  console.log(token);
   const response = await axiosClient.post(
     `/user/updateProfile`,
     {
