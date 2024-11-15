@@ -22,5 +22,6 @@ export const Primary: Story = {
     pathMatches: "/matches",
     pathSettings: "/settings",
     development: true,
+    updateHeader: () => {},
   },
 };
