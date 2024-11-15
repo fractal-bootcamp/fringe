@@ -14,7 +14,7 @@ const UpdateProfile = () => {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [profileType, setProfileType] = useState<string>(ProfileType.applicant);
-  const { updateProfile, isLoading, error } = useUpdate();
+  const { updateProfile} = useUpdate();
 
 
 
