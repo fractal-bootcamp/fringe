@@ -5,10 +5,10 @@ import React from "react";
 import XHeader from "./XHeader";
 import storeHeader from "@/stores/storeHeader";
 
-const HeaderManager = () => {
+const AuthHeader = () => {
   const { header } = storeHeader();
   const { isSignedIn } = useAuthContext();
   return isSignedIn ? <XHeader title={header} /> : null;
 };
 
-export default HeaderManager;
+export default AuthHeader;

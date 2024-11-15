@@ -1,9 +1,9 @@
-import NavbarManager from "@/components/NavbarManager";
+import NavbarManager from "@/components/AuthNavbar";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Suspense } from "react";
-import HeaderManager from "@/components/HeaderManager";
+import AuthHeader from "@/components/AuthHeader";
 
 export default function RootLayout({
   children,
@@ -17,7 +17,7 @@ export default function RootLayout({
           <AuthProvider>
             <div>
               <Suspense fallback={null}>
-                <HeaderManager />
+                <AuthHeader />
               </Suspense>
             </div>
             <div className="px-4 py-16 pb-20">
