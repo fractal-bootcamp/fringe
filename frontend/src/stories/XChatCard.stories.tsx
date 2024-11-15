@@ -13,8 +13,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     messageObjects: [
-      { id: 1, sender: "user", content: "Hello" },
-      { id: 2, sender: "recipient", content: "Hi" },
+      { id: "1", sender: "user", content: "Hello" },
+      { id: "2", sender: "recipient", content: "Hi" },
     ],
     onSendMessage: () => {},
   },

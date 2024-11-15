@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./ui/card";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 import ChatMessage from "./XChatMessage";
 import ChatInput from "./XChatInput";
 import { MessageRequest } from "@/types/types";
@@ -15,7 +15,6 @@ interface XChatCardProps {
   senderId: string;
   matchId: string;
   title?: string;
-  description?: string;
   avatarUrl?: string;
   avatarFallback?: string;
   messageObjects: MessageObject[] | null;
@@ -26,7 +25,6 @@ const XChatCard = ({
   senderId,
   matchId,
   title = "Chat",
-  description = "Online",
   avatarUrl = "",
   avatarFallback = "AI",
   messageObjects,
@@ -48,19 +46,16 @@ const XChatCard = ({
   };
 
   return (
-    <Card className="w-full max-w-sm mx-auto shadow-lg">
-      <CardHeader className="flex items-center p-4 space-x-4 border-b">
+    <Card className="w-full max-w-sm mx-auto border-none shadow-none flex flex-col items-center">
+      <CardHeader className="flex items-center justify-center border-y-[0.5px] border-black fixed top-10 z-30 w-full bg-white">
         <Avatar className="h-12 w-12">
           <AvatarImage src={avatarUrl} />
           <AvatarFallback>{avatarFallback}</AvatarFallback>
         </Avatar>
-        <div>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
-        </div>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
 
-      <CardContent className="flex flex-col p-4 space-y-4 overflow-y-auto">
+      <CardContent className="flex flex-col py-32 space-y-4 overflow-y-auto">
         {messages && (
           <>
             {messages.map((msg) => (
@@ -70,7 +65,7 @@ const XChatCard = ({
         )}
       </CardContent>
 
-      <CardFooter className="p-0">
+      <CardFooter className="p-0 fixed bottom-20 z-40 w-[90%] bg-zinc-900 border-none rounded-lg border-black">
         <ChatInput onSendMessage={handleSendMessage} />
       </CardFooter>
     </Card>

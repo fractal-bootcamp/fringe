@@ -18,12 +18,12 @@ const ChatInput = ({ onSendMessage }: ChatInputProps) => {
   };
 
   return (
-    <div className="flex items-center gap-2 p-4 border-t w-full">
+    <div className="flex items-center gap-2 p-4 border-t w-full rounded-lg border-none text-white">
       <Textarea
         placeholder="Type your message..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="flex-grow min-h-[50px] max-h-[70px]"
+        className="flex-grow min-h-[50px] max-h-[70px] outline-none rounded-lg"
       />
       <Button onClick={handleSend} className="p-3 bg-black text-white shrink-0">
         <Send className="w-5 h-5" />
