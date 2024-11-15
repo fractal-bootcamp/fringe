@@ -5,6 +5,7 @@ import useMatch from "@/hooks/useMatch";
 import XChatCard, { MessageObject } from "@/components/XChatCard";
 import useUser from "@/hooks/useUser";
 import useMessages from "@/hooks/useMessages";
+import storeHeader from "@/stores/storeHeader";
 
 const Page = () => {
   const { slug } = useParams();
@@ -32,9 +33,11 @@ const Page = () => {
     <XChatCard
       senderId={currentUser.id}
       matchId={match.id}
+      userId={match.users[1].id}
       title={match.users[1].name}
       messageObjects={messageObjects}
       onSendMessage={handleSendMessage}
+      updateHeader={storeHeader.getState().updateHeader}
     />
   );
 };

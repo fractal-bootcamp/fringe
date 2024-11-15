@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import ChatMessage from "./XChatMessage";
 import ChatInput from "./XChatInput";
 import { MessageRequest } from "@/types/types";
 import XNavbar from "./XNavbar";
+import { useRouter } from "next/navigation";
 
 export interface MessageObject {
   id: string;
@@ -14,23 +15,37 @@ export interface MessageObject {
 interface XChatCardProps {
   senderId: string;
   matchId: string;
+  userId: string;
   title?: string;
   avatarUrl?: string;
   avatarFallback?: string;
   messageObjects: MessageObject[] | null;
   onSendMessage: (message: MessageRequest) => void;
+  updateHeader: (newHeader: string) => void;
 }
 
 const XChatCard = ({
   senderId,
   matchId,
+  userId,
   title = "Chat",
   avatarUrl = "",
   avatarFallback = "AI",
   messageObjects,
   onSendMessage,
+  updateHeader,
 }: XChatCardProps) => {
+  const router = useRouter();
   const [messages, setMessages] = useState<MessageObject[] | null>(messageObjects);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSendMessage = (content: string) => {
     const newMessage: MessageObject = { id: new Date().toISOString(), sender: "user", content };
@@ -45,6 +60,11 @@ const XChatCard = ({
     }
   };
 
+  const handleNameClick = () => {
+    updateHeader("Profile");
+    router.push(`/profile/${userId}`);
+  };
+
   return (
     <div className="flex flex-col h-screen max-w-2xl mx-auto relative overflow-hidden">
       {/* Fixed Header */}
@@ -54,7 +74,12 @@ const XChatCard = ({
             <AvatarImage src={avatarUrl} />
             <AvatarFallback className="text-lg">{avatarFallback}</AvatarFallback>
           </Avatar>
-          <h1 className="text-lg font-medium">{title}</h1>
+          <h1 
+            className="text-lg font-medium cursor-pointer hover:underline"
+            onClick={handleNameClick}
+          >
+            {title}
+          </h1>
         </div>
       </div>
 
@@ -70,6 +95,7 @@ const XChatCard = ({
         {messages && messages.map((msg) => (
           <ChatMessage key={msg.id} message={msg.content} sender={msg.sender} />
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Fixed Input Area */}
@@ -86,7 +112,7 @@ const XChatCard = ({
           pathLikes="/likes"
           pathMatches="/matches"
           pathSettings="/settings"
-          updateHeader={() => {}}
+          updateHeader={updateHeader}
         />
       </div>
     </div>
