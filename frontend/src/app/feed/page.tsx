@@ -13,6 +13,7 @@ const Page = () => {
   const { handleAddLike } = useLikes();
   const { currentUser } = useUser();
   const { applicants, companies } = useUsers();
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Handle authentication
