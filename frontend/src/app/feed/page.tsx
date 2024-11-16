@@ -23,9 +23,7 @@ const Page = () => {
   if (!isSignedIn) redirect("/sign-in");
   if (!currentUser || !feed) return null;
 
-  // const items = (currentUser.profileType === "applicant" ? companies : applicants).sort(
-  //   (a, b) => Number(a.id) - Number(b.id)
-  // );
+  const feedUser = feed[currentIndex];
 
   const handleReject = () => {
     setDirection("left");
@@ -39,7 +37,7 @@ const Page = () => {
 
   const handleLikeSection = () => {
     setDirection("right");
-    handleAddLike(currentUser.id, feed[currentIndex].id);
+    handleAddLike(currentUser.id, feedUser.id);
     if (currentIndex < feed.length - 1) {
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
@@ -66,26 +64,25 @@ const Page = () => {
             transition={{ duration: 0.3 }}
             className="w-full"
           >
-            {feed[currentIndex].profileType === ProfileType.applicant &&
-            feed[currentIndex].applicantProfile ? (
+            {feedUser.profileType === ProfileType.applicant && feedUser.applicantProfile ? (
               <XProfilePage
-                profileType={feed[currentIndex].profileType}
-                name={feed[currentIndex].name}
-                location={feed[currentIndex].location}
-                image={feed[currentIndex].profilePhotoIds[0]}
+                profileType={feedUser.profileType}
+                name={feedUser.name}
+                location={feedUser.location}
+                image={feedUser.profilePhotoIds[0]}
                 applicantProps={{
-                  experience: feed[currentIndex].applicantProfile.professionalExperiences,
-                  education: feed[currentIndex].applicantProfile.educationalExperiences,
-                  portfolioUrl: feed[currentIndex].applicantProfile.portfolioUrl,
+                  experience: feedUser.applicantProfile.professionalExperiences,
+                  education: feedUser.applicantProfile.educationalExperiences,
+                  portfolioUrl: feedUser.applicantProfile.portfolioUrl,
                 }}
               />
             ) : (
               <XProfilePage
-                profileType={feed[currentIndex].profileType}
-                name={feed[currentIndex].name}
-                location={feed[currentIndex].location}
-                image={feed[currentIndex].profilePhotoIds[0]}
-                companyProps={feed[currentIndex].companyProfile}
+                profileType={feedUser.profileType}
+                name={feedUser.name}
+                location={feedUser.location}
+                image={feedUser.profilePhotoIds[0]}
+                companyProps={feedUser.companyProfile}
               />
             )}
           </motion.div>
