@@ -9,7 +9,7 @@ async function main() {
       clerkId: "clk_1",
       name: "Alice Smith",
       location: "New York, NY",
-      profilePhotoIds: ["photo1", "photo2"],
+      profilePhotoIds: ["applicant-1.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -35,7 +35,7 @@ async function main() {
       clerkId: "clk_2",
       name: "Bob Johnson",
       location: "San Francisco, CA",
-      profilePhotoIds: ["photo3"],
+      profilePhotoIds: ["applicant-2.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -57,7 +57,7 @@ async function main() {
       clerkId: "clk_3",
       name: "Charlie Brown",
       location: "Austin, TX",
-      profilePhotoIds: ["photo4"],
+      profilePhotoIds: ["applicant-3.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -82,7 +82,7 @@ async function main() {
       clerkId: "clk_4",
       name: "Diana Prince",
       location: "Seattle, WA",
-      profilePhotoIds: ["photo5"],
+      profilePhotoIds: ["applicant-4.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -107,7 +107,7 @@ async function main() {
       clerkId: "clk_5",
       name: "Ethan Hunt",
       location: "Los Angeles, CA",
-      profilePhotoIds: ["photo6"],
+      profilePhotoIds: ["applicant-5.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -129,7 +129,7 @@ async function main() {
       clerkId: "clk_6",
       name: "Fiona Gallagher",
       location: "Chicago, IL",
-      profilePhotoIds: ["photo7"],
+      profilePhotoIds: ["applicant-6.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -151,7 +151,7 @@ async function main() {
       clerkId: "clk_7",
       name: "George Smith",
       location: "Miami, FL",
-      profilePhotoIds: ["photo8"],
+      profilePhotoIds: ["applicant-7.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -173,7 +173,7 @@ async function main() {
       clerkId: "clk_8",
       name: "Hannah Baker",
       location: "Boston, MA",
-      profilePhotoIds: ["photo9"],
+      profilePhotoIds: ["applicant-8.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -198,7 +198,7 @@ async function main() {
       clerkId: "clk_9",
       name: "Ian Malcolm",
       location: "Orlando, FL",
-      profilePhotoIds: ["photo10"],
+      profilePhotoIds: ["applicant-9.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -226,7 +226,7 @@ async function main() {
       clerkId: "clk_10",
       name: "Jack Sparrow",
       location: "Port Royal, Jamaica",
-      profilePhotoIds: ["photo11"],
+      profilePhotoIds: ["applicant-10.jpg"],
       profileType: ProfileType.applicant,
       applicantProfile: {
         create: {
@@ -258,7 +258,7 @@ async function main() {
       clerkId: "clk_11",
       name: "Tech Innovations",
       location: "San Francisco, CA",
-      profilePhotoIds: ["photo1", "photo2"],
+      profilePhotoIds: ["company-1.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -280,7 +280,7 @@ async function main() {
       clerkId: "clk_12",
       name: "Finance Solutions",
       location: "New York, NY",
-      profilePhotoIds: ["photo3", "photo4"],
+      profilePhotoIds: ["company-2.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -302,7 +302,7 @@ async function main() {
       clerkId: "clk_13",
       name: "Creative Designs",
       location: "Austin, TX",
-      profilePhotoIds: ["photo5", "photo6"],
+      profilePhotoIds: ["company-3.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -324,7 +324,7 @@ async function main() {
       clerkId: "clk_14",
       name: "HealthTech Corp",
       location: "Boston, MA",
-      profilePhotoIds: ["photo7", "photo8"],
+      profilePhotoIds: ["company-4.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -349,7 +349,7 @@ async function main() {
       clerkId: "clk_15",
       name: "EcoFinance",
       location: "Seattle, WA",
-      profilePhotoIds: ["photo9", "photo10"],
+      profilePhotoIds: ["company-5.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -374,7 +374,7 @@ async function main() {
       clerkId: "clk_16",
       name: "Design Studio",
       location: "Los Angeles, CA",
-      profilePhotoIds: ["photo11", "photo12"],
+      profilePhotoIds: ["company-6.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -399,7 +399,7 @@ async function main() {
       clerkId: "clk_17",
       name: "FinTech Innovations",
       location: "Chicago, IL",
-      profilePhotoIds: ["photo13", "photo14"],
+      profilePhotoIds: ["company-7.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -421,7 +421,7 @@ async function main() {
       clerkId: "clk_18",
       name: "Software Solutions",
       location: "Denver, CO",
-      profilePhotoIds: ["photo15", "photo16"],
+      profilePhotoIds: ["company-8.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -446,7 +446,7 @@ async function main() {
       clerkId: "clk_19",
       name: "Creative Agency",
       location: "Miami, FL",
-      profilePhotoIds: ["photo17", "photo18"],
+      profilePhotoIds: ["company-9.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
@@ -468,7 +468,7 @@ async function main() {
       clerkId: "clk_20",
       name: "Tech Finance",
       location: "Atlanta, GA",
-      profilePhotoIds: ["photo19", "photo20"],
+      profilePhotoIds: ["company-10.jpg"],
       profileType: ProfileType.company,
       companyProfile: {
         create: {
