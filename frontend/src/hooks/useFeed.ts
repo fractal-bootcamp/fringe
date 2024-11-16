@@ -10,6 +10,8 @@ const useFeed = () => {
   const { currentUser } = useUser();
   const { feed, loadFeed } = storeFeed();
 
+  console.log(feed);
+
   const fetchFeed = async () => {
     if (!token || !currentUser) return;
 

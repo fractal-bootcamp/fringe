@@ -23,7 +23,7 @@ router.get("/photos/:photoId", getSignedPhotoUrl);
 router.post("/createUser", createUser);
 
 // Get all applicant/company users
-router.post("/getAllApplicantUsers", getAllApplicantUsers);
-router.post("/getAllCompanyUsers", getAllCompanyUsers);
+router.get("/getAllApplicantUsers", getAllApplicantUsers);
+router.get("/getAllCompanyUsers", getAllCompanyUsers);
 
 export default router;

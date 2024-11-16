@@ -13,7 +13,7 @@ export const apiGetAllUsers = async (token: string) => {
 };
 
 export const apiGetAllApplicantUsers = async (token: string) => {
-  const response = await axiosClient.post("/user/getAllApplicantUsers", {
+  const response = await axiosClient.get("/user/getAllApplicantUsers", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -23,7 +23,7 @@ export const apiGetAllApplicantUsers = async (token: string) => {
 };
 
 export const apiGetAllCompanyUsers = async (token: string) => {
-  const response = await axiosClient.post("/user/getAllCompanyUsers", {
+  const response = await axiosClient.get("/user/getAllCompanyUsers", {
     headers: {
       Authorization: `Bearer ${token}`,
     },

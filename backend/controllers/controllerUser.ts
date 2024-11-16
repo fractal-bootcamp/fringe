@@ -108,6 +108,15 @@ export const getAllApplicantUsers = logging(
       where: {
         profileType: "applicant",
       },
+      include: {
+        applicantProfile: {
+          include: {
+            prompts: true,
+          },
+        },
+        matches: true,
+        messages: true,
+      },
     });
     res.status(200).json(users);
   }
@@ -120,6 +129,15 @@ export const getAllCompanyUsers = logging(
     const users = await prisma.user.findMany({
       where: {
         profileType: "company",
+      },
+      include: {
+        companyProfile: {
+          include: {
+            prompts: true,
+          },
+        },
+        matches: true,
+        messages: true,
       },
     });
     res.status(200).json(users);
