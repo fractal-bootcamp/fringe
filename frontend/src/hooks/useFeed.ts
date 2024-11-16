@@ -1,32 +1,32 @@
-import { apiGetAllUsers } from "@/api/apiUser";
+import { apiGetAllApplicantUsers, apiGetAllCompanyUsers } from "@/api/apiUser";
 import { User } from "@/types/types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import useUser from "@/hooks/useUser";
+import storeFeed from "@/stores/storeFeed";
 
 const useFeed = () => {
-  const [companies, setCompanies] = useState<User[]>([]);
-  const [applicants, setApplicants] = useState<User[]>([]);
   const { token } = useAuthContext();
   const { currentUser } = useUser();
+  const { feed, loadFeed } = storeFeed();
 
-  const fetchUsers = async () => {
+  const fetchFeed = async () => {
     if (!token || !currentUser) return;
-    const res = await apiGetAllUsers(token);
-    console.log(res);
-    if (!res || res.length === 0) return;
-    const resCompanies = res.filter((user: User) => user.profileType === "company");
-    const resApplicants = res.filter((user: User) => user.profileType === "applicant");
 
-    setCompanies(resCompanies);
-    setApplicants(resApplicants);
+    if (currentUser.profileType === "applicant") {
+      const companyUsers: User[] = await apiGetAllCompanyUsers(token);
+      loadFeed(companyUsers);
+    } else if (currentUser.profileType === "company") {
+      const applicantUsers: User[] = await apiGetAllApplicantUsers(token);
+      loadFeed(applicantUsers);
+    }
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchFeed();
   }, [token, currentUser]);
 
-  return { companies, applicants };
+  return { feed };
 };
 
 export default useFeed;

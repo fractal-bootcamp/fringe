@@ -3,6 +3,7 @@ import { create } from "zustand";
 
 interface FeedState {
   feed: User[] | null;
+  loadFeed: (newFeed: User[]) => void;
 }
 
 const storeFeed = create<FeedState>((set) => ({

@@ -15,21 +15,21 @@ const Page = () => {
   const { isLoaded, isSignedIn } = useAuthContext();
   const { handleAddLike } = useLikes();
   const { currentUser } = useUser();
-  const { applicants, companies } = useFeed();
+  const { feed } = useFeed();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
 
   if (!isLoaded) return null;
   if (!isSignedIn) redirect("/sign-in");
-  if (!currentUser || !applicants || !companies) return null;
+  if (!currentUser || !feed) return null;
 
-  const items = (currentUser.profileType === "applicant" ? companies : applicants).sort(
-    (a, b) => Number(a.id) - Number(b.id)
-  );
+  // const items = (currentUser.profileType === "applicant" ? companies : applicants).sort(
+  //   (a, b) => Number(a.id) - Number(b.id)
+  // );
 
   const handleReject = () => {
     setDirection("left");
-    if (currentIndex < items.length - 1) {
+    if (currentIndex < feed.length - 1) {
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
         setDirection(null);
@@ -39,8 +39,8 @@ const Page = () => {
 
   const handleLikeSection = () => {
     setDirection("right");
-    handleAddLike(currentUser.id, items[currentIndex].id);
-    if (currentIndex < items.length - 1) {
+    handleAddLike(currentUser.id, feed[currentIndex].id);
+    if (currentIndex < feed.length - 1) {
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
         setDirection(null);
@@ -48,7 +48,7 @@ const Page = () => {
     }
   };
 
-  if (items.length === 0) {
+  if (feed.length === 0) {
     return <div>No items found</div>;
   }
 
@@ -66,26 +66,26 @@ const Page = () => {
             transition={{ duration: 0.3 }}
             className="w-full"
           >
-            {items[currentIndex].profileType === ProfileType.applicant &&
-            items[currentIndex].applicantProfile ? (
+            {feed[currentIndex].profileType === ProfileType.applicant &&
+            feed[currentIndex].applicantProfile ? (
               <XProfilePage
-                profileType={items[currentIndex].profileType}
-                name={items[currentIndex].name}
-                location={items[currentIndex].location}
-                image={items[currentIndex].profilePhotoIds[0]}
+                profileType={feed[currentIndex].profileType}
+                name={feed[currentIndex].name}
+                location={feed[currentIndex].location}
+                image={feed[currentIndex].profilePhotoIds[0]}
                 applicantProps={{
-                  experience: items[currentIndex].applicantProfile.professionalExperiences,
-                  education: items[currentIndex].applicantProfile.educationalExperiences,
-                  portfolioUrl: items[currentIndex].applicantProfile.portfolioUrl,
+                  experience: feed[currentIndex].applicantProfile.professionalExperiences,
+                  education: feed[currentIndex].applicantProfile.educationalExperiences,
+                  portfolioUrl: feed[currentIndex].applicantProfile.portfolioUrl,
                 }}
               />
             ) : (
               <XProfilePage
-                profileType={items[currentIndex].profileType}
-                name={items[currentIndex].name}
-                location={items[currentIndex].location}
-                image={items[currentIndex].profilePhotoIds[0]}
-                companyProps={items[currentIndex].companyProfile}
+                profileType={feed[currentIndex].profileType}
+                name={feed[currentIndex].name}
+                location={feed[currentIndex].location}
+                image={feed[currentIndex].profilePhotoIds[0]}
+                companyProps={feed[currentIndex].companyProfile}
               />
             )}
           </motion.div>
