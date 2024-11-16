@@ -8,7 +8,8 @@ const AuthNavar = () => {
   const { isSignedIn } = useAuthContext();
   const { updateHeader } = storeHeader();
 
-  return isSignedIn ? (
+  // return isSignedIn ? (
+  return (
     <XNavbar
       pathHome="/feed"
       pathLikes="/likes"
@@ -17,7 +18,9 @@ const AuthNavar = () => {
       development={false}
       updateHeader={updateHeader}
     />
-  ) : null;
+  );
+
+  // ) : null;
 };
 
 export default AuthNavar;

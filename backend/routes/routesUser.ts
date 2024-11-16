@@ -7,6 +7,8 @@ import {
   updateUserPhoto,
   createUser,
   getUser,
+  getAllApplicantUsers,
+  getAllCompanyUsers,
 } from "../controllers/controllerUser";
 import upload from "../middleware/upload";
 
@@ -19,5 +21,9 @@ router.post("/updateProfile", updateUserProfile);
 router.post("/updatePhoto", upload.single("photo"), updateUserPhoto);
 router.get("/photos/:photoId", getSignedPhotoUrl);
 router.post("/createUser", createUser);
+
+// Get all applicant/company users
+router.post("/getAllApplicantUsers", getAllApplicantUsers);
+router.post("/getAllCompanyUsers", getAllCompanyUsers);
 
 export default router;

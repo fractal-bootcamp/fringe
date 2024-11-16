@@ -1,6 +1,7 @@
 import { ProfileType, User } from "@/types/types";
 import axiosClient from "./axiosClient";
 
+// Get all users (all, applicant, company)
 export const apiGetAllUsers = async (token: string) => {
   const response = await axiosClient.get("/user/getAllUsers", {
     headers: {
@@ -11,6 +12,27 @@ export const apiGetAllUsers = async (token: string) => {
   return users;
 };
 
+export const apiGetAllApplicantUsers = async (token: string) => {
+  const response = await axiosClient.post("/user/getAllApplicantUsers", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const users: User[] = response.data;
+  return users;
+};
+
+export const apiGetAllCompanyUsers = async (token: string) => {
+  const response = await axiosClient.post("/user/getAllCompanyUsers", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const users: User[] = response.data;
+  return users;
+};
+
+// Get current user
 export const apiGetUserById = async (token: string) => {
   const response = await axiosClient.get(`/user/getCurrentUser`, {
     headers: {
@@ -21,6 +43,7 @@ export const apiGetUserById = async (token: string) => {
   return user;
 };
 
+// Get any user
 export const apiGetUser = async (userId: string, token: string) => {
   const response = await axiosClient.post(
     `/user/getUser`,

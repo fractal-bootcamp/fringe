@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import useUsers from "@/hooks/useUsers";
+import useFeed from "@/hooks/useFeed";
 import { redirect } from "next/navigation";
 import useUser from "@/hooks/useUser";
 import { useAuthContext } from "@/contexts/AuthContext";
@@ -15,7 +15,7 @@ const Page = () => {
   const { isLoaded, isSignedIn } = useAuthContext();
   const { handleAddLike } = useLikes();
   const { currentUser } = useUser();
-  const { applicants, companies } = useUsers();
+  const { applicants, companies } = useFeed();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import useUser from "@/hooks/useUser";
 
-const useUsers = () => {
+const useFeed = () => {
   const [companies, setCompanies] = useState<User[]>([]);
   const [applicants, setApplicants] = useState<User[]>([]);
   const { token } = useAuthContext();
@@ -29,4 +29,4 @@ const useUsers = () => {
   return { companies, applicants };
 };
 
-export default useUsers;
+export default useFeed;
