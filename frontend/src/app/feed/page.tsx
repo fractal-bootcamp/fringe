@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import useUsers from "@/hooks/useUsers";
+import useFeed from "@/hooks/useFeed";
 import { redirect } from "next/navigation";
 import useUser from "@/hooks/useUser";
 import { useAuthContext } from "@/contexts/AuthContext";
@@ -15,21 +15,19 @@ const Page = () => {
   const { isLoaded, isSignedIn } = useAuthContext();
   const { handleAddLike } = useLikes();
   const { currentUser } = useUser();
-  const { applicants, companies } = useUsers();
+  const { feed } = useFeed();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
 
   if (!isLoaded) return null;
   if (!isSignedIn) redirect("/sign-in");
-  if (!currentUser || !applicants || !companies) return null;
+  if (!currentUser || !feed) return null;
 
-  const items = (currentUser.profileType === "applicant" ? companies : applicants).sort(
-    (a, b) => Number(a.id) - Number(b.id)
-  );
+  const feedUser = feed[currentIndex];
 
   const handleReject = () => {
     setDirection("left");
-    if (currentIndex < items.length - 1) {
+    if (currentIndex < feed.length - 1) {
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
         setDirection(null);
@@ -39,8 +37,8 @@ const Page = () => {
 
   const handleLikeSection = () => {
     setDirection("right");
-    handleAddLike(currentUser.id, items[currentIndex].id);
-    if (currentIndex < items.length - 1) {
+    handleAddLike(currentUser.id, feedUser.id);
+    if (currentIndex < feed.length - 1) {
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
         setDirection(null);
@@ -48,7 +46,7 @@ const Page = () => {
     }
   };
 
-  if (items.length === 0) {
+  if (feed.length === 0) {
     return <div>No items found</div>;
   }
 
@@ -66,26 +64,25 @@ const Page = () => {
             transition={{ duration: 0.3 }}
             className="w-full"
           >
-            {items[currentIndex].profileType === ProfileType.applicant &&
-            items[currentIndex].applicantProfile ? (
+            {feedUser.profileType === ProfileType.applicant && feedUser.applicantProfile ? (
               <XProfilePage
-                profileType={items[currentIndex].profileType}
-                name={items[currentIndex].name}
-                location={items[currentIndex].location}
-                image={items[currentIndex].profilePhotoIds[0]}
+                profileType={feedUser.profileType}
+                name={feedUser.name}
+                location={feedUser.location}
+                image={feedUser.profilePhotoIds[0]}
                 applicantProps={{
-                  experience: items[currentIndex].applicantProfile.professionalExperiences,
-                  education: items[currentIndex].applicantProfile.educationalExperiences,
-                  portfolioUrl: items[currentIndex].applicantProfile.portfolioUrl,
+                  experience: feedUser.applicantProfile.professionalExperiences,
+                  education: feedUser.applicantProfile.educationalExperiences,
+                  portfolioUrl: feedUser.applicantProfile.portfolioUrl,
                 }}
               />
             ) : (
               <XProfilePage
-                profileType={items[currentIndex].profileType}
-                name={items[currentIndex].name}
-                location={items[currentIndex].location}
-                image={items[currentIndex].profilePhotoIds[0]}
-                companyProps={items[currentIndex].companyProfile}
+                profileType={feedUser.profileType}
+                name={feedUser.name}
+                location={feedUser.location}
+                image={feedUser.profilePhotoIds[0]}
+                companyProps={feedUser.companyProfile}
               />
             )}
           </motion.div>

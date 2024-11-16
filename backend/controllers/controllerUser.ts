@@ -100,6 +100,50 @@ export const getAllUsers = logging("getAllUsers", false, async (req: Request, re
   res.status(200).json(users);
 });
 
+export const getAllApplicantUsers = logging(
+  "getAllApplicantUsers",
+  false,
+  async (req: Request, res: Response) => {
+    const users = await prisma.user.findMany({
+      where: {
+        profileType: "applicant",
+      },
+      include: {
+        applicantProfile: {
+          include: {
+            prompts: true,
+          },
+        },
+        matches: true,
+        messages: true,
+      },
+    });
+    res.status(200).json(users);
+  }
+);
+
+export const getAllCompanyUsers = logging(
+  "getAllApplicantUsers",
+  false,
+  async (req: Request, res: Response) => {
+    const users = await prisma.user.findMany({
+      where: {
+        profileType: "company",
+      },
+      include: {
+        companyProfile: {
+          include: {
+            prompts: true,
+          },
+        },
+        matches: true,
+        messages: true,
+      },
+    });
+    res.status(200).json(users);
+  }
+);
+
 export const updateUserProfile = logging(
   "updateUserProfile",
   false,

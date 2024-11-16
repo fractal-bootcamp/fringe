@@ -1,22 +1,20 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import useMatch from "@/hooks/useMatch";
 import XChatCard, { MessageObject } from "@/components/XChatCard";
 import useUser from "@/hooks/useUser";
 import useMessages from "@/hooks/useMessages";
 import storeHeader from "@/stores/storeHeader";
+import useMatches from "@/hooks/useMatches";
 
 const Page = () => {
   const { slug } = useParams();
   const { currentUser } = useUser();
-  const { match } = useMatch(slug as string);
-  const { handleSendMessage } = useMessages(match?.id || "");
+  const { matches } = useMatches();
 
-  console.log("user");
-  console.log(currentUser);
-  console.log("match");
-  console.log(match);
+  const match = matches.find((match) => match.id === slug);
+
+  const { handleSendMessage } = useMessages(match?.id || "");
 
   if (!match || !currentUser) return <div>Loading...</div>;
 
